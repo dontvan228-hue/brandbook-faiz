@@ -1,0 +1,810 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Брендбук ФАЙЗ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;500;700;800&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=UnifrakturMaguntia&display=swap">
+<style>
+/* Layout: dark emerald "vault" — full-bleed bands, text set in a 12-col rail, gold reserved for the mark */
+:root{
+  --ink:#02110c; --deep:#06190f; --olive:#1a422f; --moss:#2c5c45;
+  --cream:#f3ebd6; --gold:#c8b48c; --gold-hi:#f3e3b8; --gold-lo:#8a6b3c;
+  --fg:#f3ebd6; --muted:rgba(243,235,214,.62); --line:rgba(243,235,214,.14);
+  --bad:#d4553f;
+  --f-head:"Roboto Condensed","Arial Narrow",Arial,sans-serif;
+  --f-acc:"Cormorant Garamond","Times New Roman",serif;
+  --f-black:"UnifrakturMaguntia","Old English Text MT",serif;
+  --rail:min(1320px,100%);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--ink);overflow-x:clip}
+body{background:var(--ink);color:var(--fg);font-family:var(--f-head);font-size:17px;line-height:1.55;overflow-x:clip;
+  padding-left:0;padding-right:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+::selection{background:var(--gold);color:var(--ink)}
+a{color:inherit}
+.wrap{width:var(--rail);margin-inline:auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.band{position:relative;padding-block:clamp(90px,14vw,190px)}
+.eyebrow{font-size:13px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);display:flex;gap:14px;align-items:center}
+.eyebrow::before{content:"";width:34px;height:1px;background:currentColor}
+h2.h{font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(40px,7.4vw,112px);line-height:.92;margin:22px 0 0;text-wrap:balance}
+h3.h{font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:15px;margin:0 0 14px;color:var(--gold)}
+.lead{font-family:var(--f-acc);font-style:italic;font-size:clamp(22px,2.4vw,32px);line-height:1.3;color:var(--cream);max-width:30ch}
+p{margin:0;max-width:62ch;color:var(--muted)}
+.gold-text{background:linear-gradient(100deg,var(--gold-lo),var(--gold-hi) 35%,var(--gold) 55%,var(--gold-hi) 75%,var(--gold-lo));-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 100%}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+svg.mk{display:block;overflow:visible}
+
+/* ---------- preloader */
+#pre{position:fixed;inset:0;z-index:100;background:var(--ink);display:grid;place-items:center;animation:preOut .7s 1.9s forwards}
+#pre svg{width:120px;height:140px}
+#pre use{fill:none;stroke:var(--gold);stroke-width:2;stroke-dasharray:2600;stroke-dashoffset:2600;animation:draw 1.6s .1s cubic-bezier(.6,0,.2,1) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes preOut{to{opacity:0;visibility:hidden}}
+
+/* ---------- cursor */
+#cur{position:fixed;left:0;top:0;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--gold-hi);z-index:90;pointer-events:none;mix-blend-mode:difference;transition:width .25s,height .25s,margin .25s;display:none}
+#cur.big{width:56px;height:56px;margin:-28px 0 0 -28px}
+@media (hover:hover) and (pointer:fine){#cur{display:block}}
+
+/* ---------- nav */
+nav.top{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+  padding:18px max(24px,env(safe-area-inset-right,0px)) 18px max(24px,env(safe-area-inset-left,0px));transition:background .4s,backdrop-filter .4s}
+nav.top.solid{background:rgba(2,17,12,.72);backdrop-filter:blur(14px)}
+nav.top .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+nav.top .brand svg{width:26px;height:30px;fill:url(#gGold)}
+nav.top .brand span{font-weight:700;letter-spacing:.3em;font-size:13px}
+nav.top ul{display:flex;gap:clamp(14px,2.4vw,34px);list-style:none;margin:0;padding:0}
+nav.top ul a{text-decoration:none;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);position:relative}
+nav.top ul a::after{content:"";position:absolute;left:0;bottom:-6px;height:1px;width:100%;background:var(--gold);transform:scaleX(0);transform-origin:right;transition:transform .4s}
+nav.top ul a:hover{color:var(--cream)} nav.top ul a:hover::after{transform:scaleX(1);transform-origin:left}
+@media (max-width:760px){nav.top ul{display:none}}
+
+/* ---------- hero (live seal) */
+#hero{position:relative;height:100svh;min-height:600px;overflow:hidden;background:radial-gradient(ellipse at 50% 48%,#123726 0%,#071a12 42%,var(--ink) 75%)}
+#dust{position:absolute;inset:0;width:100%;height:100%}
+#hero .sealWrap{position:absolute;left:50%;top:50%;width:min(94vmin,940px);aspect-ratio:1;translate:-50% -51%;perspective:1400px;cursor:pointer}
+#hero .sealIn{width:100%;height:100%;transform-style:preserve-3d}
+#heroSeal{width:100%;height:100%;overflow:visible}
+#heroSeal .r1 text{font-family:var(--f-black);font-size:46px;fill:url(#gGoldRing)}
+#heroSeal .r2 text{font-family:var(--f-head);font-weight:500;font-size:22px;fill:rgba(243,235,214,.8)}
+#heroSeal .r4 text{font-family:var(--f-head);font-weight:400;font-size:13px;fill:rgba(200,180,140,.6)}
+#hero .hud{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;
+  padding:0 max(24px,env(safe-area-inset-right,0px)) 34px max(24px,env(safe-area-inset-left,0px));pointer-events:none}
+#hero .hud .t{font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+#hero .hud .t b{display:block;color:var(--cream);font-weight:700;font-size:clamp(22px,3vw,40px);letter-spacing:.2em;margin-top:6px}
+#hero .hud .r{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);text-align:right}
+.pill{border:1px solid rgba(243,235,214,.35);background:rgba(2,17,12,.35);backdrop-filter:blur(8px);border-radius:999px;padding:10px 18px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;transition:background .3s,color .3s,border-color .3s}
+.pill:hover,.pill[aria-pressed="true"]{background:var(--cream);color:var(--ink);border-color:var(--cream)}
+.scrollcue{position:absolute;left:50%;bottom:30px;width:1px;height:56px;background:rgba(243,235,214,.25);overflow:hidden}
+.scrollcue::after{content:"";position:absolute;left:0;top:-50%;width:1px;height:50%;background:var(--gold-hi);animation:cue 1.8s infinite}
+@keyframes cue{to{top:110%}}
+@media (max-width:760px){.scrollcue{display:none}#hero .sealWrap{width:min(96vw,560px)}}
+/* marquee band */
+.marq{overflow:hidden;border-block:1px solid var(--line);background:var(--deep);padding-block:18px}
+.marq .mi{display:flex;width:max-content;animation:mq 38s linear infinite}
+.marq.rev .mi{animation-direction:reverse}
+.marq span{display:inline-flex;align-items:center;gap:28px;padding-right:28px;font-family:var(--f-black);font-size:clamp(36px,5vw,64px);line-height:1.15;color:var(--gold);white-space:nowrap}
+.marq span svg{height:.8em;width:auto;fill:var(--cream)}
+@keyframes mq{to{transform:translateX(-50%)}}
+.ch{display:inline-block;will-change:transform}
+.wd{display:inline-block;white-space:nowrap}
+
+/* ---------- welcome */
+.big-title{font-weight:800;text-transform:uppercase;font-size:clamp(54px,12.5vw,210px);line-height:.86;letter-spacing:.02em;margin:0}
+.big-title .ln{display:block;overflow:hidden;padding-top:.16em;margin-top:-.16em;padding-bottom:.04em}
+.big-title .ln span{display:inline-block}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,4vw,64px);margin-top:clamp(56px,8vw,110px);border-top:1px solid var(--line);padding-top:36px}
+.cols3 > div{min-width:0}
+@media (max-width:860px){.cols3{grid-template-columns:1fr}}
+
+/* ---------- manifesto */
+#about{background:linear-gradient(180deg,var(--ink),var(--deep))}
+.manifest{font-family:var(--f-acc);font-size:clamp(30px,4.6vw,68px);line-height:1.12;color:var(--cream);max-width:22ch;margin:34px 0 0;text-wrap:balance}
+.manifest .w{opacity:.22;transition:opacity .2s}
+.mission{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:clamp(30px,6vw,100px);margin-top:clamp(60px,9vw,130px);align-items:start}
+.mission .tag{font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:clamp(32px,4vw,58px);line-height:.95}
+@media (max-width:860px){.mission{grid-template-columns:1fr}}
+
+/* ---------- contents */
+.toc{margin-top:60px;border-top:1px solid var(--line)}
+.toc a{display:grid;grid-template-columns:90px minmax(0,1fr) auto;gap:20px;align-items:center;text-decoration:none;padding:clamp(22px,3vw,40px) 0;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.toc a::before{content:"";position:absolute;inset:0;background:var(--olive);transform:translateY(101%);transition:transform .55s cubic-bezier(.7,0,.2,1);z-index:0}
+.toc a:hover::before{transform:none}
+.toc a > *{position:relative;z-index:1}
+.toc .n{font-family:var(--f-acc);font-style:italic;font-size:34px;color:var(--gold)}
+.toc .nm{font-weight:800;text-transform:uppercase;letter-spacing:.05em;font-size:clamp(30px,5.4vw,78px);line-height:1;transition:transform .55s cubic-bezier(.7,0,.2,1)}
+.toc a:hover .nm{transform:translateX(18px)}
+.toc .subs{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-align:right;line-height:1.9}
+@media (max-width:700px){.toc a{grid-template-columns:50px minmax(0,1fr)}.toc .subs{display:none}}
+
+/* ---------- logo story (pinned) */
+#logo{background:var(--ink)}
+.story{position:relative;height:260vh}
+.story .stage{position:sticky;top:0;height:100svh;display:grid;place-items:center;overflow:hidden}
+.story svg.draw{width:min(72vw,980px);height:auto;overflow:visible}
+.story .cap{position:absolute;left:max(24px,env(safe-area-inset-left,0px));bottom:48px;display:grid;gap:6px}
+.story .cap .k{font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.story .cap .v{font-weight:800;text-transform:uppercase;font-size:clamp(26px,3.4vw,48px);letter-spacing:.06em}
+.story .cap .d{font-size:15px;color:var(--muted);max-width:44ch}
+.story .grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(circle at 50% 50%,#000 20%,transparent 70%);opacity:.5}
+
+/* construction */
+.constr{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:clamp(30px,5vw,80px);align-items:center;margin-top:30px}
+@media (max-width:900px){.constr{grid-template-columns:1fr}}
+.board{position:relative;aspect-ratio:3/2;max-width:100%;background:var(--deep);border:1px solid var(--line);border-radius:6px;display:grid;place-items:center;overflow:hidden}
+.board .lg{position:relative;width:62%}
+.board .lg svg{width:100%;height:auto;fill:var(--cream)}
+.board .safe{position:absolute;inset:-9.5% -6.4%;border:1px dashed var(--gold);opacity:0;transition:opacity .4s, inset .6s}
+.board .safe i{position:absolute;font-style:normal;font-size:12px;color:var(--gold);letter-spacing:.1em}
+.board .gridov{position:absolute;inset:0;opacity:0;transition:opacity .4s;background-image:linear-gradient(rgba(200,180,140,.18) 1px,transparent 1px),linear-gradient(90deg,rgba(200,180,140,.18) 1px,transparent 1px);background-size:calc(100%/24) calc(100%/16)}
+.board.show-safe .safe{opacity:1}
+.board.show-grid .gridov{opacity:1}
+.toggles{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:30px}
+.specs div{border-top:1px solid var(--line);padding-top:12px;min-width:0}
+.specs b{display:block;font-size:clamp(22px,2.4vw,32px);font-weight:700;color:var(--cream);font-variant-numeric:tabular-nums}
+.specs span{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+
+/* variations */
+.vars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:40px;perspective:1200px}
+@media (max-width:700px){.vars{grid-template-columns:1fr}}
+.var{aspect-ratio:16/9;max-width:100%;border-radius:10px;display:grid;place-items:center;position:relative;overflow:hidden;transform-style:preserve-3d;transition:transform .2s ease-out}
+.var svg{width:58%;height:auto}
+.var .lab{position:absolute;left:18px;bottom:14px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;opacity:.7}
+.var::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.18),transparent 45%);pointer-events:none}
+
+/* misuse */
+.mis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:40px}
+@media (max-width:860px){.mis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.mis{grid-template-columns:1fr}}
+.mcard{position:relative;border:1px solid var(--line);border-radius:10px;aspect-ratio:4/3;max-width:100%;display:grid;place-items:center;background:var(--deep);overflow:hidden}
+.mcard .lg{width:52%;transition:transform .7s cubic-bezier(.6,0,.2,1),opacity .7s,filter .7s}
+.mcard .lg svg{width:100%;height:auto;fill:var(--cream);transition:fill .7s}
+.mcard .x{position:absolute;top:14px;right:14px;width:26px;height:26px;border-radius:50%;background:var(--bad);display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;transition:background .5s}
+.mcard .x::before{content:"✕"}
+.mcard .cap{position:absolute;left:16px;bottom:12px;right:16px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.mcard:hover .lg,.mcard.fix .lg{transform:none!important;opacity:1!important;filter:none!important}
+.mcard:hover .lg svg,.mcard.fix .lg svg{fill:var(--cream)!important}
+.mcard:hover .x,.mcard.fix .x{background:var(--moss)}
+.mcard:hover .x::before,.mcard.fix .x::before{content:"✓"}
+.m1 .lg{transform:rotate(-18deg)} .m2 .lg{opacity:.28} .m3 .lg{transform:scale(1.3,.66)}
+.m4 .lg{filter:drop-shadow(8px 10px 0 #000) drop-shadow(0 0 18px #d0ff00)} .m5 .lg svg{fill:#2f8cff!important}
+.m6 .lg{transform:none} .m6 .lg svg .bigF{transform-box:fill-box;transform-origin:center;transform:scale(1.3);transition:transform .7s}
+.mcard.m6:hover .lg svg .bigF,.mcard.m6.fix .lg svg .bigF{transform:none}
+.hint{font-size:13px;color:var(--muted);margin-top:16px;letter-spacing:.06em}
+
+/* ---------- identity */
+#identity{background:var(--deep)}
+.pal{display:flex;gap:12px;margin-top:44px;height:min(68vh,560px);min-height:360px}
+.sw{flex:1;min-width:0;border-radius:14px;position:relative;overflow:hidden;transition:flex .7s cubic-bezier(.7,0,.2,1);text-align:left;border:1px solid var(--line);padding:0}
+.sw:hover,.sw:focus-visible{flex:2.4}
+.sw .in{position:absolute;inset:auto 18px 18px 18px;display:grid;gap:4px}
+.sw .nm{font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:15px}
+.sw .hx{font-size:clamp(22px,2.6vw,38px);font-weight:700;font-variant-numeric:tabular-nums}
+.sw .cd{font-size:12px;letter-spacing:.08em;opacity:.75;white-space:nowrap;font-variant-numeric:tabular-nums}
+.sw .cp{position:absolute;top:16px;right:16px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;opacity:0;transition:opacity .3s}
+.sw:hover .cp{opacity:.8}
+@media (max-width:700px){.pal{flex-direction:column;height:auto}.sw{min-height:120px;flex:none}.sw:hover{flex:none}}
+.combos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:22px}
+.combo{aspect-ratio:1;max-width:100%;border-radius:12px;display:grid;place-items:center;border:1px solid var(--line)}
+.combo svg{width:46%;height:auto}
+@media (max-width:700px){.combos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.types{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:44px}
+@media (max-width:860px){.types{grid-template-columns:1fr}}
+.tcard{border:1px solid var(--line);border-radius:12px;padding:26px;min-width:0;background:rgba(2,17,12,.5);transition:border-color .3s}
+.tcard:hover{border-color:var(--gold)}
+.tcard .aa{font-size:clamp(70px,9vw,128px);line-height:1;color:var(--cream)}
+.tcard .fn{font-size:20px;font-weight:700;margin-top:10px}
+.tcard .ro{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-top:4px}
+.tester{margin-top:22px;border:1px solid var(--line);border-radius:12px;padding:22px 26px;background:rgba(2,17,12,.5)}
+.tester .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tester input[type=text]{flex:1;min-width:0;background:transparent;border:0;border-bottom:1px solid var(--line);color:var(--cream);font:inherit;font-size:16px;padding:8px 0}
+.tester input[type=range]{accent-color:var(--gold);width:160px;max-width:100%}
+.tester .out{margin-top:20px;font-size:64px;line-height:1.05;color:var(--cream);overflow-wrap:anywhere;min-height:1.1em}
+.tester .seg{display:flex;gap:6px;flex-wrap:wrap}
+
+.patt{margin-top:44px;border-radius:14px;overflow:hidden;position:relative;background:var(--ink);border:1px solid var(--line);transition:background .6s}
+.patt .row{white-space:nowrap;font-family:var(--f-black);font-size:clamp(58px,8vw,118px);line-height:1;padding:4px 0;color:var(--olive);transition:color .6s;will-change:transform}
+.patt .row span{display:inline-flex;align-items:center;gap:.25em;margin-right:.25em}
+.patt .row svg{height:.78em;width:auto;fill:currentColor;display:inline-block}
+.patt[data-tone="cream"]{background:var(--cream)} .patt[data-tone="cream"] .row{color:#d8cdb0}
+.patt[data-tone="olive"]{background:var(--olive)} .patt[data-tone="olive"] .row{color:#24553d}
+.patt[data-tone="gold"]{background:#16120a} .patt[data-tone="gold"] .row{color:#4b3d22}
+.patt .over{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+.patt .over svg{width:min(46%,520px);height:auto;filter:drop-shadow(0 20px 50px rgba(0,0,0,.5))}
+
+.emblem{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(30px,6vw,90px);align-items:center;margin-top:30px}
+@media (max-width:860px){.emblem{grid-template-columns:1fr}}
+.seal{width:min(520px,100%);aspect-ratio:1;max-width:100%;margin-inline:auto;position:relative}
+.seal svg{position:absolute;inset:0;width:100%;height:100%}
+.seal .ring text{font-family:var(--f-black);font-size:38px;fill:var(--gold)}
+.seal .ring2 text{font-family:var(--f-head);font-size:15px;letter-spacing:6px;fill:var(--muted);font-weight:500}
+
+/* ---------- carriers */
+#carriers{background:var(--ink);padding-bottom:0}
+.hs{position:relative;overflow-x:clip}
+.hs .track{display:flex;gap:28px;padding:50px max(24px,env(safe-area-inset-left,0px)) 110px;width:max-content}
+.item{width:min(78vw,620px);flex:none}
+.item .scene{aspect-ratio:5/4;max-width:100%;border-radius:16px;position:relative;overflow:hidden;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#163a29,#06190f 70%)}
+.item .meta{display:flex;justify-content:space-between;gap:16px;margin-top:16px;align-items:baseline}
+.item .meta b{font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:22px}
+.item .meta span{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:760px){.hs .track{flex-direction:column;width:auto;padding-inline:0}.item{width:100%}}
+/* card flip */
+.flip{width:64%;aspect-ratio:85/55;perspective:1400px;cursor:pointer}
+.flip .fi{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.6,0,.2,1)}
+.flip:hover .fi,.flip.on .fi{transform:rotateY(180deg)}
+.flip .fc,.flip .bc{position:absolute;inset:0;border-radius:10px;backface-visibility:hidden;box-shadow:0 30px 60px rgba(0,0,0,.45);display:grid;place-items:center}
+.flip .fc{background:var(--cream);color:var(--olive)}
+.flip .fc svg{width:56%;fill:var(--olive)}
+.flip .fc small{position:absolute;bottom:12%;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--olive);opacity:.7}
+.flip .bc{background:var(--olive);transform:rotateY(180deg);border:1px solid rgba(200,180,140,.5)}
+.flip .bc svg{width:22%;fill:url(#gGoldObj)}
+.shine{position:relative;overflow:hidden}
+.shine::after{content:"";position:absolute;inset:-50%;background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.55) 50%,transparent 58%);transform:translateX(-60%);transition:transform 1.1s}
+.shine:hover::after,.item:hover .shine::after{transform:translateX(60%)}
+/* sign */
+.sign{width:74%;aspect-ratio:4/1;background:#0b0b0b;border-radius:10px;display:grid;place-items:center;position:relative;box-shadow:0 30px 60px rgba(0,0,0,.6),inset 0 0 0 2px #1a1a1a}
+.sign svg{width:72%;fill:#fff7e0;filter:drop-shadow(0 0 0 rgba(255,220,150,0));transition:filter .2s}
+.sign.lit svg{filter:drop-shadow(0 0 6px rgba(255,226,160,.9)) drop-shadow(0 0 22px rgba(232,200,130,.7))}
+.wall{position:absolute;inset:0;background:repeating-linear-gradient(0deg,#1d2b24 0 58px,#17241d 58px 60px)}
+/* stickers board */
+.stickers{position:relative;height:min(70vh,560px);min-height:380px;border-radius:16px;border:1px dashed rgba(200,180,140,.35);margin-top:40px;overflow:hidden;background:radial-gradient(circle at 30% 30%,#10301f,#06190f)}
+.stk{position:absolute;cursor:grab;touch-action:none;user-select:none;filter:drop-shadow(0 12px 18px rgba(0,0,0,.45));transition:filter .2s}
+.stk:active{cursor:grabbing;filter:drop-shadow(0 22px 28px rgba(0,0,0,.55))}
+.stk svg{display:block}
+
+/* ---------- footer */
+footer{position:relative;padding-block:clamp(90px,14vw,180px) 40px;background:radial-gradient(ellipse at 50% 0%,#0f3323,var(--ink) 65%);overflow:hidden}
+footer .huge{width:min(92%,1300px);margin-inline:auto;display:block}
+footer .huge svg{width:100%;height:auto;fill:url(#gGoldWide)}
+footer .meta{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:60px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+#toast{position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));transform:translate(-50%,calc(100% + 80px));visibility:hidden;background:var(--cream);color:var(--ink);padding:12px 22px;border-radius:999px;font-size:14px;letter-spacing:.06em;z-index:80;transition:transform .45s cubic-bezier(.6,0,.2,1)}
+#toast.on{transform:translate(-50%,0);visibility:visible}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  .manifest .w{opacity:1}
+}
+</style>
+
+<!-- shared vector defs -->
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="pF" d="M215.90,418.69C215.82,418.38 215.46,416.89 215.11,415.38C214.47,412.60 214.37,412.24 212.98,407.50C212.16,404.71 210.06,398.04 209.28,395.75C208.85,394.50 208.21,392.98 205.96,387.88C204.66,384.92 201.76,379.23 200.54,377.25C195.62,369.21 189.80,362.83 183.88,358.96C179.37,356.02 176.20,354.27 172.25,352.55C167.14,350.33 166.52,350.11 160.78,348.39C157.84,347.51 155.32,346.67 155.17,346.52C154.69,346.04 155.28,345.80 159.12,344.89C161.19,344.40 164.17,343.67 165.75,343.27C175.06,340.89 175.04,340.90 179.38,339.92C182.36,339.24 186.28,338.07 186.58,337.77C186.74,337.61 186.93,336.67 187.01,335.68C187.19,333.19 187.05,144.24 186.86,141.08C186.77,139.68 186.57,138.36 186.41,138.15C186.08,137.69 180.89,136.62 177.88,136.38C176.78,136.29 175.48,136.11 175.00,135.99C174.51,135.86 172.77,135.65 171.12,135.51C169.47,135.38 167.22,135.15 166.12,135.01C165.03,134.88 162.96,134.65 161.54,134.52C160.11,134.39 158.87,134.21 158.79,134.12C158.45,133.78 159.70,133.23 163.59,132.01C177.66,127.57 185.00,123.76 191.71,117.38C197.33,112.05 203.59,101.72 207.69,91.00C209.53,86.20 211.98,78.05 213.00,73.38C213.42,71.45 214.22,67.91 214.77,65.50C215.33,63.09 215.84,60.87 215.90,60.56C216.04,59.84 216.46,59.84 216.60,60.56C216.66,60.87 217.17,63.09 217.73,65.50C218.28,67.91 219.08,71.45 219.50,73.38C221.88,84.35 226.48,96.45 231.55,105.12C234.37,109.94 237.94,114.69 240.79,117.38C247.50,123.76 254.84,127.57 268.91,132.01C272.80,133.23 274.05,133.78 273.71,134.12C273.63,134.21 272.39,134.39 270.96,134.52C269.54,134.65 267.48,134.88 266.38,135.01C265.27,135.15 263.03,135.38 261.38,135.51C259.73,135.65 257.99,135.86 257.50,135.99C257.02,136.11 255.72,136.29 254.62,136.38C251.61,136.62 246.42,137.69 246.09,138.15C245.93,138.36 245.73,139.68 245.64,141.08C245.45,144.24 245.31,333.19 245.49,335.68C245.57,336.67 245.76,337.61 245.92,337.77C246.22,338.07 250.14,339.24 253.12,339.92C257.46,340.90 257.44,340.89 266.75,343.27C268.33,343.67 271.31,344.40 273.38,344.89C277.22,345.80 277.81,346.04 277.33,346.52C277.18,346.67 274.66,347.51 271.72,348.39C265.98,350.11 265.36,350.33 260.25,352.55C256.30,354.27 253.13,356.02 248.62,358.96C242.70,362.83 236.88,369.21 231.96,377.25C230.74,379.23 227.84,384.92 226.54,387.88C224.29,392.98 223.65,394.50 223.22,395.75C222.44,398.04 220.34,404.71 219.52,407.50C218.13,412.24 218.03,412.60 217.39,415.38C216.56,418.98 216.48,419.25 216.25,419.25C216.14,419.25 215.99,419.00 215.90,418.69Z M178.62,330.12C178.07,329.94 177.27,329.78 176.84,329.77C176.02,329.75 172.24,329.07 168.38,328.24C166.45,327.83 163.63,327.10 158.50,325.69C156.59,325.17 139.54,319.36 136.62,318.25C129.85,315.65 116.98,309.23 110.50,305.23C106.81,302.94 99.25,297.70 97.12,295.95C96.30,295.27 94.74,294.03 93.67,293.20C89.20,289.76 79.09,279.42 76.25,275.38C75.35,274.11 74.22,272.58 73.74,271.97C71.00,268.56 66.22,259.72 64.11,254.17C63.20,251.78 61.23,244.32 60.76,241.50C59.47,233.82 60.23,222.59 62.56,214.62C63.44,211.65 65.72,206.01 67.22,203.12C72.24,193.47 78.86,185.47 89.15,176.67C94.58,172.02 106.11,164.53 113.36,160.94C121.35,156.98 131.67,152.63 137.25,150.87C146.99,147.79 147.68,147.60 154.00,146.09C163.50,143.82 169.53,142.65 177.12,141.62C178.64,141.42 180.41,141.14 181.07,141.00C182.80,140.64 183.67,140.69 183.85,141.15C183.93,141.36 184.00,142.47 184.00,143.61C184.00,145.26 183.91,145.75 183.56,146.06C183.32,146.28 181.71,147.06 179.97,147.80C176.17,149.43 170.36,152.56 167.62,154.46C162.26,158.17 154.74,165.28 151.30,169.90C147.78,174.62 144.17,180.83 142.16,185.62C140.37,189.88 138.09,197.54 137.53,201.12C135.58,213.74 135.54,221.89 137.40,235.00C138.44,242.40 141.38,253.14 144.63,261.39C146.08,265.09 150.45,273.90 152.24,276.75C156.70,283.85 160.23,288.41 165.34,293.71C170.23,298.76 172.48,300.70 178.00,304.56C179.86,305.86 181.51,307.20 181.68,307.53C182.04,308.21 182.10,315.46 181.83,324.34C181.66,330.23 181.58,330.52 180.29,330.47C179.93,330.46 179.18,330.30 178.62,330.12Z M251.21,330.17C250.91,329.87 250.80,328.69 250.67,324.34C250.40,315.46 250.46,308.21 250.82,307.53C250.99,307.20 252.64,305.86 254.50,304.56C260.02,300.70 262.27,298.76 267.16,293.71C272.27,288.41 275.80,283.85 280.26,276.75C282.05,273.90 286.42,265.09 287.87,261.39C291.12,253.14 294.06,242.40 295.10,235.00C296.96,221.89 296.92,213.74 294.97,201.12C294.41,197.54 292.13,189.88 290.34,185.62C288.33,180.83 284.72,174.62 281.20,169.90C277.76,165.28 270.24,158.17 264.88,154.46C262.14,152.56 256.33,149.43 252.53,147.80C250.79,147.06 249.18,146.28 248.94,146.06C248.59,145.75 248.50,145.26 248.50,143.61C248.50,142.47 248.57,141.36 248.65,141.15C248.83,140.69 249.70,140.64 251.43,141.00C252.09,141.14 253.86,141.42 255.38,141.62C262.97,142.65 269.00,143.82 278.50,146.09C284.82,147.60 285.51,147.79 295.25,150.87C300.83,152.63 311.15,156.98 319.14,160.94C326.39,164.53 337.92,172.02 343.35,176.67C353.64,185.47 360.26,193.47 365.28,203.12C366.78,206.01 369.06,211.65 369.94,214.62C372.27,222.59 373.03,233.82 371.74,241.50C371.27,244.32 369.30,251.78 368.39,254.17C366.28,259.72 361.50,268.56 358.76,271.97C358.28,272.58 357.15,274.11 356.25,275.38C353.41,279.42 343.30,289.76 338.83,293.20C337.76,294.03 336.20,295.27 335.38,295.95C333.25,297.70 325.69,302.94 322.00,305.23C315.52,309.23 302.65,315.65 295.88,318.25C292.96,319.36 275.91,325.17 274.00,325.69C266.10,327.86 263.90,328.37 258.88,329.24C257.23,329.53 255.26,329.88 254.50,330.03C251.94,330.54 251.60,330.56 251.21,330.17Z M149.50,307.26C149.50,307.13 148.30,305.97 146.83,304.70C137.50,296.58 132.59,291.17 126.38,282.15C123.42,277.87 121.74,275.06 118.93,269.75C117.73,267.47 116.74,265.25 114.27,259.25C112.15,254.12 110.12,246.96 109.63,242.88C109.54,242.19 109.32,240.67 109.12,239.50C107.89,232.02 107.88,231.80 107.88,224.00C107.87,216.12 107.94,215.39 109.17,209.46C109.39,208.41 109.50,207.35 109.41,207.11C109.25,206.71 109.21,206.71 108.75,207.13C108.24,207.59 107.64,209.33 106.73,213.00C102.59,229.68 102.30,240.56 105.63,253.75C107.53,261.24 112.63,271.93 117.41,278.43C122.96,285.95 127.19,290.39 135.58,297.43C140.81,301.83 141.15,302.10 145.24,304.96C148.65,307.36 149.50,307.82 149.50,307.26Z M287.26,304.96C291.35,302.10 291.69,301.83 296.92,297.43C303.17,292.19 305.07,290.38 308.86,286.12C314.97,279.25 319.05,273.07 322.73,265.08C326.45,257.02 328.46,249.12 329.00,240.38C329.51,232.14 328.59,224.36 325.77,213.00C324.86,209.33 324.26,207.59 323.75,207.13C323.29,206.71 323.25,206.71 323.09,207.11C323.00,207.35 323.11,208.41 323.33,209.46C324.56,215.39 324.63,216.12 324.62,224.00C324.62,231.80 324.61,232.02 323.38,239.50C323.18,240.67 322.96,242.19 322.87,242.88C322.38,246.96 320.35,254.12 318.23,259.25C315.76,265.25 314.77,267.47 313.57,269.75C310.76,275.06 309.08,277.87 306.12,282.15C299.91,291.17 295.00,296.58 285.67,304.70C284.20,305.97 283.00,307.13 283.00,307.26C283.00,307.82 283.85,307.36 287.26,304.96Z"/><path id="pA" d="M459.44,345.96C458.96,345.67 459.43,345.12 460.78,344.40C462.95,343.25 465.54,341.16 466.94,339.43C469.41,336.38 470.49,333.12 470.50,328.67C470.50,326.44 469.91,320.38 469.61,319.53C469.55,319.34 469.33,318.22 469.13,317.03C468.52,313.39 467.80,309.75 467.17,307.00C466.83,305.56 466.37,303.36 466.14,302.12C464.68,294.35 463.95,291.34 463.38,290.77C463.02,290.42 460.82,290.38 441.95,290.40L420.91,290.43L420.47,290.97C419.93,291.64 419.32,294.71 418.49,301.00C418.33,302.17 418.05,303.91 417.86,304.88C417.67,305.84 417.40,307.58 417.25,308.75C417.11,309.92 416.83,311.72 416.63,312.75C416.24,314.87 415.74,320.18 415.75,322.25C415.77,325.20 416.46,328.73 417.40,330.69C418.52,333.02 421.13,335.73 424.38,337.91C426.69,339.47 432.63,342.66 435.50,343.89C437.38,344.69 438.23,345.37 437.85,345.75C437.49,346.11 335.45,345.97 335.33,345.61C335.28,345.46 337.46,344.35 340.18,343.13C348.00,339.64 351.65,337.79 354.74,335.73C359.02,332.88 362.09,330.00 364.17,326.88C368.12,320.94 370.44,314.95 372.72,304.88C373.62,300.87 374.20,298.44 375.11,294.88C375.61,292.95 376.17,290.64 376.37,289.75C376.77,287.98 378.67,280.08 380.13,274.12C382.20,265.65 383.01,262.24 383.60,259.62C383.93,258.11 384.54,255.41 384.95,253.62C385.35,251.84 385.92,249.31 386.21,248.00C386.50,246.69 387.36,243.26 388.12,240.38C389.51,235.10 390.13,232.62 392.65,222.25C394.26,215.63 394.05,216.45 395.12,212.31C395.59,210.49 396.10,208.30 396.25,207.44C396.40,206.58 396.67,205.37 396.86,204.75C397.48,202.66 398.20,199.89 398.63,197.88C399.10,195.70 401.66,185.28 402.47,182.25C403.50,178.40 404.07,174.28 403.90,171.88C403.75,169.68 403.25,167.13 402.86,166.46C402.03,165.07 399.50,162.08 398.20,160.95C395.33,158.47 389.43,154.17 385.88,151.99C383.95,150.80 381.26,149.13 379.90,148.28C378.54,147.42 376.09,145.98 374.46,145.08C371.61,143.51 371.05,142.98 371.90,142.65C372.11,142.57 402.05,142.50 438.41,142.50C501.18,142.50 504.53,142.52 504.45,142.94C504.40,143.23 503.53,143.71 501.87,144.38C496.15,146.71 492.68,149.17 491.39,151.83C490.60,153.46 490.00,156.30 490.00,158.40C490.00,160.55 490.89,165.44 493.49,177.50C493.92,179.49 494.43,181.86 494.61,182.75C494.79,183.64 495.24,185.72 495.60,187.38C495.95,189.03 496.43,191.22 496.65,192.25C496.88,193.28 497.22,194.80 497.42,195.62C497.61,196.45 498.27,199.54 498.88,202.50C499.49,205.46 500.27,209.17 500.62,210.75C500.97,212.33 501.48,214.75 501.77,216.12C502.05,217.50 502.50,219.58 502.76,220.75C503.03,221.92 503.54,224.34 503.90,226.12C504.26,227.91 504.82,230.61 505.15,232.12C505.48,233.64 505.85,235.44 505.98,236.12C506.69,239.85 507.11,241.86 507.64,244.00C507.96,245.31 508.39,247.28 508.60,248.38C509.06,250.76 509.75,254.00 510.50,257.25C510.79,258.56 511.14,260.19 511.26,260.88C511.47,262.08 511.86,263.91 513.51,271.38C513.94,273.30 514.43,275.61 514.61,276.50C514.79,277.39 515.22,279.42 515.57,281.00C515.91,282.58 516.33,284.61 516.50,285.50C517.04,288.41 517.45,290.34 517.85,292.00C518.06,292.89 518.63,295.65 519.11,298.12C522.20,314.08 523.75,320.54 525.40,324.32L526.25,326.27L526.25,336.14L526.25,346.00L514.69,346.00C508.33,346.01 493.35,346.03 481.41,346.07C469.47,346.10 459.58,346.05 459.44,345.96Z M458.12,264.16C458.57,263.83 458.57,263.73 458.17,261.47C457.95,260.18 457.60,258.45 457.40,257.62C457.21,256.80 456.75,254.78 456.39,253.12C456.03,251.47 455.36,248.38 454.89,246.25C454.42,244.12 453.86,241.31 453.65,240.00C452.96,235.73 452.57,233.50 451.00,224.88C450.57,222.54 450.07,219.67 449.88,218.50C449.69,217.33 449.42,215.81 449.28,215.12C449.14,214.44 448.79,212.30 448.50,210.38C448.21,208.45 447.64,205.24 447.25,203.25C446.85,201.26 446.18,197.49 445.76,194.88C445.33,192.26 444.76,188.89 444.50,187.38C443.63,182.47 442.54,175.66 442.38,174.12C442.15,171.93 442.03,171.50 441.63,171.50C441.09,171.50 440.99,171.81 440.60,174.70C440.40,176.17 440.08,178.16 439.88,179.12C439.68,180.09 439.35,181.83 439.15,183.00C438.94,184.17 438.44,186.93 438.03,189.12C437.63,191.32 437.05,194.47 436.75,196.12C435.82,201.21 435.25,204.07 434.88,205.50C434.38,207.44 433.84,210.06 433.49,212.25C433.33,213.28 432.99,215.03 432.75,216.12C432.50,217.22 432.22,218.63 432.13,219.25C432.03,219.87 431.80,221.05 431.62,221.88C431.44,222.70 431.10,224.50 430.87,225.88C430.63,227.25 430.25,229.22 430.01,230.25C429.16,233.86 427.30,243.17 426.25,249.00C425.96,250.58 425.35,253.79 424.88,256.12C423.56,262.73 423.44,263.90 424.02,264.27C424.22,264.39 431.74,264.49 441.01,264.50C454.69,264.50 457.74,264.44 458.12,264.16Z M525.50,153.22C524.17,151.07 519.39,147.17 514.75,144.46C511.70,142.69 511.83,142.64 519.56,142.56L526.25,142.49L526.25,148.37C526.25,151.60 526.22,154.25 526.19,154.24C526.15,154.24 525.84,153.78 525.50,153.22Z"/><path id="pY" d="M543.39,387.31C543.31,386.93 543.27,377.71 543.31,366.82C543.37,348.06 543.35,346.99 542.93,346.57C542.56,346.20 542.05,346.12 540.05,346.12C538.72,346.12 535.07,346.09 531.94,346.06L526.25,346.00L526.25,336.31L526.26,326.62L527.26,328.46C527.81,329.47 528.58,330.77 528.98,331.35C530.08,332.95 533.73,336.55 535.39,337.68C537.28,338.96 540.84,340.75 541.49,340.75C542.39,340.75 542.06,339.87 540.81,338.90C540.16,338.39 538.41,336.66 536.93,335.05C534.69,332.63 534.00,331.67 532.88,329.49C531.48,326.74 530.26,322.86 529.77,319.60C529.59,318.38 529.50,293.73 529.49,241.60C529.47,175.48 529.42,165.04 529.10,162.88C528.62,159.69 528.15,158.05 527.09,155.94L526.25,154.26L526.25,148.38L526.25,142.50L550.99,142.50L575.74,142.50L576.18,143.18C576.60,143.82 576.63,146.18 576.65,187.98C576.66,214.22 576.76,232.13 576.90,232.17C577.39,232.32 577.80,231.76 578.49,229.98C578.89,228.96 579.84,226.61 580.62,224.75C581.39,222.89 582.46,220.25 582.98,218.88C583.51,217.50 584.24,215.70 584.62,214.88C584.99,214.05 585.61,212.53 586.01,211.50C586.40,210.47 587.47,207.82 588.38,205.62C589.29,203.43 590.37,200.78 590.78,199.75C591.19,198.72 591.69,197.52 591.89,197.09C592.09,196.65 592.75,195.02 593.36,193.46C593.97,191.90 595.28,188.71 596.26,186.38C597.24,184.04 598.30,181.39 598.62,180.50C598.94,179.61 599.84,177.36 600.62,175.50C602.26,171.58 603.51,168.46 604.96,164.69C606.10,161.74 606.25,160.21 605.73,157.01C605.15,153.43 602.38,148.60 598.97,145.27C597.89,144.21 597.00,143.21 597.00,143.05C597.00,142.90 597.37,142.71 597.81,142.63C598.26,142.55 611.45,142.52 627.12,142.56C652.29,142.62 655.63,142.67 655.69,143.00C655.73,143.22 655.38,143.58 654.83,143.88C651.77,145.51 651.20,146.93 650.39,155.00C650.08,158.08 650.01,169.90 649.95,233.12C649.91,274.10 649.88,310.83 649.88,314.75C649.89,322.61 650.19,325.27 651.49,329.18C652.73,332.89 655.69,336.71 659.00,338.87C661.23,340.33 666.94,343.28 669.43,344.25C672.80,345.57 672.84,346.39 669.52,346.14C668.51,346.06 650.25,346.00 628.96,346.00C595.18,346.00 590.25,345.95 590.25,345.63C590.25,345.43 591.12,344.63 592.19,343.84C597.67,339.80 601.30,334.62 602.87,328.60C603.07,327.82 603.42,325.42 603.63,323.28C603.97,319.87 604.02,313.33 603.98,271.43C603.95,239.27 603.86,223.44 603.69,223.34C603.15,223.00 602.44,224.59 600.47,230.62C598.46,236.77 598.01,238.02 595.04,245.75C594.22,247.88 592.73,252.04 591.74,255.00C590.74,257.96 589.43,261.73 588.82,263.38C588.21,265.02 586.66,269.47 585.38,273.25C584.10,277.03 582.41,281.76 581.62,283.75C580.83,285.74 579.65,288.95 578.98,290.88C576.94,296.82 575.14,301.93 573.39,306.75C571.78,311.16 568.56,320.24 566.51,326.12C565.50,329.04 561.10,341.34 558.82,347.62C558.07,349.69 556.96,352.78 556.35,354.50C555.74,356.22 555.02,358.19 554.76,358.88C554.50,359.56 553.82,361.48 553.25,363.12C552.68,364.77 552.01,366.69 551.75,367.38C551.49,368.06 550.66,370.37 549.90,372.50C549.15,374.63 548.12,377.50 547.61,378.88C547.10,380.25 546.31,382.40 545.86,383.66C544.91,386.30 544.09,388.00 543.76,388.00C543.64,388.00 543.47,387.69 543.39,387.31Z"/><path id="pB" d="M528.17,136.33C527.79,135.96 528.05,135.53 529.06,134.86C531.94,132.96 536.05,128.91 538.81,125.25C543.40,119.18 546.80,111.59 549.12,102.25C549.86,99.30 550.51,97.18 550.79,96.89C551.23,96.41 551.27,96.41 554.43,96.94C565.76,98.84 572.67,99.44 586.25,99.68C595.13,99.83 600.84,99.33 606.93,97.85C610.22,97.05 611.70,96.53 613.96,95.39C617.03,93.85 617.11,94.26 614.76,99.12C611.16,106.56 607.75,111.48 602.57,116.66C593.94,125.32 582.15,131.02 567.50,133.62C566.19,133.85 564.30,134.20 563.29,134.40C562.27,134.59 560.87,134.75 560.17,134.75C559.47,134.75 557.82,134.91 556.51,135.11C555.20,135.31 552.44,135.60 550.38,135.75C548.31,135.90 545.44,136.12 544.00,136.25C540.97,136.51 528.42,136.58 528.17,136.33Z"/><path id="pZ" d="M755.91,376.69C752.79,372.89 745.88,368.44 738.75,365.64C733.63,363.62 725.54,360.43 723.88,359.76C722.91,359.37 720.95,358.64 719.52,358.12C718.08,357.61 715.10,356.46 712.89,355.57C710.68,354.68 708.09,353.63 707.12,353.26C703.60,351.87 701.06,350.79 698.12,349.44C696.48,348.68 694.17,347.66 693.00,347.17C687.48,344.89 679.67,341.25 675.25,338.90C669.64,335.93 663.62,332.39 662.85,331.63C662.33,331.10 662.33,330.96 662.29,318.49C662.26,311.55 662.13,303.40 661.98,300.38C661.62,292.71 661.76,275.88 662.20,275.88C662.37,275.88 663.05,276.57 663.70,277.42C671.09,287.12 678.06,293.98 688.00,301.36C689.99,302.84 691.96,304.22 692.38,304.43C692.79,304.64 694.98,305.91 697.25,307.25C702.31,310.24 706.26,312.34 709.88,313.95C711.39,314.63 713.29,315.49 714.11,315.87C716.83,317.13 720.88,318.68 723.85,319.61C725.47,320.12 728.45,321.08 730.46,321.75C736.24,323.66 744.84,325.79 749.75,326.52C750.64,326.65 752.22,326.92 753.25,327.11C754.28,327.30 756.48,327.64 758.12,327.86C759.77,328.07 762.33,328.43 763.81,328.66C766.84,329.11 767.72,328.95 768.22,327.83C768.44,327.36 768.51,317.24 768.50,288.20C768.49,244.95 768.64,248.50 766.78,247.02C764.46,245.19 757.62,242.32 753.63,241.51C753.08,241.40 751.95,241.14 751.12,240.93C744.06,239.17 731.46,238.45 716.50,238.97C708.68,239.24 700.53,239.82 698.72,240.24C698.12,240.37 697.06,240.49 696.38,240.50C695.69,240.50 694.45,240.67 693.62,240.86C692.80,241.05 691.39,241.29 690.50,241.37C689.61,241.46 688.31,241.64 687.62,241.77C686.35,242.01 683.47,242.48 679.25,243.13C677.94,243.34 676.03,243.64 675.00,243.80C672.48,244.20 671.20,244.20 671.06,243.80C671.00,243.63 672.68,241.72 674.79,239.55C676.90,237.39 680.14,233.99 681.98,232.00C683.82,230.01 687.31,226.41 689.73,224.00C692.16,221.59 697.73,215.91 702.12,211.38C706.51,206.84 712.14,201.10 714.62,198.62C727.14,186.15 741.25,171.64 741.25,171.23C741.25,170.89 740.99,170.74 740.19,170.63C739.60,170.54 730.12,170.51 719.12,170.55L699.12,170.62L697.32,171.59C694.25,173.23 691.73,175.85 688.43,180.82C686.85,183.19 684.93,186.19 684.15,187.50C683.37,188.81 681.71,191.45 680.47,193.38C679.23,195.30 677.51,198.08 676.63,199.55C675.76,201.02 674.27,203.38 673.31,204.80C672.36,206.22 670.34,209.34 668.83,211.75C667.32,214.16 665.66,216.76 665.15,217.54C664.24,218.91 663.64,219.43 663.41,219.05C663.35,218.95 663.22,203.31 663.12,184.29C662.98,156.79 662.88,149.46 662.61,148.46C662.17,146.77 661.26,145.45 659.75,144.33C659.06,143.81 658.50,143.26 658.50,143.10C658.50,142.95 659.03,142.75 659.69,142.68C660.34,142.60 696.34,142.53 739.69,142.51C809.73,142.49 818.53,142.53 818.66,142.86C818.81,143.26 815.94,146.47 807.88,154.93C805.54,157.38 801.26,161.91 798.38,165.00C795.49,168.09 791.16,172.70 788.75,175.24C786.34,177.79 782.24,182.18 779.62,185.00C777.01,187.81 772.40,192.69 769.38,195.84C766.35,198.99 762.78,202.76 761.43,204.22C752.14,214.31 751.98,214.51 752.81,214.81C752.98,214.87 755.77,214.81 759.00,214.67C771.81,214.11 787.13,214.70 796.50,216.11C797.81,216.31 799.44,216.54 800.12,216.62C800.81,216.70 802.16,216.93 803.12,217.12C804.09,217.30 805.89,217.65 807.12,217.87C811.14,218.61 814.32,219.28 816.88,219.92C820.67,220.86 832.16,224.63 836.25,226.27C839.52,227.58 846.21,230.59 847.31,231.24C848.02,231.67 847.82,232.25 846.81,232.66C844.12,233.77 838.19,237.06 834.23,239.64C832.04,241.07 828.01,245.04 826.58,247.19C826.02,248.03 825.19,249.60 824.74,250.67C823.93,252.62 823.92,252.63 823.65,259.00C823.27,267.94 823.31,303.45 823.70,310.38C824.41,322.82 827.04,328.72 834.15,333.80C837.20,335.98 839.75,337.44 843.22,338.99C847.91,341.10 847.84,341.15 839.95,341.35C836.33,341.44 832.25,341.68 830.88,341.87C829.50,342.07 827.25,342.35 825.88,342.48C817.55,343.32 809.81,344.88 801.50,347.40C789.00,351.19 777.39,357.11 768.83,364.05C765.48,366.77 759.96,373.37 758.28,376.69C757.93,377.38 757.57,377.75 757.26,377.75C757.00,377.75 756.39,377.27 755.91,376.69Z"/>
+    <symbol id="wm" viewBox="44 44 819.75 391.25"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></symbol>
+    <symbol id="wm6" viewBox="44 44 819.75 391.25"><use href="#pF" class="bigF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></symbol>
+    <symbol id="zn" viewBox="44 44 344.5 391.25"><use href="#pF"/></symbol>
+    <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3cf"/><stop offset=".4" stop-color="#b8955c"/><stop offset=".6" stop-color="#f6e7bf"/><stop offset="1" stop-color="#8a6b3c"/></linearGradient>
+    <linearGradient id="gGoldObj" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff3cf"/><stop offset=".4" stop-color="#b8955c"/><stop offset=".6" stop-color="#f6e7bf"/><stop offset="1" stop-color="#8a6b3c"/></linearGradient>
+    <linearGradient id="gGoldWide" gradientUnits="userSpaceOnUse" x1="60" y1="40" x2="860" y2="440">
+      <stop offset="0" stop-color="#fff3cf"/><stop offset=".2" stop-color="#c9a76a"/><stop offset=".36" stop-color="#7d6136"/><stop offset=".5" stop-color="#f7e9c2"/><stop offset=".68" stop-color="#b08d55"/><stop offset=".84" stop-color="#6e5430"/><stop offset="1" stop-color="#e9d39c"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<div id="pre" aria-hidden="true"><svg viewBox="44 44 344.5 391.25"><use href="#pF"/></svg></div>
+<div id="cur" aria-hidden="true"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<nav class="top" id="nav">
+  <a class="brand" href="#hero"><svg viewBox="44 44 344.5 391.25"><use href="#pF"/></svg><span>ФАЙЗ</span></a>
+  <ul>
+    <li><a href="#welcome">Брендбук</a></li>
+    <li><a href="#about">О нас</a></li>
+    <li><a href="#logo">Логотип</a></li>
+    <li><a href="#identity">Айдентика</a></li>
+    <li><a href="#carriers">Носители</a></li>
+  </ul>
+</nav>
+
+<header id="hero">
+  <canvas id="dust" aria-hidden="true"></canvas>
+  <div class="sealWrap" id="sealWrap"><div class="sealIn" id="sealIn">
+    <svg id="heroSeal" viewBox="-500 -500 1000 1000" role="img" aria-label="Фирменный знак ФАЙЗ в кольцах каллиграфии">
+      <defs>
+        <linearGradient id="gGoldRing" gradientUnits="userSpaceOnUse" x1="-450" y1="-450" x2="450" y2="450"><stop offset="0" stop-color="#fff3cf"/><stop offset=".35" stop-color="#b8955c"/><stop offset=".55" stop-color="#f6e7bf"/><stop offset=".8" stop-color="#8a6b3c"/><stop offset="1" stop-color="#e9d39c"/></linearGradient>
+        <radialGradient id="gDisc"><stop offset="0" stop-color="#1d4a35"/><stop offset=".75" stop-color="#0d2b1e"/><stop offset="1" stop-color="#06190f"/></radialGradient>
+        <radialGradient id="gHalo"><stop offset="0" stop-color="#e8cf98" stop-opacity=".28"/><stop offset="1" stop-color="#e8cf98" stop-opacity="0"/></radialGradient>
+        <clipPath id="clipHF"><use href="#pF" transform="scale(.78) translate(-216.25 -239.6)"/></clipPath>
+        <linearGradient id="gSheen" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+      </defs>
+      <circle r="480" fill="url(#gHalo)" id="hHalo"/>
+      <g id="hR3"></g>
+      <g class="r4" id="hR4"></g>
+      <g class="r1" id="hR1"></g>
+      <g class="r2" id="hR2"></g>
+      <circle r="212" fill="url(#gDisc)" id="hDisc"/>
+      <circle r="212" fill="none" stroke="rgba(200,180,140,.55)" stroke-width="1.5" id="hDiscLine"/>
+      <circle r="198" fill="none" stroke="rgba(200,180,140,.25)" stroke-width="1" stroke-dasharray="2 6"/>
+      <g id="hF" transform="scale(.78) translate(-216.25 -239.6)">
+        <use href="#pF" id="hFfill" fill="url(#gGoldWide)" opacity="0"/>
+        <path id="hFline" fill="none" stroke="#f3e3b8" stroke-width="1.6"/>
+      </g>
+      <g clip-path="url(#clipHF)"><rect id="hSheen" x="-400" y="-300" width="90" height="600" fill="url(#gSheen)" transform="rotate(18)"/></g>
+    </svg>
+  </div></div>
+  <div class="hud">
+    <div class="t">Брендбук<b>ФАЙЗ · 2026</b></div>
+    <div class="r">Наведите на знак<br>и листайте вниз</div>
+  </div>
+  <div class="scrollcue" aria-hidden="true"></div>
+</header>
+<div class="marq" aria-hidden="true"><div class="mi" id="mq1"></div></div>
+
+
+<main>
+<section id="welcome" class="band">
+  <div class="wrap">
+    <div class="eyebrow">Добро пожаловать</div>
+    <h1 class="big-title" aria-label="Брендбук ФАЙЗ"><span class="ln"><span>Брендбук</span></span><span class="ln"><span class="gold-text" id="ttl2">ФАЙЗ</span></span></h1>
+    <div class="cols3">
+      <div class="rv"><h3 class="h">Что такое брендбук</h3><p>Брендбук — это руководство по стилю и сути бренда. В нём собраны ключевые правила и элементы: логотип, цвета, шрифты и тон коммуникации. Он помогает бренду выглядеть и звучать единообразно на всех платформах, создавая узнаваемость и поддерживая целостный образ в глазах аудитории.</p></div>
+      <div class="rv"><h3 class="h">Для чего он нужен</h3><p>Брендбук нужен, чтобы бренд оставался узнаваемым и единым во всех точках контакта — от рекламы до социальных сетей и упаковки. Он помогает команде и партнёрам придерживаться общего стиля и тона, формируя цельный образ, который укрепляет доверие и лояльность аудитории.</p></div>
+      <div class="rv"><h3 class="h">Брендбук и гайдбук</h3><p>Брендбук описывает суть и стратегию бренда: миссию, ценности, аудиторию. Гайдбук — практическое руководство по использованию логотипа, цветов и шрифтов. Брендбук задаёт направление, а гайдбук помогает его поддерживать.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="about" class="band">
+  <div class="wrap">
+    <div class="eyebrow">О нас</div>
+    <p class="manifest" id="manifest">«ФАЙЗ» — это сеть магазинов, созданная для тех, кто ценит качество и современный подход. Главное для нас — удобство и доверие клиента.</p>
+    <div class="mission">
+      <div class="tag rv">Наша<br><span class="gold-text">миссия</span></div>
+      <div class="rv">
+        <p class="lead" style="margin-bottom:22px">Честность продаж и уверенность в выборе.</p>
+        <p>Миссия «ФАЙЗ» — предлагать надёжные продукты и сервис, оставаясь ближе к потребностям клиентов. Мы строим бренд, который объединяет торговлю и атмосферу: здесь важна не только покупка, но и опыт, который остаётся с человеком. Наши точки продаж — это пространства, где можно найти всё необходимое и почувствовать комфорт.</p>
+      </div>
+    </div>
+    <div class="mission" style="margin-top:clamp(50px,7vw,90px)">
+      <div class="tag rv">Почему важна<br>однородность</div>
+      <div class="rv"><p>Когда логотип, цвета, шрифты и тон коммуникации последовательно используются во всех точках контакта, бренд становится легко узнаваемым и выглядит надёжно. Непоследовательное использование элементов айдентики, наоборот, сбивает аудиторию с толку и ослабляет восприятие бренда.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contents" class="band" style="padding-top:40px">
+  <div class="wrap">
+    <div class="eyebrow">Содержание</div>
+    <div class="toc">
+      <a href="#logo"><span class="n">01</span><span class="nm">Логотип</span><span class="subs">Основной логотип<br>Фирменный знак<br>Охранное поле<br>Использование</span></a>
+      <a href="#identity"><span class="n">02</span><span class="nm">Айдентика</span><span class="subs">Фирменные цвета<br>Типографика<br>Паттерн<br>Графический элемент</span></a>
+      <a href="#carriers"><span class="n">03</span><span class="nm">Носители</span><span class="subs">Полиграфия<br>Мерч и упаковка<br>Торговая точка</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="logo">
+  <div class="wrap" style="padding-top:clamp(80px,10vw,140px)">
+    <div class="eyebrow">01 · Логотип</div>
+    <h2 class="h">Логотип</h2>
+  </div>
+  <div class="story" id="story">
+    <div class="stage">
+      <div class="grid-bg"></div>
+      <svg class="draw" id="drawSvg" viewBox="40 40 827.75 399.25" aria-label="Логотип ФАЙЗ"></svg>
+      <div class="cap"><span class="k" id="capK">01.1</span><span class="v" id="capV">Основной логотип</span><span class="d" id="capD">Шрифтовое написание названия и фирменный знак в одной связке.</span></div>
+    </div>
+  </div>
+
+  <div class="wrap band" style="padding-top:40px">
+    <h3 class="h">Построение и охранное поле</h3>
+    <div class="constr">
+      <div>
+        <p>Весь логотип вписан в прямоугольник с соотношением сторон 3 : 2 (например, 1280 × 853). Минимальное охранное поле вокруг логотипа — модуль X: 6 мм или 24 px со всех сторон. Никакие элементы не должны пересекать это пространство, чтобы сохранить читаемость и целостность знака.</p>
+        <div class="toggles">
+          <button class="pill" id="tgSafe" aria-pressed="false">Охранное поле</button>
+          <button class="pill" id="tgGrid" aria-pressed="false">Модульная сетка</button>
+        </div>
+        <div class="specs">
+          <div><b>3 : 2</b><span>Пропорции</span></div>
+          <div><b>6 мм</b><span>Модуль X</span></div>
+          <div><b>24 px</b><span>Поле на экране</span></div>
+        </div>
+      </div>
+      <div class="board" id="board">
+        <div class="gridov"></div>
+        <div class="lg"><svg viewBox="44 44 819.75 391.25"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg>
+          <div class="safe"><i style="top:-20px;left:50%;transform:translateX(-50%)">X</i><i style="bottom:-20px;left:50%;transform:translateX(-50%)">X</i><i style="left:-16px;top:50%;transform:translateY(-50%)">X</i><i style="right:-16px;top:50%;transform:translateY(-50%)">X</i></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="h" style="margin-top:clamp(90px,10vw,140px)">Цветовые вариации</h3>
+    <p>Логотип используется только в фирменных сочетаниях. Наведите курсор на карточку.</p>
+    <div class="vars">
+      <div class="var" style="background:var(--ink)"><svg viewBox="44 44 819.75 391.25" style="fill:url(#gGoldWide)"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg><span class="lab" style="color:var(--gold)">Золото на изумруде</span></div>
+      <div class="var" style="background:var(--cream)"><svg viewBox="44 44 819.75 391.25" style="fill:var(--olive)"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg><span class="lab" style="color:var(--olive)">Олива на креме</span></div>
+      <div class="var" style="background:var(--olive)"><svg viewBox="44 44 819.75 391.25" style="fill:var(--cream)"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg><span class="lab">Крем на оливе</span></div>
+      <div class="var" style="background:linear-gradient(135deg,#e9d6a4,#b8955c 45%,#f3e3b8 70%,#9c7a45)"><svg viewBox="44 44 819.75 391.25" style="fill:var(--ink)"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg><span class="lab" style="color:var(--ink)">Изумруд на золоте</span></div>
+    </div>
+
+    <h3 class="h" style="margin-top:clamp(90px,10vw,140px)">Некорректное использование</h3>
+    <p>Чтобы логотип не терял узнаваемости и айдентика оставалась однородной, не изменяйте его. Наведите курсор или нажмите на карточку, чтобы увидеть правильный вариант.</p>
+    <div class="mis">
+      <div class="mcard m1" tabindex="0"><div class="lg"><svg viewBox="44 44 819.75 391.25"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg></div><span class="x"></span><span class="cap">Поворот под произвольным углом</span></div>
+      <div class="mcard m2" tabindex="0"><div class="lg"><svg viewBox="44 44 819.75 391.25"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg></div><span class="x"></span><span class="cap">Изменение непрозрачности</span></div>
+      <div class="mcard m3" tabindex="0"><div class="lg"><svg viewBox="44 44 819.75 391.25"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg></div><span class="x"></span><span class="cap">Деформация по осям</span></div>
+      <div class="mcard m4" tabindex="0"><div class="lg"><svg viewBox="44 44 819.75 391.25"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg></div><span class="x"></span><span class="cap">Применение эффектов</span></div>
+      <div class="mcard m5" tabindex="0"><div class="lg"><svg viewBox="44 44 819.75 391.25"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg></div><span class="x"></span><span class="cap">Сторонняя палитра</span></div>
+      <div class="mcard m6" tabindex="0"><div class="lg"><svg viewBox="44 44 819.75 391.25"><use href="#pF" class="bigF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg></div><span class="x"></span><span class="cap">Изменение размеров элементов</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="identity" class="band">
+  <div class="wrap">
+    <div class="eyebrow">02 · Визуальная айдентика</div>
+    <h2 class="h">Фирменные<br>цвета</h2>
+    <div class="pal" id="pal"></div>
+    <div class="combos">
+      <div class="combo" style="background:var(--ink)"><svg viewBox="44 44 344.5 391.25" style="fill:url(#gGoldObj)"><use href="#pF"/></svg></div>
+      <div class="combo" style="background:var(--olive)"><svg viewBox="44 44 344.5 391.25" style="fill:var(--cream)"><use href="#pF"/></svg></div>
+      <div class="combo" style="background:var(--cream)"><svg viewBox="44 44 344.5 391.25" style="fill:var(--olive)"><use href="#pF"/></svg></div>
+      <div class="combo" style="background:linear-gradient(135deg,#e9d6a4,#b8955c 45%,#f3e3b8 70%,#9c7a45)"><svg viewBox="44 44 344.5 391.25" style="fill:var(--ink)"><use href="#pF"/></svg></div>
+    </div>
+
+    <h2 class="h" style="margin-top:clamp(110px,12vw,170px)">Типографика</h2>
+    <div class="types">
+      <div class="tcard"><svg viewBox="44 44 819.75 391.25" style="fill:var(--cream);width:78%;height:auto;margin:14px 0 22px"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg><div class="fn">Mephisto · original</div><div class="ro">Логотип и крупные заголовки</div></div>
+      <div class="tcard"><div class="aa" style="font-family:var(--f-head);font-weight:700">Аа</div><div class="fn">Roboto Condensed</div><div class="ro">Заголовки и блоки текста</div></div>
+      <div class="tcard"><div class="aa" style="font-family:var(--f-black)">Aa</div><div class="fn">Old English Text MT</div><div class="ro">Паттерн и графика</div></div>
+    </div>
+    <div class="tester">
+      <div class="row">
+        <label class="sr" for="tIn">Текст для примера</label>
+        <input type="text" id="tIn" value="Качество и доверие">
+        <div class="seg" role="group" aria-label="Шрифт">
+          <button class="pill" data-f="head" aria-pressed="true">Текст</button>
+          <button class="pill" data-f="acc" aria-pressed="false">Акцент</button>
+          <button class="pill" data-f="black" aria-pressed="false">Паттерн</button>
+        </div>
+        <label class="sr" for="tSz">Размер</label>
+        <input type="range" id="tSz" min="28" max="140" value="64">
+      </div>
+      <div class="out" id="tOut">Качество и доверие</div>
+    </div>
+
+    <h2 class="h" style="margin-top:clamp(110px,12vw,170px)">Паттерн</h2>
+    <p style="margin-top:18px">Паттерн строится из слов, связанных с брендом, и фирменного написания «ФАЙЗ», набранных каллиграфическим шрифтом. Строки движутся вслед за прокруткой.</p>
+    <div class="toggles" role="group" aria-label="Фон паттерна">
+      <button class="pill" data-tone="ink" aria-pressed="true">Изумруд</button>
+      <button class="pill" data-tone="olive" aria-pressed="false">Олива</button>
+      <button class="pill" data-tone="cream" aria-pressed="false">Крем</button>
+      <button class="pill" data-tone="gold" aria-pressed="false">Золото</button>
+    </div>
+    <div class="patt" id="patt" data-tone="ink">
+      <div class="row" data-dir="1"></div><div class="row" data-dir="-1"></div><div class="row" data-dir="1"></div><div class="row" data-dir="-1"></div><div class="row" data-dir="1"></div>
+      <div class="over"><svg viewBox="44 44 819.75 391.25" style="fill:url(#gGoldWide)"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg></div>
+    </div>
+
+    <h2 class="h" style="margin-top:clamp(110px,12vw,170px)">Графический<br>элемент</h2>
+    <div class="emblem">
+      <div><p>Каллиграфия и слова бренда пишутся по кругу вокруг фирменного знака. Элемент работает как печать: на упаковке, стикерах, вывеске-таблетке и сертификатах. Шрифты можно сочетать между собой.</p>
+ <div class="tester" style="margin-top:28px"><label for="ringIn" style="font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)">Соберите свою печать</label>
+ <div class="row" style="margin-top:8px"><input type="text" id="ringIn" value="ФАЙЗ · КАЧЕСТВО · ДОВЕРИЕ · КОМФОРТ · АТМОСФЕРА · ВЫБОР ·" maxlength="80"></div></div></div>
+      <div class="seal" id="seal">
+        <svg viewBox="0 0 500 500" aria-hidden="true">
+          <defs><path id="circA" d="M250,250 m-200,0 a200,200 0 1,1 400,0 a200,200 0 1,1 -400,0"/><path id="circB" d="M250,250 m-152,0 a152,152 0 1,1 304,0 a152,152 0 1,1 -304,0"/></defs>
+          <circle cx="250" cy="250" r="236" fill="none" stroke="rgba(200,180,140,.4)"/>
+          <circle cx="250" cy="250" r="128" fill="var(--olive)"/>
+          <g class="ring" id="ringA"><text><textPath href="#circA" textLength="1250">Faiz · Quality · Trust · Comfort · Faiz · Quality · Trust · Comfort ·</textPath></text></g>
+          <g class="ring2" id="ringB"><text><textPath href="#circB" textLength="950">ФАЙЗ · КАЧЕСТВО · ДОВЕРИЕ · КОМФОРТ · АТМОСФЕРА · ВЫБОР ·</textPath></text></g>
+          <svg x="196" y="186" width="108" height="128" viewBox="44 44 344.5 391.25" style="fill:url(#gGoldObj)"><use href="#pF"/></svg>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marq rev" aria-hidden="true"><div class="mi" id="mq2"></div></div>
+<section id="carriers" class="band">
+  <div class="wrap">
+    <div class="eyebrow">03 · Носители бренда</div>
+    <h2 class="h">Носители</h2>
+    <p style="margin-top:18px">Полиграфия, упаковка, мерч и оформление торговой точки. Листайте — галерея движется вбок.</p>
+  </div>
+  <div class="hs" id="hs">
+    <div class="track" id="track">
+      <div class="item"><div class="scene"><div class="flip" id="flip"><div class="fi"><div class="fc"><svg viewBox="44 44 819.75 391.25"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg><small>Сеть магазинов</small></div><div class="bc shine"><svg viewBox="44 44 344.5 391.25"><use href="#pF"/></svg></div></div></div></div><div class="meta"><b>Визитка</b><span>85 × 55 мм · наведите</span></div></div>
+      <div class="item"><div class="scene" id="scBag"></div><div class="meta"><b>Пакет</b><span>Крафт-картон · тиснение</span></div></div>
+      <div class="item"><div class="scene" id="scTee"></div><div class="meta"><b>Футболка</b><span>Униформа персонала</span></div></div>
+      <div class="item"><div class="scene" id="scTote"></div><div class="meta"><b>Шоппер</b><span>Хлопок · печать</span></div></div>
+      <div class="item"><div class="scene" id="scCert"></div><div class="meta"><b>Сертификат</b><span>Золотая фольга</span></div></div>
+      <div class="item"><div class="scene"><div class="wall"></div><div class="sign" id="sign"><svg viewBox="44 44 819.75 391.25"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg></div></div><div class="meta"><b>Вывеска</b><span>Световой короб</span></div></div>
+    </div>
+  </div>
+  <div class="wrap" style="padding-bottom:clamp(90px,12vw,160px)">
+    <h3 class="h" style="margin-top:20px">Стикерпак</h3>
+    <p>Перетаскивайте стикеры.</p>
+    <div class="stickers" id="stickers"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <span class="huge"><svg viewBox="44 44 819.75 391.25" aria-label="ФАЙЗ"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg></span>
+  <div class="wrap"><div class="meta"><span>© 2026 ФАЙЗ</span><span>Брендбук · цифровая версия</span><a href="#hero">Наверх ↑</a></div></div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const NS='http://www.w3.org/2000/svg';
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const hasG=!!(window.gsap&&window.ScrollTrigger);
+const toast=(m)=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),1600)};
+
+/* ---------- smooth scroll */
+let lenis=null;
+if(window.Lenis&&!reduce){ lenis=new Lenis({lerp:.09});
+  if(hasG){ lenis.on('scroll',ScrollTrigger.update); gsap.ticker.add(t=>lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0);}
+  else { const r=t=>{lenis.raf(t);requestAnimationFrame(r)};requestAnimationFrame(r);} }
+$$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href');const el=$(id);if(!el)return;e.preventDefault();lenis?lenis.scrollTo(el,{duration:1.4}):el.scrollIntoView({behavior:'smooth'});}));
+
+/* ---------- nav */
+const nav=$('#nav'); const onS=()=>nav.classList.toggle('solid',scrollY>innerHeight*.6); addEventListener('scroll',onS,{passive:true}); onS();
+
+/* ---------- cursor */
+const cur=$('#cur'); let cx=0,cy=0,tx=0,ty=0;
+addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY});
+(function loop(){cx+=(tx-cx)*.2;cy+=(ty-cy)*.2;cur.style.transform=`translate(${cx}px,${cy}px)`;requestAnimationFrame(loop)})();
+document.addEventListener('pointerover',e=>{cur.classList.toggle('big',!!e.target.closest('a,button,.var,.mcard,.sw,.stk,.flip'))});
+
+/* ---------- hero seal */
+const SEAL={r1:{txt:'Faiz · Quality · Trust · Comfort · Faiz · Quality · Trust · Comfort · ',r:372,el:'#hR1'},
+            r2:{txt:'ФАЙЗ · КАЧЕСТВО · ДОВЕРИЕ · КОМФОРТ · АТМОСФЕРА · ВЫБОР · ',r:268,el:'#hR2'},
+            r4:{txt:'БРЕНДБУК · ФИРМЕННЫЙ СТИЛЬ · 2026 · БРЕНДБУК · ФИРМЕННЫЙ СТИЛЬ · 2026 · БРЕНДБУК · ФИРМЕННЫЙ СТИЛЬ · 2026 · ',r:450,el:'#hR4'}};
+const CH=[];
+function buildRing(key){const R=SEAL[key];const g=$(R.el);g.innerHTML='';const chars=[...R.txt];
+  const els=chars.map(c=>{const t=document.createElementNS(NS,'text');t.textContent=c===' '?' ':c;t.setAttribute('text-anchor','middle');g.appendChild(t);return t;});
+  const w=els.map(t=>{try{return t.getComputedTextLength()||10}catch(e){return 10}});const tot=w.reduce((s,x)=>s+x,0);
+  let acc=0;els.forEach((t,i)=>{const a=(acc+w[i]/2)/tot*360;acc+=w[i];CH.push({t,a,r:R.r,ring:key,rnd:Math.random(),rnd2:Math.random()});
+    t.setAttribute('transform',`rotate(${a}) translate(0 ${-R.r})`);});}
+const ticksG=$('#hR3');
+for(let i=0;i<180;i++){const l=document.createElementNS(NS,'line');const long=i%15===0;l.setAttribute('x1',0);l.setAttribute('x2',0);l.setAttribute('y1',-422);l.setAttribute('y2',long?-406:-414);
+  l.setAttribute('stroke',long?'rgba(232,207,152,.85)':'rgba(200,180,140,.35)');l.setAttribute('stroke-width',long?2:1);l.setAttribute('transform',`rotate(${i*2})`);ticksG.appendChild(l);}
+[[426,.35],[318,.22],[226,.18]].forEach(([r,o])=>{const c=document.createElementNS(NS,'circle');c.setAttribute('r',r);c.setAttribute('fill','none');c.setAttribute('stroke',`rgba(200,180,140,${o})`);ticksG.appendChild(c);});
+const hFline=$('#hFline');hFline.setAttribute('d',$('#pF').getAttribute('d'));const HFL=hFline.getTotalLength();hFline.style.strokeDasharray=HFL;hFline.style.strokeDashoffset=HFL;
+const H={intro:reduce?1:0,spin:[0,0,0,0],boost:0,mx:0,my:0,tx:0,ty:0,out:0};
+const cl01=x=>Math.min(1,Math.max(0,x));
+function introAt(p){
+  CH.forEach(o=>{const d=o.ring==='r1'?0:(o.ring==='r2'?.12:.22);const k=cl01((p-d-o.rnd*.25)/.45);const e=1-Math.pow(1-k,4);
+    const a=o.a+(1-e)*(o.rnd2-.5)*240, r=o.r*(1+(1-e)*(1.2+o.rnd));
+    o.t.setAttribute('transform',`rotate(${a}) translate(0 ${-r}) rotate(${(1-e)*(o.rnd-.5)*180})`);o.t.style.opacity=e;});
+  hFline.style.strokeDashoffset=HFL*(1-cl01((p-.05)/.55));
+  const f=cl01((p-.55)/.25);$('#hFfill').setAttribute('opacity',f);hFline.style.opacity=1-f*.9;
+  ['#hR3','#hDisc','#hDiscLine','#hHalo'].forEach((s,i)=>{$(s).style.opacity=cl01((p-i*.06)/.5);});
+  $('#hSheen').setAttribute('x',-400+cl01((p-.78)/.22)*760);}
+let sheenT=0;
+function startHero(){['r1','r2','r4'].forEach(buildRing);introAt(H.intro);
+  if(hasG&&!reduce){gsap.to(H,{intro:1,duration:3.6,ease:'power2.inOut',delay:1.9,onUpdate:()=>introAt(H.intro)});}else introAt(1);
+  const tick=(t)=>{const sp=reduce?0:1;H.boost*=.95;H.spin[0]+=(.05+H.boost)*sp;H.spin[1]-=(.08+H.boost*1.3)*sp;H.spin[2]+=(.02+H.boost*.4)*sp;H.spin[3]-=(.03+H.boost*.6)*sp;
+    H.mx+=(H.tx-H.mx)*.06;H.my+=(H.ty-H.my)*.06;const o=H.out;
+    const tr=(d,s)=>`translate(${H.mx*d} ${H.my*d}) rotate(${s}) scale(${1+o*d/28})`;
+    $('#hR1').setAttribute('transform',tr(14,H.spin[0]));$('#hR2').setAttribute('transform',tr(8,H.spin[1]));
+    $('#hR3').setAttribute('transform',tr(22,H.spin[2]));$('#hR4').setAttribute('transform',tr(28,H.spin[3]));
+    $('#hF').setAttribute('transform',`translate(${H.mx*-6} ${H.my*-6}) scale(${.78*(1+o*.3)}) translate(-216.25 -239.6)`);
+    $('#sealIn').style.transform=`rotateY(${H.mx*.9}deg) rotateX(${-H.my*.9}deg)`;
+    ['#hR1','#hR2','#hR3','#hR4'].forEach(s=>$(s).style.opacity=H.intro<1?$(s).style.opacity:Math.max(0,1-o*1.5));
+    // periodic sheen after intro
+    if(H.intro>=1&&!reduce){sheenT=(sheenT+1)%420;$('#hSheen').setAttribute('x',-400+Math.min(1,sheenT/70)*760);}
+    requestAnimationFrame(tick);};requestAnimationFrame(tick);
+  const hero=$('#hero');
+  hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();H.tx=((e.clientX-r.left)/r.width-.5)*16;H.ty=((e.clientY-r.top)/r.height-.5)*16;});
+  hero.addEventListener('pointerleave',()=>{H.tx=H.ty=0});
+  $('#sealWrap').addEventListener('click',()=>{H.boost=5;sheenT=0;});
+}
+(document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(startHero);
+
+/* dust */
+const cv=$('#dust'),dctx=cv.getContext('2d');let DW=0,DH=0;const D=[];const DPR=Math.min(2,devicePixelRatio||1);
+const rsz=()=>{DW=cv.width=cv.offsetWidth*DPR;DH=cv.height=cv.offsetHeight*DPR};rsz();addEventListener('resize',rsz);
+for(let i=0;i<110;i++)D.push({x:Math.random(),y:Math.random(),r:Math.random()*Math.random()*2.6+.4,v:.0004+Math.random()*.0012,p:Math.random()*6});
+(function dl(t){dctx.clearRect(0,0,DW,DH);D.forEach(d=>{if(!reduce){d.y-=d.v*(1+H.boost*2);d.x+=Math.sin(t/2000+d.p)*.0003;}if(d.y<-.02){d.y=1.02;d.x=Math.random()}
+  const a=.3+.45*Math.sin(t/700+d.p*3);dctx.beginPath();dctx.arc(d.x*DW,d.y*DH,d.r*DPR,0,7);dctx.fillStyle=`rgba(232,207,152,${Math.max(0,a)})`;dctx.fill();});requestAnimationFrame(dl)})(0);
+
+/* marquees */
+const mqHTML=()=>{let s='';for(let k=0;k<2;k++){['Faiz','Quality','Trust','Comfort','Atmosphere','Choice'].forEach(w=>{s+=`<span>${w}<svg viewBox="44 44 344.5 391.25"><use href="#pF"/></svg></span>`});}return s};
+['#mq1','#mq2'].forEach(s=>{$(s).innerHTML=mqHTML()});
+
+/* ---------- logo story: build drawable paths */
+const ds=$('#drawSvg'); const parts=['F','A','Y','B','Z'];
+const gStroke=document.createElementNS(NS,'g'), gFill=document.createElementNS(NS,'g');
+ds.append(gFill,gStroke);
+const strokes=[],fills=[];
+parts.forEach(k=>{const d=document.getElementById('p'+k).getAttribute('d');
+  const f=document.createElementNS(NS,'path');f.setAttribute('d',d);f.setAttribute('fill','url(#gGoldWide)');f.style.opacity=0;gFill.appendChild(f);fills.push(f);
+  const s=document.createElementNS(NS,'path');s.setAttribute('d',d);s.setAttribute('fill','none');s.setAttribute('stroke','#f3e3b8');s.setAttribute('stroke-width','1.4');gStroke.appendChild(s);strokes.push(s);
+  const L=s.getTotalLength();s.style.strokeDasharray=L;s.style.strokeDashoffset=L;s.dataset.l=L;});
+const caps=[["01.1","Основной логотип","Шрифтовое написание названия и фирменный знак в одной связке."],
+            ["01.2","Фирменный знак","Буква Ф с шипами — самостоятельная пиктограмма для иконок, аватаров и тиснения."],
+            ["01.3","Шрифтовой логотип","Написание «АЙЗ» продолжает знак и вместе с ним образует название."]];
+let capI=-1; const setCap=i=>{if(i===capI)return;capI=i;const c=caps[i];$('#capK').textContent=c[0];$('#capV').textContent=c[1];$('#capD').textContent=c[2];
+  if(hasG) gsap.fromTo('.story .cap > *',{y:18,opacity:0},{y:0,opacity:1,stagger:.06,duration:.5,overwrite:true});};
+const STY={draw:(hasG&&!reduce)?0:1,scr:0};
+const sm=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2, c01=x=>Math.min(1,Math.max(0,x));
+function storyRender(){
+  const draw=STY.draw, fill=c01((draw-.6)/.4), p=STY.scr;
+  strokes.forEach((s,i)=>{const L=+s.dataset.l;const local=c01(draw*1.35-i*.08);s.style.strokeDashoffset=L*(1-local);s.style.opacity=1-fill*.85;});
+  const S=sm(c01((p-.12)/.18))*(1-sm(c01((p-.8)/.14)));
+  fills.forEach((f,i)=>{const isF=i===0;f.setAttribute('transform',`translate(${isF?-50*S:50*S} 0)`);
+    let o=fill; if(p>.34&&p<.56) o=fill*(isF?1:.12); else if(p>=.56&&p<.78) o=fill*(isF?.12:1); f.style.opacity=o;});
+  strokes.forEach((s,i)=>s.setAttribute('transform',`translate(${i===0?-50*S:50*S} 0)`));
+  setCap(p>.34&&p<.56?1:(p>=.56&&p<.78?2:0));
+}
+function storyAt(p){STY.scr=p;storyRender();}
+storyRender();
+
+/* ---------- construction toggles */
+['Safe','Grid'].forEach(k=>$('#tg'+k).addEventListener('click',e=>{const on=e.currentTarget.getAttribute('aria-pressed')!=='true';e.currentTarget.setAttribute('aria-pressed',String(on));$('#board').classList.toggle('show-'+k.toLowerCase(),on);}));
+
+/* ---------- variation tilt */
+$$('.var').forEach(c=>{c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();const x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+  c.style.transform=`rotateY(${(x-.5)*14}deg) rotateX(${(.5-y)*10}deg)`;c.style.setProperty('--mx',x*100+'%');c.style.setProperty('--my',y*100+'%');});
+  c.addEventListener('pointerleave',()=>c.style.transform='');});
+$$('.mcard').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('fix')));
+
+/* ---------- palette */
+const PAL=[["Тёмный изумруд","#02110c"],["Оливковый","#1a422f"],["Кремовый","#f3ebd6"],["Шампань","#c8b48c"]];
+const rgb=h=>[1,3,5].map(i=>parseInt(h.substr(i,2),16));
+const cmyk=([r,g,b])=>{r/=255;g/=255;b/=255;const k=1-Math.max(r,g,b);if(k>=1)return[0,0,0,100];return[(1-r-k)/(1-k),(1-g-k)/(1-k),(1-b-k)/(1-k),k].map(x=>Math.round(x*100))};
+const pal=$('#pal');
+PAL.forEach(([n,h])=>{const c=rgb(h),light=(c[0]*.3+c[1]*.59+c[2]*.11)>140;const b=document.createElement('button');b.className='sw';b.style.background=h;b.style.color=light?'#02110c':'#f3ebd6';
+  const k=cmyk(c);b.innerHTML=`<span class="cp">Копировать</span><span class="in"><span class="nm">${n}</span><span class="hx">${h.toUpperCase()}</span><span class="cd">R${c[0]} G${c[1]} B${c[2]} · C${k[0]} M${k[1]} Y${k[2]} K${k[3]}</span></span>`;
+  b.setAttribute('aria-label',`${n}, ${h}. Нажмите, чтобы скопировать`);
+  b.addEventListener('click',()=>{const done=()=>toast('Скопировано '+h.toUpperCase());try{navigator.clipboard.writeText(h.toUpperCase()).then(done,()=>toast(h.toUpperCase()))}catch(e){toast(h.toUpperCase())}});
+  pal.appendChild(b);});
+
+/* ---------- type tester */
+const tOut=$('#tOut'),tIn=$('#tIn'),tSz=$('#tSz');let tf='head';
+const upd=()=>{tOut.textContent=tIn.value||' ';tOut.style.fontSize=tSz.value+'px';tOut.style.fontFamily=`var(--f-${tf})`;tOut.style.fontWeight=tf==='head'?700:500;tOut.style.fontStyle=tf==='acc'?'italic':'normal';};
+tIn.addEventListener('input',upd);tSz.addEventListener('input',upd);
+$$('.tester .seg .pill').forEach(b=>b.addEventListener('click',()=>{tf=b.dataset.f;$$('.tester .seg .pill').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));upd();}));upd();
+
+/* ---------- pattern */
+const words=['Faiz','Quality','Trust','Comfort','Atmosphere','Style','Choice'];
+const wmSvg='<svg viewBox="44 44 819.75 391.25"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg>';
+$$('#patt .row').forEach((r,i)=>{let h='';for(let k=0;k<4;k++){words.forEach((w,j)=>{h+=`<span>${w}</span>`;if((j+i)%3===0)h+=`<span>${wmSvg}</span>`;});}r.innerHTML=h;r.style.transform=`translateX(${-200*i}px)`;});
+$$('[data-tone]').forEach(b=>{if(b.tagName!=='BUTTON')return;b.addEventListener('click',()=>{$('#patt').dataset.tone=b.dataset.tone;$$('button[data-tone]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});});
+
+/* ---------- carriers: drawn mockups */
+const sc=(id,svg)=>{$(id).innerHTML=svg};
+sc('#scBag',`<svg viewBox="0 0 400 320" style="width:70%;height:auto" class="mk">
+  <ellipse cx="200" cy="300" rx="120" ry="10" fill="rgba(0,0,0,.45)"/>
+  <path d="M150 90 C150 40 250 40 250 90" fill="none" stroke="#c8b48c" stroke-width="6"/>
+  <path d="M110 92 L290 92 L304 296 L96 296 Z" fill="#1a422f"/>
+  <path d="M290 92 L320 104 L330 290 L304 296 Z" fill="#12311f"/>
+  <path d="M110 92 L290 92 L292 108 L108 108 Z" fill="#245a40"/>
+  <svg x="160" y="150" width="80" height="94" viewBox="44 44 344.5 391.25" style="fill:url(#gGoldObj)"><use href="#pF"/></svg>
+  <text x="200" y="272" text-anchor="middle" font-family="Roboto Condensed" font-size="11" letter-spacing="5" fill="#c8b48c">ФАЙЗ</text></svg>`);
+sc('#scTee',`<svg viewBox="0 0 400 340" style="width:72%;height:auto" class="mk">
+  <path d="M140 30 C160 52 240 52 260 30 L340 64 L370 140 L318 160 L310 128 L310 320 L90 320 L90 128 L82 160 L30 140 L60 64 Z" fill="#0b1f16"/>
+  <path d="M140 30 C160 52 240 52 260 30 C246 62 154 62 140 30Z" fill="#06150e"/>
+  <path d="M60 64 L90 128 M340 64 L310 128" stroke="#163a29" stroke-width="2"/>
+  <svg x="230" y="98" width="56" height="26" viewBox="44 44 819.75 391.25" style="fill:#f3ebd6"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg></svg>`);
+sc('#scTote',`<svg viewBox="0 0 400 340" style="width:66%;height:auto" class="mk">
+  <path d="M150 120 C150 30 250 30 250 120" fill="none" stroke="#e6dcc2" stroke-width="10"/>
+  <rect x="90" y="110" width="220" height="215" rx="4" fill="#f3ebd6"/>
+  <defs><path id="tc" d="M200,218 m-62,0 a62,62 0 1,1 124,0 a62,62 0 1,1 -124,0"/></defs>
+  <circle cx="200" cy="218" r="76" fill="none" stroke="#1a422f" stroke-width="1.5"/>
+  <text font-family="UnifrakturMaguntia" font-size="19" fill="#1a422f"><textPath href="#tc" textLength="385">Faiz · Quality · Trust · Comfort · Choice ·</textPath></text>
+  <svg x="176" y="190" width="48" height="56" viewBox="44 44 344.5 391.25" style="fill:#1a422f"><use href="#pF"/></svg></svg>`);
+sc('#scCert',`<div class="shine" style="width:72%;aspect-ratio:2/1;border-radius:8px;background:#02110c;box-shadow:0 30px 60px rgba(0,0,0,.5);display:grid;grid-template-columns:1fr 1.4fr;align-items:center;border:1px solid rgba(200,180,140,.5);transform:rotate(-4deg)">
+  <div style="display:grid;place-items:center;height:100%;border-right:1px dashed rgba(200,180,140,.4)"><svg viewBox="44 44 344.5 391.25" style="width:46%;fill:url(#gGoldObj)"><use href="#pF"/></svg></div>
+  <div style="padding:8%"><div style="font-family:var(--f-acc);font-style:italic;color:#c8b48c;font-size:clamp(14px,1.6vw,22px)">Подарочный</div><div style="font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:clamp(16px,2vw,28px);color:#f3ebd6">сертификат</div>
+  <div style="height:1px;background:rgba(200,180,140,.4);margin:10% 0 6%"></div><svg viewBox="44 44 819.75 391.25" style="width:46%;fill:#c8b48c"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg></div></div>`);
+
+/* sign flicker */
+const sign=$('#sign');
+const lightUp=()=>{if(sign.dataset.done)return;sign.dataset.done=1;const seq=[1,0,1,0,0,1];seq.forEach((s,i)=>setTimeout(()=>sign.classList.toggle('lit',!!s),i*110+80));};
+new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)lightUp()}),{threshold:.5}).observe(sign);
+$('#flip').addEventListener('click',e=>e.currentTarget.classList.toggle('on'));
+
+/* stickers */
+const board=$('#stickers');
+const ST=[
+ `<svg width="150" height="150" viewBox="0 0 150 150"><circle cx="75" cy="75" r="72" fill="#1a422f" stroke="#c8b48c" stroke-width="3"/><svg x="45" y="38" width="60" height="70" viewBox="44 44 344.5 391.25" style="fill:url(#gGoldObj)"><use href="#pF"/></svg></svg>`,
+ `<svg width="220" height="90" viewBox="0 0 220 90"><rect width="220" height="90" rx="16" fill="#f3ebd6"/><svg x="26" y="16" width="168" height="58" viewBox="44 44 819.75 391.25" style="fill:#1a422f"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg></svg>`,
+ `<svg width="120" height="120" viewBox="0 0 120 120"><rect width="120" height="120" rx="26" fill="#02110c" stroke="#c8b48c" stroke-width="2"/><svg x="34" y="26" width="52" height="68" viewBox="44 44 344.5 391.25" style="fill:#f3ebd6"><use href="#pF"/></svg></svg>`,
+ `<svg width="170" height="170" viewBox="0 0 170 170"><defs><path id="sc1" d="M85,85 m-58,0 a58,58 0 1,1 116,0 a58,58 0 1,1 -116,0"/></defs><circle cx="85" cy="85" r="82" fill="#c8b48c"/><text font-family="UnifrakturMaguntia" font-size="19" fill="#02110c"><textPath href="#sc1" textLength="360">Faiz · Trust · Comfort · Choice ·</textPath></text><svg x="64" y="60" width="42" height="50" viewBox="44 44 344.5 391.25" style="fill:#02110c"><use href="#pF"/></svg></svg>`,
+ `<svg width="200" height="80" viewBox="0 0 200 80"><rect width="200" height="80" rx="40" fill="#1a422f"/><text x="100" y="52" text-anchor="middle" font-family="UnifrakturMaguntia" font-size="36" fill="#f3ebd6">Quality</text></svg>`,
+ `<svg width="140" height="140" viewBox="0 0 140 140"><circle cx="70" cy="70" r="68" fill="#f3ebd6"/><text x="70" y="82" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="34" fill="#1a422f">с 2026</text></svg>`
+];
+const pos=[[6,10,-8],[30,48,5],[58,12,-4],[70,48,9],[18,62,6],[44,20,-12]];
+ST.forEach((s,i)=>{const d=document.createElement('div');d.className='stk';d.innerHTML=s;d.style.left=pos[i][0]+'%';d.style.top=pos[i][1]+'%';d.style.transform=`rotate(${pos[i][2]}deg)`;board.appendChild(d);
+  let sx,sy,ox,oy,z=10;d.addEventListener('pointerdown',e=>{d.setPointerCapture(e.pointerId);sx=e.clientX;sy=e.clientY;ox=d.offsetLeft;oy=d.offsetTop;d.style.zIndex=++window.__z||(window.__z=20);
+    const mv=ev=>{const bw=board.clientWidth-d.offsetWidth,bh=board.clientHeight-d.offsetHeight;d.style.left=Math.max(0,Math.min(bw,ox+ev.clientX-sx))+'px';d.style.top=Math.max(0,Math.min(bh,oy+ev.clientY-sy))+'px';};
+    const up=()=>{d.removeEventListener('pointermove',mv);d.removeEventListener('pointerup',up)};d.addEventListener('pointermove',mv);d.addEventListener('pointerup',up);});});
+
+/* ---------- seal constructor */
+const ringIn=$('#ringIn'),ringTP=$('#ringB textPath');
+ringIn.addEventListener('input',()=>{let v=ringIn.value.trim()||'ФАЙЗ';if(!/[·•]\s*$/.test(v))v+=' ·';ringTP.textContent=(v+' ').repeat(Math.max(1,Math.ceil(46/v.length))).trim();});
+/* ---------- manifesto words */
+const man=$('#manifest');man.innerHTML=man.textContent.split(' ').map(w=>`<span class="w">${w}</span>`).join(' ');
+const mw=$$('#manifest .w');
+
+/* ---------- GSAP choreography */
+if(hasG&&!reduce){
+  gsap.registerPlugin(ScrollTrigger);
+  // hero: scroll pushes rings outward and spins them
+  ScrollTrigger.create({trigger:'#hero',start:'top top',end:'bottom top',scrub:true,onUpdate:s=>{H.out=s.progress;H.boost=Math.max(H.boost,Math.min(3,Math.abs(s.getVelocity())/900));}});
+  gsap.to('#sealWrap',{yPercent:16,ease:'none',scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
+  gsap.to('#hero .hud',{opacity:0,y:-40,ease:'none',scrollTrigger:{trigger:'#hero',start:'top top',end:'40% top',scrub:true}});
+  // split headings into letters
+  $$('h2.h').forEach(h2=>{const parts=h2.innerHTML.split(/<br\s*\/?>/i);h2.innerHTML=parts.map(p=>p.trim().split(' ').map(w=>`<span class="wd">${[...w].map(c=>`<span class="ch">${c}</span>`).join('')}</span>`).join(' ')).join('<br>');});
+  // marquee skews with scroll speed
+  const skewTo=gsap.quickTo('.marq .mi','skewX',{duration:.4,ease:'power3'});
+  ScrollTrigger.create({onUpdate:s=>skewTo(Math.max(-12,Math.min(12,s.getVelocity()/-260)))});
+  // big title
+  gsap.from('.big-title .ln > span',{yPercent:110,rotate:4,duration:1.2,ease:'expo.out',stagger:.12,scrollTrigger:{trigger:'.big-title',start:'top 85%'}});
+  gsap.to('#ttl2',{backgroundPosition:'200% 0',ease:'none',scrollTrigger:{trigger:'#welcome',start:'top bottom',end:'bottom top',scrub:true}});
+  // reveals
+  $$('.rv').forEach(el=>gsap.from(el,{y:50,opacity:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
+  $$('h2.h').forEach(el=>gsap.from(el.querySelectorAll('.ch'),{yPercent:110,rotateX:-80,opacity:0,duration:1,ease:'expo.out',stagger:.025,scrollTrigger:{trigger:el,start:'top 90%'}}));
+  // palette liquid reveal
+  gsap.from('#pal .sw',{clipPath:'inset(100% 0% 0% 0%)',duration:1.3,ease:'expo.inOut',stagger:.12,scrollTrigger:{trigger:'#pal',start:'top 80%'}});
+  // variation logos zoom in
+  $$('.var svg').forEach(s=>gsap.from(s,{scale:.6,opacity:0,rotate:-6,duration:1.1,ease:'expo.out',scrollTrigger:{trigger:s,start:'top 90%'}}));
+  // seal section spins in
+  gsap.from('#seal',{rotate:-120,scale:.6,opacity:0,duration:1.6,ease:'expo.out',scrollTrigger:{trigger:'#seal',start:'top 85%'}});
+  // footer glow loop
+  gsap.to('footer .huge svg',{filter:'drop-shadow(0 0 24px rgba(232,207,152,.45))',duration:2,yoyo:true,repeat:-1,ease:'sine.inOut'});
+  // magnetic pills
+  $$('.pill').forEach(b=>{const xT=gsap.quickTo(b,'x',{duration:.4}),yT=gsap.quickTo(b,'y',{duration:.4});b.addEventListener('pointermove',e=>{const r=b.getBoundingClientRect();xT((e.clientX-r.left-r.width/2)*.3);yT((e.clientY-r.top-r.height/2)*.4)});b.addEventListener('pointerleave',()=>{xT(0);yT(0)});});
+  // carriers scenes: soft parallax on mockups
+  $$('.item .scene').forEach(s=>s.addEventListener('pointermove',e=>{const r=s.getBoundingClientRect();gsap.to(s.firstElementChild,{x:(e.clientX-r.left-r.width/2)*.05,y:(e.clientY-r.top-r.height/2)*.05,rotateY:(e.clientX-r.left-r.width/2)*.02,duration:.6});}));
+
+  // manifesto word lighting
+  ScrollTrigger.create({trigger:man,start:'top 80%',end:'bottom 45%',scrub:true,onUpdate:s=>{const n=Math.round(s.progress*mw.length);mw.forEach((w,i)=>w.style.opacity=i<n?1:.22)}});
+  // toc rows
+  gsap.from('.toc a',{x:-60,opacity:0,duration:.9,ease:'power3.out',stagger:.12,scrollTrigger:{trigger:'.toc',start:'top 85%'}});
+  // logo story
+  ScrollTrigger.create({trigger:'#story',start:'top 85%',once:true,onEnter:()=>gsap.to(STY,{draw:1,duration:2.2,ease:'power2.inOut',onUpdate:storyRender})});
+  ScrollTrigger.create({trigger:'#story',start:'top top',end:'bottom bottom',scrub:.6,onUpdate:s=>storyAt(s.progress)});
+  gsap.fromTo('#drawSvg',{scale:.9},{scale:1.04,ease:'none',scrollTrigger:{trigger:'#story',start:'top bottom',end:'bottom bottom',scrub:true}});
+  // cards
+  gsap.from('.var',{y:80,opacity:0,rotateX:-18,duration:1,ease:'power3.out',stagger:.1,scrollTrigger:{trigger:'.vars',start:'top 85%'}});
+  gsap.from('.mcard',{y:60,opacity:0,duration:.8,ease:'power3.out',stagger:.07,scrollTrigger:{trigger:'.mis',start:'top 85%'}});
+  gsap.from('.combo',{scale:.7,opacity:0,duration:.8,ease:'back.out(1.6)',stagger:.08,scrollTrigger:{trigger:'.combos',start:'top 90%'}});
+  gsap.from('.tcard',{y:60,opacity:0,duration:.9,stagger:.1,ease:'power3.out',scrollTrigger:{trigger:'.types',start:'top 88%'}});
+  // pattern rows follow scroll
+  $$('#patt .row').forEach((r,i)=>{const dir=+r.dataset.dir;gsap.fromTo(r,{x:dir>0?-600-i*120:-200-i*80},{x:dir>0?-100-i*120:-700-i*80,ease:'none',scrollTrigger:{trigger:'#patt',start:'top bottom',end:'bottom top',scrub:true}})});
+  gsap.from('#patt .over svg',{scale:.6,opacity:0,duration:1.2,ease:'expo.out',scrollTrigger:{trigger:'#patt',start:'top 70%'}});
+  // seal rotation (time + scroll boost)
+  let rot=0,boost=0;ScrollTrigger.create({trigger:'#seal',start:'top bottom',end:'bottom top',onUpdate:s=>{boost=Math.min(6,Math.abs(s.getVelocity())/300)}});
+  gsap.ticker.add(()=>{rot+=.12+boost;boost*=.92;$('#ringA').setAttribute('transform',`rotate(${rot} 250 250)`);$('#ringB').setAttribute('transform',`rotate(${-rot*.7} 250 250)`)});
+  // horizontal carriers
+  ScrollTrigger.matchMedia({
+    '(min-width:761px)':function(){const tr=$('#track');
+      const tw=gsap.to(tr,{x:()=>-(tr.scrollWidth-innerWidth),ease:'none',scrollTrigger:{trigger:'#hs',start:'top top',end:()=>'+='+(tr.scrollWidth-innerWidth),pin:true,scrub:.8,invalidateOnRefresh:true,anticipatePin:1}});
+      $$('.item .scene').forEach(s=>gsap.from(s.firstElementChild,{scale:.8,rotate:-6,ease:'none',scrollTrigger:{trigger:s,containerAnimation:tw,start:'left right',end:'center center',scrub:true}}));
+    }});
+  gsap.from('.stk',{scale:0,rotate:-40,duration:.8,ease:'back.out(2)',stagger:.08,scrollTrigger:{trigger:'#stickers',start:'top 80%'}});
+  // footer
+  gsap.from('footer .huge',{yPercent:30,opacity:0,scale:.9,duration:1.4,ease:'expo.out',scrollTrigger:{trigger:'footer',start:'top 80%'}});
+  addEventListener('load',()=>ScrollTrigger.refresh());
+} else { mw.forEach(w=>w.style.opacity=1); }
+
+/* rotate seal without gsap */
+if(!hasG&&!reduce){let r=0;(function sp(){r+=.12;const a=$('#ringA'),b=$('#ringB');a&&a.setAttribute('transform',`rotate(${r} 250 250)`);b&&b.setAttribute('transform',`rotate(${-r*.7} 250 250)`);requestAnimationFrame(sp)})();}
+})();
+</script>
+
+</body>
+</html>
