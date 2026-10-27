@@ -306,6 +306,7 @@ footer .meta{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
     <li><a href="#logo">Логотип</a></li>
     <li><a href="#identity">Айдентика</a></li>
     <li><a href="#carriers">Носители</a></li>
+    <li><a href="#store">Магазин</a></li>
   </ul>
 </nav>
 
@@ -532,6 +533,112 @@ footer .meta{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
     <div class="stickers" id="stickers"></div>
   </div>
 </section>
+<style>
+/* ---------- store tour */
+#store{background:var(--ink)}
+.tour button{background:none;border:0;padding:0;color:inherit;font:inherit}
+.tour{position:relative;margin-top:44px;aspect-ratio:16/9;max-width:100%;min-height:520px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#020806;touch-action:none;user-select:none;-webkit-user-select:none}
+@media (pointer:coarse){.tour{touch-action:pan-y}}
+@media (max-width:760px){.tour{aspect-ratio:auto;height:min(78svh,680px)}}
+.tour.grab{cursor:grab}.tour.grabbing{cursor:grabbing}
+.tour .layer{position:absolute;inset:0;opacity:0;pointer-events:none}
+.tour .layer.on{opacity:1;pointer-events:auto}
+.tour .blur{position:absolute;inset:-60px;background-size:cover;background-position:center;filter:blur(34px) brightness(.4) saturate(1.05);transform:scale(1.08)}
+.tour .stage{position:absolute;left:0;top:0;will-change:transform}
+.tour .inner{position:absolute;inset:0;transform-origin:50% 50%}
+.tour .drift{position:absolute;inset:0;animation:tdrift 18s ease-in-out infinite alternate}
+@keyframes tdrift{from{transform:scale(1)}to{transform:scale(1.035)}}
+.tour .drift img{position:absolute;inset:0;width:100%;height:100%;max-width:none;display:block;-webkit-user-drag:none}
+.tour .contain .drift img{-webkit-mask-image:radial-gradient(120% 100% at 50% 50%,#000 70%,transparent 100%);mask-image:radial-gradient(120% 100% at 50% 50%,#000 70%,transparent 100%)}
+.tour .vig{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(2,17,12,.7) 0%,transparent 20%,transparent 55%,rgba(2,17,12,.9) 100%)}
+.tour .flash{position:absolute;inset:0;pointer-events:none;opacity:0;background:radial-gradient(circle at var(--fx,50%) var(--fy,60%),rgba(243,227,184,.6),rgba(13,43,30,.95) 45%,#020806 80%)}
+.tour .spot{position:absolute;transform:translate(-50%,-50%);display:flex;align-items:center;gap:10px;z-index:2}
+.tour .dot{position:relative;width:22px;height:22px;border-radius:50%;flex:none;background:rgba(2,17,12,.6);border:2px solid var(--gold-hi);box-shadow:0 0 14px rgba(232,207,152,.6)}
+.tour .dot::before{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--gold-hi)}
+.tour .dot::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid var(--gold);animation:tping 2.2s ease-out infinite}
+@keyframes tping{from{transform:scale(1);opacity:.9}to{transform:scale(2.6);opacity:0}}
+.tour .tag{white-space:nowrap;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:7px 11px;border-radius:999px;background:rgba(2,17,12,.78);border:1px solid rgba(200,180,140,.45);color:var(--cream);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:background .2s,color .2s}
+.tour .spot:hover .tag,.tour .spot:focus-visible .tag{background:var(--gold-hi);color:var(--ink)}
+.tour .spot.left{flex-direction:row-reverse}
+.tour .spot.info .dot{width:18px;height:18px;background:rgba(2,17,12,.75)}
+.tour .spot.info .dot::before{inset:0;background:none;content:"+";display:grid;place-items:center;color:var(--gold-hi);font:700 14px/15px var(--f-head);text-align:center}
+.tour .spot.info .dot::after{animation-duration:3.2s}
+.tour .spot.info .tag{text-transform:none;letter-spacing:.01em;font-weight:400;font-size:14px;border-radius:10px;white-space:normal;width:max-content;max-width:230px;line-height:1.4;opacity:0;transform:translateX(-4px);pointer-events:none;transition:opacity .25s,transform .25s}
+.tour .spot.info.left .tag{transform:translateX(4px)}
+.tour .spot.info:hover .tag,.tour .spot.info.open .tag,.tour .spot.info:focus-visible .tag{opacity:1;transform:none;background:rgba(2,17,12,.85);color:var(--cream)}
+.tour .door{position:absolute;z-index:2;border:2px solid var(--gold-hi);border-radius:4px;box-shadow:0 0 18px rgba(232,207,152,.6),inset 0 0 30px rgba(232,207,152,.18);animation:tdoor 2.4s ease-in-out infinite;background:rgba(232,207,152,.04)}
+.tour .door:hover{background:rgba(232,207,152,.12)}
+@keyframes tdoor{50%{box-shadow:0 0 28px rgba(232,207,152,.9),inset 0 0 40px rgba(232,207,152,.3)}}
+.tour .door .tag{position:absolute;left:50%;top:-14px;transform:translate(-50%,-100%);background:var(--gold-hi);color:var(--ink);border-color:var(--gold-hi)}
+.tour .ttop{position:absolute;left:0;right:0;top:0;z-index:5;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:18px 20px;pointer-events:none}
+.tour .tbrand{display:flex;align-items:center;gap:10px}
+.tour .tbrand svg{width:22px;height:26px;fill:url(#gGoldObj)}
+.tour .tbrand span{font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+.tour .meta{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.tour .chip{font-size:12px;letter-spacing:.1em;padding:6px 11px;border:1px solid rgba(200,180,140,.35);background:rgba(2,17,12,.7);border-radius:999px;color:var(--cream);font-variant-numeric:tabular-nums}
+.tour .chip.age{border-color:var(--gold);color:var(--gold-hi)}
+.tour .card{position:absolute;right:20px;bottom:74px;z-index:5;width:min(380px,calc(100% - 40px));padding:18px 20px 16px;border-radius:14px;background:rgba(2,17,12,.8);border:1px solid rgba(200,180,140,.3);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;flex-direction:column;gap:8px;transition:opacity .35s}
+.tour .card.out{opacity:0}
+.tour .card .ey{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-variant-numeric:tabular-nums}
+.tour .card h3{margin:0;font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(20px,2.2vw,28px);line-height:1.05;color:var(--cream)}
+.tour .card p{margin:0;font-size:14.5px;line-height:1.5;color:var(--muted)}
+.tour .ctl{display:flex;gap:8px;margin-top:6px}
+.tour .arr{width:44px;height:44px;flex:none;display:grid;place-items:center;border:1px solid rgba(200,180,140,.35);border-radius:999px;background:transparent;transition:background .2s}
+.tour .arr:hover{background:rgba(232,207,152,.12)}
+.tour .arr:disabled{opacity:.3;cursor:default}
+.tour .arr svg{width:16px;height:16px;stroke:var(--cream);fill:none;stroke-width:2}
+.tour .go{flex:1;height:44px;border-radius:999px;border:0;background:linear-gradient(100deg,#e9d6a4,#b8955c 50%,#f3e3b8);color:var(--ink);font-weight:800;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+.tour .go:hover{filter:brightness(1.08)}
+.tour .rail{position:absolute;left:20px;right:20px;bottom:18px;z-index:5;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.tour .rail::-webkit-scrollbar{display:none}
+.tour .stop{flex:none;display:flex;gap:8px;align-items:center;padding:8px 13px;border-radius:999px;border:1px solid rgba(200,180,140,.3);background:rgba(2,17,12,.72);font-size:12.5px;font-weight:500;color:var(--muted);transition:color .2s,border-color .2s,background .2s}
+.tour .stop i{font-style:normal;font-size:11px;color:var(--gold);font-variant-numeric:tabular-nums}
+.tour .stop:hover{color:var(--cream);border-color:var(--gold)}
+.tour .stop.cur{background:var(--cream);color:var(--ink);border-color:var(--cream)}
+.tour .stop.cur i{color:var(--olive)}
+.tour .hint{position:absolute;left:50%;top:50%;z-index:4;transform:translate(-50%,-50%);padding:10px 16px;border-radius:30px;background:rgba(2,17,12,.8);border:1px solid rgba(200,180,140,.35);font-size:13px;color:var(--cream);opacity:0;transition:opacity .5s;pointer-events:none}
+.tour .hint.show{opacity:1}
+@media (max-width:760px){
+  .tour .card{left:12px;right:12px;width:auto;bottom:64px;padding:14px 16px}
+  .tour .card p{display:none}
+  .tour .chip.hours{display:none}
+  .tour .rail{left:12px;right:12px;bottom:12px}
+  .tour .tag{font-size:10.5px;padding:6px 9px}
+}
+@media (prefers-reduced-motion:reduce){.tour .drift,.tour .dot::after,.tour .door{animation:none}}
+</style>
+
+<div class="marq" aria-hidden="true"><div class="mi" id="mq3"></div></div>
+<section id="store" class="band">
+  <div class="wrap">
+    <div class="eyebrow">03.3 · Оформление торговой точки</div>
+    <h2 class="h">Магазин</h2>
+    <p style="margin-top:18px">Виртуальная экскурсия по магазину ФАЙЗ: фасад, зал, стойка, стеллажи и зона отдыха. Тяните фото, чтобы осмотреться, нажимайте на точки, чтобы перейти дальше.</p>
+    <div class="tour" id="tour" aria-label="Виртуальная экскурсия по магазину ФАЙЗ" tabindex="0">
+      <div class="layer" id="tL0"><div class="blur"></div><div class="stage"><div class="inner"><div class="drift"><img alt=""><div class="spots"></div></div></div></div></div>
+      <div class="layer" id="tL1"><div class="blur"></div><div class="stage"><div class="inner"><div class="drift"><img alt=""><div class="spots"></div></div></div></div></div>
+      <div class="vig"></div>
+      <div class="flash" id="tFlash"></div>
+      <div class="hint" id="tHint">Потяните, чтобы осмотреться</div>
+      <div class="ttop">
+        <div class="tbrand"><svg viewBox="44 44 344.5 391.25"><use href="#pF"/></svg><span>Экскурсия</span></div>
+        <div class="meta"><span class="chip hours">10:00–22:00</span><span class="chip age">18+</span><span class="chip" id="tCount">00 / 06</span></div>
+      </div>
+      <section class="card" id="tCard" aria-live="polite">
+        <div class="ey" id="tEy"></div>
+        <h3 id="tTitle"></h3>
+        <p id="tDesc"></p>
+        <div class="ctl">
+          <button class="arr" id="tPrev" aria-label="Предыдущая точка"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button class="go" id="tGo">Войти</button>
+          <button class="arr" id="tNext" aria-label="Следующая точка"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </section>
+      <nav class="rail" id="tRail" aria-label="Точки обзора"></nav>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <footer>
@@ -621,7 +728,7 @@ for(let i=0;i<110;i++)D.push({x:Math.random(),y:Math.random(),r:Math.random()*Ma
 
 /* marquees */
 const mqHTML=()=>{let s='';for(let k=0;k<2;k++){['Faiz','Quality','Trust','Comfort','Atmosphere','Choice'].forEach(w=>{s+=`<span>${w}<svg viewBox="44 44 344.5 391.25"><use href="#pF"/></svg></span>`});}return s};
-['#mq1','#mq2'].forEach(s=>{$(s).innerHTML=mqHTML()});
+['#mq1','#mq2','#mq3'].forEach(s=>{$(s).innerHTML=mqHTML()});
 
 /* ---------- logo story: build drawable paths */
 const ds=$('#drawSvg'); const parts=['F','A','Y','B','Z'];
@@ -738,6 +845,103 @@ ringIn.addEventListener('input',()=>{let v=ringIn.value.trim()||'ФАЙЗ';if(!/
 /* ---------- manifesto words */
 const man=$('#manifest');man.innerHTML=man.textContent.split(' ').map(w=>`<span class="w">${w}</span>`).join(' ');
 const mw=$$('#manifest .w');
+
+/* ---------- store tour */
+(()=>{
+const app=document.getElementById('tour'); if(!app) return;
+const S=[
+  {id:'facade',name:'Фасад',zone:'Улица',img:'img/facade.jpg',f:[.46,.6],
+   text:'Неоновая вывеска, панорамные витрины и узор из фирменных завитков. Дверь подсвечена — заходите.',
+   door:{x:37.4,y:39.5,w:17.3,h:54.5},spots:[]},
+  {id:'entry',name:'У входа',zone:'Вход',img:'img/hall.jpg',f:[.55,.5],
+   text:'Светлая плитка, неоновые квадраты под потолком и стена с типографикой. Слева — выход, в центре — стойка, справа — стеллажи.',
+   spots:[{x:24,y:56,to:'facade',label:'На улицу',left:true},{x:74,y:42,to:'main',label:'Главный зал'},{x:55,y:72,to:'counter',label:'Стойка'}]},
+  {id:'main',name:'Главный зал',zone:'Зал',img:'img/interior.jpg',f:[.5,.5],
+   text:'Стеклянные стеллажи с подсветкой каждой полки. Весь ассортимент стоит на виду.',
+   spots:[{x:35,y:60,to:'counter',label:'Стойка'},{x:80,y:40,to:'shelves',label:'Стеллажи'},
+          {x:23,y:11,info:'Над стеллажами — перечень разделов магазина, чтобы сразу найти нужное.'}]},
+  {id:'counter',name:'Стойка',zone:'Касса',img:'img/counter.jpg',f:[.5,.38],
+   text:'Брендированная стойка с подсвеченным логотипом. Покупки упаковывают в фирменные пакеты ФАЙЗ.',
+   spots:[{x:58,y:13,info:'Логотип на панели с контурной подсветкой.'},
+          {x:12,y:30,info:'Стена с крупной типографикой в фирменном зелёном.'},
+          {x:55,y:38,to:'shelves',label:'К стеллажам'},
+          {x:22,y:55,info:'Фирменные пакеты ФАЙЗ — чёрные, с логотипом.'}]},
+  {id:'shelves',name:'Стеллажи',zone:'Ассортимент',img:'img/shelves.jpg',f:[.5,.45],
+   text:'Позиции разложены по линейкам, подсветка по краю полки делает каждую позицию читаемой.',
+   spots:[{x:40,y:34,info:'Флаконы расставлены по брендам.'},{x:48,y:66,to:'consult',label:'Консультация'}]},
+  {id:'consult',name:'Консультация',zone:'Сервис',img:'img/consult.jpg',f:[.5,.45],
+   text:'Консультант поможет подобрать нужное и объяснит разницу между линейками.',
+   spots:[{x:52,y:41,info:'Подбор прямо у витрины: консультант показывает линейки и объясняет разницу.'},{x:84,y:30,to:'lifestyle',label:'Зона отдыха'}]},
+  {id:'lifestyle',name:'Зона отдыха',zone:'Отдых',img:'img/lifestyle.jpg',f:[.5,.55],
+   text:'Кресло, столик и вид на улицу через витрину с логотипом. Место, где можно не спешить.',
+   spots:[{x:55,y:66,info:'Мягкое кресло и столик — можно присесть и спокойно рассмотреть покупку.',left:true},{x:86,y:42,to:'main',label:'Обратно в зал',left:true}]}
+];
+const idx=id=>S.findIndex(s=>s.id===id), N=S.length-1, $t=id=>document.getElementById(id);
+const L=[0,1].map(i=>{const el=$t('tL'+i);return{el,blur:el.querySelector('.blur'),stage:el.querySelector('.stage'),inner:el.querySelector('.inner'),img:el.querySelector('img'),spots:el.querySelector('.spots'),x:0,y:0,w:0,h:0,scene:-1}});
+const rd=matchMedia('(prefers-reduced-motion: reduce)').matches, dims={}, ready={};
+let cur=0,at=-1,busy=false,moved=false,down=null,inView=false;
+S.forEach(s=>{ready[s.id]=new Promise(res=>{const im=new Image();im.onload=()=>{dims[s.id]=[im.naturalWidth,im.naturalHeight];res()};im.onerror=()=>{dims[s.id]=[1600,1000];res()};im.src=s.img;})});
+function fit(l,keep){const s=S[l.scene];if(!s)return;const [iw,ih]=dims[s.id]||[1600,1000];const vw=app.clientWidth,vh=app.clientHeight;
+  const contain=vw/vh>1.05&&iw/ih<1;const sc=contain?Math.min(vw/iw,vh/ih):Math.max(vw/iw,vh/ih);
+  l.w=iw*sc;l.h=ih*sc;l.el.classList.toggle('contain',contain);l.stage.style.width=l.w+'px';l.stage.style.height=l.h+'px';
+  if(!keep){l.x=vw/2-s.f[0]*l.w;l.y=vh/2-s.f[1]*l.h;}clamp(l);place(l);}
+function clamp(l){const vw=app.clientWidth,vh=app.clientHeight;l.x=l.w<=vw?(vw-l.w)/2:Math.min(0,Math.max(vw-l.w,l.x));l.y=l.h<=vh?(vh-l.h)/2:Math.min(0,Math.max(vh-l.h,l.y));}
+function place(l){l.stage.style.transform=`translate3d(${l.x}px,${l.y}px,0)`;}
+const pannable=l=>l.w>app.clientWidth+2||l.h>app.clientHeight+2;
+function build(l,i){const s=S[i];l.scene=i;l.img.src=s.img;l.img.alt=s.name;l.blur.style.backgroundImage=`url(${s.img})`;l.spots.innerHTML='';
+  if(s.door){const d=document.createElement('button');d.className='door';d.setAttribute('aria-label','Войти в магазин');
+    Object.assign(d.style,{left:s.door.x+'%',top:s.door.y+'%',width:s.door.w+'%',height:s.door.h+'%'});d.innerHTML='<span class="tag">Нажмите, чтобы войти</span>';
+    d.addEventListener('click',e=>{if(moved)return;e.stopPropagation();enter();});l.spots.appendChild(d);}
+  s.spots.forEach(p=>{const b=document.createElement('button');b.className='spot'+(p.info?' info':'')+(p.left?' left':'');b.style.left=p.x+'%';b.style.top=p.y+'%';
+    b.innerHTML=`<span class="dot"></span><span class="tag">${p.info?p.info:p.label+' →'}</span>`;
+    if(p.info){b.setAttribute('aria-label',p.info);b.addEventListener('click',e=>{if(moved)return;e.stopPropagation();const o=b.classList.contains('open');l.spots.querySelectorAll('.open').forEach(x=>x.classList.remove('open'));if(!o)b.classList.add('open');});}
+    else{b.setAttribute('aria-label','Перейти: '+p.label);b.addEventListener('click',e=>{if(moved)return;e.stopPropagation();go(idx(p.to),{origin:[p.x,p.y]});});}
+    l.spots.appendChild(b);});}
+function ui(i){const s=S[i],card=$t('tCard');card.classList.add('out');
+  setTimeout(()=>{$t('tEy').textContent=i===0?'Улица · вход с тротуара':`${s.zone} · точка ${String(i).padStart(2,'0')}`;
+    $t('tTitle').textContent=i===0?'Добро пожаловать в ФАЙЗ':s.name;$t('tDesc').textContent=s.text;
+    $t('tGo').textContent=i===0?'Войти внутрь →':(i===N?'Начать заново →':'Дальше →');
+    $t('tCount').textContent=`${String(i).padStart(2,'0')} / ${String(N).padStart(2,'0')}`;
+    $t('tPrev').disabled=i===0;$t('tNext').disabled=i===N;
+    app.querySelectorAll('.stop').forEach((b,k)=>b.classList.toggle('cur',k===i));
+    const c=app.querySelector('.stop.cur');if(c){const r=$t('tRail');r.scrollTo({left:c.offsetLeft-r.clientWidth/2+c.clientWidth/2,behavior:rd?'auto':'smooth'});}
+    card.classList.remove('out');},at<0?0:260);}
+let hintT;function hint(){const l=L[cur],h=$t('tHint');app.classList.toggle('grab',pannable(l));clearTimeout(hintT);h.classList.remove('show');
+  if(pannable(l)&&S[l.scene].id!=='facade'&&inView){h.classList.add('show');hintT=setTimeout(()=>h.classList.remove('show'),2400);}}
+async function show(i,origin,isEnter){if(busy||i===at)return;busy=true;await ready[S[i].id];
+  const out=L[cur],inn=L[1-cur];build(inn,i);fit(inn);const T=rd?0:1;
+  inn.inner.style.transition='none';inn.inner.style.transformOrigin='50% 50%';inn.inner.style.transform=`scale(${rd?1:1.1})`;
+  inn.el.style.transition='none';inn.el.style.opacity=0;inn.el.classList.add('on');void inn.el.offsetWidth;
+  if(at>=0){const [ox,oy]=origin||[50,50];out.inner.style.transformOrigin=`${ox}% ${oy}%`;
+    out.inner.style.transition=`transform ${isEnter?1.2:.95}s cubic-bezier(.6,.05,.4,1)`;out.inner.style.transform=`scale(${rd?1:(isEnter?3:1.35)})`;
+    out.el.style.transition=`opacity ${.7*T+.01}s ease ${isEnter?.55*T:.3*T}s`;out.el.style.opacity=0;out.el.classList.remove('on');
+    if(isEnter&&!rd){const f=$t('tFlash'),r=out.stage.getBoundingClientRect(),a=app.getBoundingClientRect();
+      f.style.setProperty('--fx',(r.left-a.left+r.width*ox/100)+'px');f.style.setProperty('--fy',(r.top-a.top+r.height*oy/100)+'px');
+      f.animate([{opacity:0},{opacity:.95,offset:.55},{opacity:0}],{duration:1500,easing:'ease-in-out'});}}
+  const d=at<0?0:(isEnter?.75:.4)*T;inn.el.style.transition=`opacity ${.8*T+.01}s ease ${d}s`;inn.el.style.opacity=1;
+  inn.inner.style.transition=`transform ${1.5*T+.01}s cubic-bezier(.2,.7,.2,1) ${d}s`;inn.inner.style.transform='scale(1)';
+  cur=1-cur;at=i;ui(i);
+  setTimeout(()=>{out.inner.style.transition='none';out.inner.style.transform='scale(1)';out.el.style.opacity='';busy=false;hint();},(d+.9)*1000*T+30);}
+function go(i,o={}){i=Math.max(0,Math.min(N,i));show(i,o.origin,false);}
+function enter(){const d=S[0].door;show(1,[d.x+d.w/2,d.y+d.h/2],true);}
+function step(dir){if(at===0&&dir>0)return enter();if(at===N&&dir>0)return go(0);go(at+dir,{origin:dir>0?[70,50]:[30,50]});}
+S.forEach((s,k)=>{const b=document.createElement('button');b.className='stop';b.innerHTML=`<i>${String(k).padStart(2,'0')}</i>${s.name}`;
+  b.addEventListener('click',()=>{if(at===0&&k>0){if(k===1)enter();else show(k,[S[0].door.x+8,66],true);}else go(k);});$t('tRail').appendChild(b);});
+$t('tGo').addEventListener('click',()=>step(1));$t('tNext').addEventListener('click',()=>step(1));$t('tPrev').addEventListener('click',()=>step(-1));
+addEventListener('keydown',e=>{if(!inView||/INPUT|TEXTAREA/.test((document.activeElement||{}).tagName||''))return;
+  if(e.key==='ArrowRight')step(1);else if(e.key==='ArrowLeft')step(-1);});
+app.addEventListener('pointerdown',e=>{if(e.target.closest('.card,.rail,.ttop'))return;const l=L[cur];down={x:e.clientX,y:e.clientY,lx:l.x,ly:l.y,pan:pannable(l)};moved=false;});
+addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-down.x,dy=e.clientY-down.y;if(Math.abs(dx)+Math.abs(dy)>6){moved=true;if(down.pan)app.classList.add('grabbing');}
+  if(down.pan&&moved){const l=L[cur];l.x=down.lx+dx;l.y=down.ly+dy;clamp(l);place(l);$t('tHint').classList.remove('show');}});
+addEventListener('pointerup',e=>{if(!down)return;const dx=e.clientX-down.x,dy=e.clientY-down.y;
+  if(!down.pan&&moved&&Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy))step(dx<0?1:-1);
+  if(!moved)L[cur].spots.querySelectorAll('.open').forEach(x=>x.classList.remove('open'));
+  app.classList.remove('grabbing');down=null;setTimeout(()=>{moved=false},0);});
+addEventListener('pointercancel',()=>{down=null;moved=false;app.classList.remove('grabbing');});
+if(window.ResizeObserver)new ResizeObserver(()=>{L.forEach(l=>l.scene>=0&&fit(l,true));}).observe(app);
+new IntersectionObserver(es=>es.forEach(en=>{inView=en.isIntersecting;if(inView)hint();}),{threshold:.4}).observe(app);
+show(0);
+})();
 
 /* ---------- GSAP choreography */
 if(hasG&&!reduce){
