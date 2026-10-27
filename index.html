@@ -306,6 +306,7 @@ footer .meta{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
     <li><a href="#logo">Логотип</a></li>
     <li><a href="#identity">Айдентика</a></li>
     <li><a href="#carriers">Носители</a></li>
+    <li><a href="#merch">Мерч</a></li>
     <li><a href="#store">Магазин</a></li>
   </ul>
 </nav>
@@ -608,6 +609,91 @@ footer .meta{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
 @media (prefers-reduced-motion:reduce){.tour .drift,.tour .dot::after,.tour .door{animation:none}}
 </style>
 
+<style>
+/* ---------- merch rack */
+#merch{background:radial-gradient(ellipse at 50% 0%,#0f3323 0%,var(--ink) 60%);overflow:hidden}
+.rack{position:relative}
+.rack .rail{position:absolute;left:0;right:0;top:46px;height:6px;border-radius:3px;background:linear-gradient(180deg,#f3e3b8,#8a6b3c);box-shadow:0 6px 18px rgba(0,0,0,.5);z-index:1}
+.rack .rtrack{display:flex;gap:clamp(36px,5vw,80px);padding:40px calc(50vw - min(35vw,200px)) 120px;width:max-content}
+.hang{position:relative;width:min(70vw,400px);flex:none;perspective:1200px;padding-top:66px;cursor:pointer;transform-style:preserve-3d;background:none;border:0;text-align:left;color:inherit}
+.hang .hook{position:absolute;left:50%;top:0;width:34px;height:70px;translate:-50% 0;z-index:2}
+.hang .hook svg{width:100%;height:100%;overflow:visible}
+.hang .piece{display:block;position:relative;transform-origin:50% -40px;transform-style:preserve-3d;will-change:transform}
+.hang .face{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/3.55;max-width:100%;background:#e9e7e2;box-shadow:0 40px 70px rgba(0,0,0,.55);backface-visibility:hidden}
+.hang .face img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.hang:hover .face img{transform:scale(1.05)}
+.hang .face::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,var(--shade,0)),transparent 70%);pointer-events:none}
+.hang .edge{display:block;opacity:var(--edge,0);position:absolute;top:0;bottom:0;right:-1px;width:14px;background:linear-gradient(90deg,#1a1a1a,#050505);transform-origin:left;transform:rotateY(90deg);border-radius:0 4px 4px 0}
+.hang .lbl{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:22px}
+.hang .lbl b{font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:22px}
+.hang .lbl span{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.hang .dots{display:flex;gap:6px;margin-top:10px}
+.hang .dots i{width:14px;height:14px;border-radius:50%;border:1px solid rgba(243,235,214,.4)}
+.hang .cta{display:inline-block;margin-top:12px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+@media (max-width:760px){.rack .rtrack{flex-direction:column;width:auto;padding-inline:max(24px,env(safe-area-inset-left,0px))}.hang{width:100%}.rack .rail{display:none}}
+
+/* product sheet */
+.sheet{position:fixed;inset:0;z-index:70;display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));visibility:hidden}
+.sheet.on{visibility:visible}
+.sheet .bd{position:absolute;inset:0;background:rgba(1,8,5,.78);backdrop-filter:blur(10px);opacity:0;transition:opacity .45s}
+.sheet.on .bd{opacity:1}
+.sheet .box{position:relative;width:min(1080px,100%);max-height:100%;overflow:auto;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);border-radius:20px;background:var(--deep);border:1px solid rgba(200,180,140,.3);transform:translateY(40px) scale(.96);opacity:0;transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .4s}
+.sheet.on .box{transform:none;opacity:1}
+@media (max-width:820px){.sheet .box{grid-template-columns:1fr}}
+.sheet .pic{position:relative;aspect-ratio:4/3.55;max-width:100%;background:#e9e7e2;overflow:hidden}
+.sheet .pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sheet .pic img.next{clip-path:circle(0% at var(--cx,50%) var(--cy,50%));transition:clip-path .8s cubic-bezier(.6,0,.2,1)}
+.sheet .pic img.next.go{clip-path:circle(150% at var(--cx,50%) var(--cy,50%))}
+.sheet .info{padding:clamp(22px,3vw,40px);display:flex;flex-direction:column;gap:22px;min-width:0}
+.sheet .info .ey{font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold)}
+.sheet .info h3{margin:6px 0 0;font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(28px,3.4vw,44px);line-height:1}
+.sheet .info p{color:var(--muted);font-size:15px}
+.sheet .grp .t{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;display:flex;justify-content:space-between}
+.sheet .grp .t b{color:var(--cream);font-weight:500;letter-spacing:.08em}
+.sheet .sws{display:flex;gap:12px;flex-wrap:wrap}
+.sheet .sw2{width:44px;height:44px;border-radius:50%;border:2px solid transparent;padding:3px;background:none;transition:border-color .25s,transform .25s}
+.sheet .sw2 span{display:block;width:100%;height:100%;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.15)}
+.sheet .sw2[aria-pressed="true"]{border-color:var(--gold-hi)}
+.sheet .sw2:hover{transform:scale(1.08)}
+.sheet .szs{display:flex;gap:8px;flex-wrap:wrap}
+.sheet .sz{min-width:56px;height:46px;padding:0 14px;border-radius:999px;border:1px solid rgba(200,180,140,.35);background:none;font-weight:600;letter-spacing:.06em;transition:background .25s,color .25s,border-color .25s}
+.sheet .sz:hover{border-color:var(--gold)}
+.sheet .sz[aria-pressed="true"]{background:var(--cream);color:var(--ink);border-color:var(--cream)}
+.sheet .sum{margin-top:auto;padding-top:18px;border-top:1px solid var(--line);font-size:15px;color:var(--cream);font-variant-numeric:tabular-nums}
+.sheet .x{position:absolute;top:14px;right:14px;z-index:2;width:44px;height:44px;border-radius:50%;border:1px solid rgba(200,180,140,.4);background:rgba(2,17,12,.75);color:var(--cream);font-size:20px;line-height:1}
+.sheet .nav{display:flex;gap:8px}
+.sheet .nav button{flex:1;height:44px;border-radius:999px;border:1px solid rgba(200,180,140,.35);background:none;font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+.sheet .nav button:hover{border-color:var(--gold);color:var(--gold-hi)}
+</style>
+
+<section id="merch" class="band">
+  <div class="wrap">
+    <div class="eyebrow">03.1 · Мерч и одежда</div>
+    <h2 class="h">Мерч</h2>
+    <p style="margin-top:18px">Вещи висят на рейле боком и поворачиваются к вам, пока вы листаете. Нажмите на любую, чтобы выбрать цвет и размер.</p>
+  </div>
+  <div class="rack" id="rack">
+    <div class="rail" aria-hidden="true"></div>
+    <div class="rtrack" id="rtrack"></div>
+  </div>
+</section>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle">
+  <div class="bd" id="shBd"></div>
+  <div class="box">
+    <button class="x" id="shX" aria-label="Закрыть">✕</button>
+    <div class="pic" id="shPic"><img id="shImg" alt=""></div>
+    <div class="info">
+      <div><div class="ey" id="shEy">Мерч ФАЙЗ</div><h3 id="shTitle"></h3></div>
+      <p id="shDesc"></p>
+      <div class="grp"><div class="t">Цвет <b id="shColName"></b></div><div class="sws" id="shCols" role="group" aria-label="Цвет"></div></div>
+      <div class="grp"><div class="t">Размер <b id="shSzName"></b></div><div class="szs" id="shSizes" role="group" aria-label="Размер"></div></div>
+      <div class="nav"><button id="shPrev">← Предыдущая</button><button id="shNext">Следующая →</button></div>
+      <div class="sum" id="shSum"></div>
+    </div>
+  </div>
+</div>
+
 <div class="marq" aria-hidden="true"><div class="mi" id="mq3"></div></div>
 <section id="store" class="band">
   <div class="wrap">
@@ -846,6 +932,53 @@ ringIn.addEventListener('input',()=>{let v=ringIn.value.trim()||'ФАЙЗ';if(!/
 const man=$('#manifest');man.innerHTML=man.textContent.split(' ').map(w=>`<span class="w">${w}</span>`).join(' ');
 const mw=$$('#manifest .w');
 
+/* ---------- merch rack */
+const MERCH=[
+  {id:'hoodie',name:'Худи на молнии',type:'Одежда',desc:'Оверсайз-худи с крупным логотипом на груди. Плотный футер, капюшон, карманы-кенгуру.',
+   colors:['black','emerald','cream'],sizes:['XS','S','M','L','XL','XXL'],def:'M'},
+  {id:'cap',name:'Бейсболка',type:'Головные уборы',desc:'Шестипанельная кепка с объёмной вышивкой логотипа. Регулируемый ремешок сзади.',
+   colors:['black','emerald'],sizes:['S–M','L–XL'],def:'L–XL'},
+  {id:'tote',name:'Шоппер',type:'Сумки',desc:'Хлопковый шоппер с длинными ручками и печатью логотипа по центру.',
+   colors:['black','emerald','cream'],sizes:['Единый'],def:'Единый'},
+  {id:'mug',name:'Кружка',type:'Посуда',desc:'Керамическая кружка с матовым покрытием и логотипом на лицевой стороне.',
+   colors:['black','emerald','cream'],sizes:['330 мл','450 мл'],def:'330 мл'}
+];
+const COL={black:{n:'Чёрный',c:'#141414'},emerald:{n:'Изумруд',c:'#1a422f'},cream:{n:'Крем',c:'#e9e0c8'}};
+const rtrack=$('#rtrack');
+const hookSVG='<svg viewBox="0 0 34 70" aria-hidden="true"><path d="M17 2 C 27 2, 27 16, 17 16 L 17 34" fill="none" stroke="#c8b48c" stroke-width="3" stroke-linecap="round"/><path d="M2 66 L17 34 L32 66" fill="none" stroke="#c8b48c" stroke-width="3" stroke-linejoin="round"/></svg>';
+MERCH.forEach((m,i)=>{const b=document.createElement('button');b.className='hang';b.dataset.i=i;b.setAttribute('aria-label',`${m.name}: выбрать цвет и размер`);
+  b.innerHTML=`<span class="hook">${hookSVG}</span><span class="piece"><span class="face" style="display:block"><img src="img/merch/${m.id}_black.jpg" alt="${m.name} ФАЙЗ" loading="lazy"></span><span class="edge"></span></span>
+  <span class="lbl"><b>${m.name}</b><span>${m.type}</span></span>
+  <span class="dots">${m.colors.map(c=>`<i style="background:${COL[c].c}"></i>`).join('')}</span><span class="cta">Выбрать цвет и размер →</span>`;
+  b.addEventListener('click',()=>openSheet(i));rtrack.appendChild(b);});
+const pieces=$$('#rtrack .piece');
+const setTurn=(p,el)=>{p=Math.max(0,Math.min(1,p));const e=p*p*(3-2*p);el.style.transform=`rotateY(${e*78}deg) translateZ(0)`;el.querySelector('.face').style.setProperty('--shade',(e*.6).toFixed(3));el.querySelector('.edge').style.setProperty('--edge',e.toFixed(3));};
+pieces.forEach(el=>setTurn(hasG&&!reduce?1:0,el));
+// sheet
+const sheet=$('#sheet');let msel={i:0,c:'black',s:''},lastFocus=null;
+function renderSheet(swap){const m=MERCH[msel.i];
+  $('#shEy').textContent='Мерч ФАЙЗ · '+m.type;$('#shTitle').textContent=m.name;$('#shDesc').textContent=m.desc;
+  $('#shColName').textContent=COL[msel.c].n;$('#shSzName').textContent=msel.s;
+  $('#shCols').innerHTML=m.colors.map(c=>`<button class="sw2" data-c="${c}" aria-pressed="${c===msel.c}" aria-label="${COL[c].n}"><span style="background:${COL[c].c}"></span></button>`).join('');
+  $('#shSizes').innerHTML=m.sizes.map(s=>`<button class="sz" data-s="${s}" aria-pressed="${s===msel.s}">${s}</button>`).join('');
+  $('#shSum').textContent=`Выбрано: ${m.name} · ${COL[msel.c].n} · ${msel.s}`;
+  const src=`img/merch/${m.id}_${msel.c}.jpg`,img=$('#shImg');
+  if(swap&&!reduce){const pic=$('#shPic'),n=document.createElement('img');n.className='next';n.src=src;n.alt=img.alt;pic.appendChild(n);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>n.classList.add('go')));
+    setTimeout(()=>{img.src=src;n.remove();},850);}
+  else img.src=src;
+  img.alt=`${m.name} ФАЙЗ, ${COL[msel.c].n.toLowerCase()}`;
+  $$('#shCols .sw2').forEach(b=>b.addEventListener('click',e=>{if(b.dataset.c===msel.c)return;const r=b.getBoundingClientRect(),pr=$('#shPic').getBoundingClientRect();
+    $('#shPic').style.setProperty('--cx','50%');$('#shPic').style.setProperty('--cy','50%');msel.c=b.dataset.c;renderSheet(true);}));
+  $$('#shSizes .sz').forEach(b=>b.addEventListener('click',()=>{msel.s=b.dataset.s;renderSheet(false);}));}
+function openSheet(i){lastFocus=document.activeElement;const m=MERCH[i];msel={i,c:'black',s:m.def};renderSheet(false);sheet.classList.add('on');lenis&&lenis.stop();setTimeout(()=>$('#shX').focus(),50);}
+function closeSheet(){sheet.classList.remove('on');lenis&&lenis.start();lastFocus&&lastFocus.focus&&lastFocus.focus();}
+$('#shX').addEventListener('click',closeSheet);$('#shBd').addEventListener('click',closeSheet);
+addEventListener('keydown',e=>{if(!sheet.classList.contains('on'))return;if(e.key==='Escape')closeSheet();});
+$('#shPrev').addEventListener('click',()=>{const i=(msel.i+MERCH.length-1)%MERCH.length;msel={i,c:'black',s:MERCH[i].def};renderSheet(true);});
+$('#shNext').addEventListener('click',()=>{const i=(msel.i+1)%MERCH.length;msel={i,c:'black',s:MERCH[i].def};renderSheet(true);});
+
+
 /* ---------- store tour */
 (()=>{
 const app=document.getElementById('tour'); if(!app) return;
@@ -996,6 +1129,14 @@ if(hasG&&!reduce){
       const tw=gsap.to(tr,{x:()=>-(tr.scrollWidth-innerWidth),ease:'none',scrollTrigger:{trigger:'#hs',start:'top top',end:()=>'+='+(tr.scrollWidth-innerWidth),pin:true,scrub:.8,invalidateOnRefresh:true,anticipatePin:1}});
       $$('.item .scene').forEach(s=>gsap.from(s.firstElementChild,{scale:.8,rotate:-6,ease:'none',scrollTrigger:{trigger:s,containerAnimation:tw,start:'left right',end:'center center',scrub:true}}));
     }});
+  // merch: pieces hang sideways and turn to face you as they reach the centre
+  ScrollTrigger.matchMedia({
+    '(min-width:761px)':function(){const tr=$('#rtrack');
+      gsap.to(tr,{x:()=>-(tr.scrollWidth-innerWidth),ease:'none',scrollTrigger:{trigger:'#rack',start:'center center',end:()=>'+='+(tr.scrollWidth-innerWidth)*1.1,pin:true,scrub:.8,invalidateOnRefresh:true,anticipatePin:1}});
+    }});
+  gsap.ticker.add(()=>{const wide=innerWidth>760;pieces.forEach(el=>{const r=el.getBoundingClientRect();
+    const p=wide?((r.left+r.width/2)-innerWidth*.5)/(innerWidth*.42):((r.top+r.height/2)-innerHeight*.5)/(innerHeight*.42);setTurn(p,el);});});
+  gsap.fromTo('.rack .rail',{scaleX:0},{scaleX:1,transformOrigin:'left center',ease:'power2.out',scrollTrigger:{trigger:'#rack',start:'top 85%',end:'top 40%',scrub:true}});
   gsap.from('.stk',{scale:0,rotate:-40,duration:.8,ease:'back.out(2)',stagger:.08,scrollTrigger:{trigger:'#stickers',start:'top 80%'}});
   // footer
   gsap.from('footer .huge',{yPercent:30,opacity:0,scale:.9,duration:1.4,ease:'expo.out',scrollTrigger:{trigger:'footer',start:'top 80%'}});
