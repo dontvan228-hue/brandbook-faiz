@@ -235,6 +235,10 @@ nav.top ul a:hover{color:var(--cream)} nav.top ul a:hover::after{transform:scale
 .hs .track{display:flex;gap:28px;padding:50px max(24px,env(safe-area-inset-left,0px)) 110px;width:max-content}
 .item{width:min(78vw,620px);flex:none}
 .item .scene{aspect-ratio:5/4;max-width:100%;border-radius:16px;position:relative;overflow:hidden;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#163a29,#06190f 70%)}
+.item .scene.ph{display:block;width:100%;padding:0;border:0;cursor:pointer;background:#e9e7e2}
+.item .scene.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.item .scene.ph:hover img{transform:scale(1.06)}
+.item .phtag{position:absolute;left:14px;bottom:14px;padding:7px 12px;border-radius:999px;background:rgba(2,17,12,.75);color:var(--cream);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
 .item .meta{display:flex;justify-content:space-between;gap:16px;margin-top:16px;align-items:baseline}
 .item .meta b{font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:22px}
 .item .meta span{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
@@ -306,7 +310,6 @@ footer .meta{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
     <li><a href="#logo">Логотип</a></li>
     <li><a href="#identity">Айдентика</a></li>
     <li><a href="#carriers">Носители</a></li>
-    <li><a href="#merch">Мерч</a></li>
     <li><a href="#store">Магазин</a></li>
   </ul>
 </nav>
@@ -383,7 +386,7 @@ footer .meta{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
     <div class="toc">
       <a href="#logo"><span class="n">01</span><span class="nm">Логотип</span><span class="subs">Основной логотип<br>Фирменный знак<br>Охранное поле<br>Использование</span></a>
       <a href="#identity"><span class="n">02</span><span class="nm">Айдентика</span><span class="subs">Фирменные цвета<br>Типографика<br>Паттерн<br>Графический элемент</span></a>
-      <a href="#carriers"><span class="n">03</span><span class="nm">Носители</span><span class="subs">Полиграфия<br>Мерч и упаковка<br>Торговая точка</span></a>
+      <a href="#carriers"><span class="n">03</span><span class="nm">Носители</span><span class="subs">Одежда и мерч<br>Аксессуары<br>Полиграфия<br>Торговая точка</span></a>
     </div>
   </div>
 </section>
@@ -516,14 +519,32 @@ footer .meta{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
   <div class="wrap">
     <div class="eyebrow">03 · Носители бренда</div>
     <h2 class="h">Носители</h2>
-    <p style="margin-top:18px">Полиграфия, упаковка, мерч и оформление торговой точки. Листайте — галерея движется вбок.</p>
+    <p style="margin-top:18px">Одежда, аксессуары, полиграфия и вывеска — всё, на чём живёт логотип ФАЙЗ.</p>
+    <h3 class="h" style="margin-top:56px">Одежда</h3>
+    <p>Вещи висят на штанге боком и едут вслед за прокруткой. Зажмите вещь — она развернётся к вам. Нажмите — откроется фото и выбор размера.</p>
+  </div>
+  <div class="rail3d" id="rail3d">
+    <div class="stick">
+      <canvas id="railCv" aria-label="3D-штанга с одеждой ФАЙЗ"></canvas>
+      <div class="load" id="railLoad">Загружаем 3D…</div>
+      <div class="hud">
+        <div class="cur"><span id="railType">Одежда</span><b id="railName">Худи</b></div>
+        <div class="tip">Зажмите — повернётся<br>Нажмите — откроется фото</div>
+      </div>
+      <div class="prog" id="railProg"></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <h3 class="h" style="margin-top:60px">Аксессуары и полиграфия</h3>
+    <p>Листайте — галерея движется вбок. Нажмите на фото, чтобы выбрать размер.</p>
   </div>
   <div class="hs" id="hs">
     <div class="track" id="track">
+      <div class="item"><button class="scene ph" data-acc="0" aria-label="Бейсболка: фото и размер"><img src="img/merch/cap.jpg" alt="Бейсболка ФАЙЗ" loading="lazy"><span class="phtag">Фото и размер</span></button><div class="meta"><b>Бейсболка</b><span>Вышивка</span></div></div>
+      <div class="item"><button class="scene ph" data-acc="1" aria-label="Шоппер: фото и размер"><img src="img/merch/tote.jpg" alt="Шоппер ФАЙЗ" loading="lazy"><span class="phtag">Фото и размер</span></button><div class="meta"><b>Шоппер</b><span>Хлопок · печать</span></div></div>
+      <div class="item"><button class="scene ph" data-acc="2" aria-label="Кружка: фото и размер"><img src="img/merch/mug.jpg" alt="Кружка ФАЙЗ" loading="lazy"><span class="phtag">Фото и размер</span></button><div class="meta"><b>Кружка</b><span>Керамика</span></div></div>
       <div class="item"><div class="scene"><div class="flip" id="flip"><div class="fi"><div class="fc"><svg viewBox="44 44 819.75 391.25"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg><small>Сеть магазинов</small></div><div class="bc shine"><svg viewBox="44 44 344.5 391.25"><use href="#pF"/></svg></div></div></div></div><div class="meta"><b>Визитка</b><span>85 × 55 мм · наведите</span></div></div>
       <div class="item"><div class="scene" id="scBag"></div><div class="meta"><b>Пакет</b><span>Крафт-картон · тиснение</span></div></div>
-      <div class="item"><div class="scene" id="scTee"></div><div class="meta"><b>Футболка</b><span>Униформа персонала</span></div></div>
-      <div class="item"><div class="scene" id="scTote"></div><div class="meta"><b>Шоппер</b><span>Хлопок · печать</span></div></div>
       <div class="item"><div class="scene" id="scCert"></div><div class="meta"><b>Сертификат</b><span>Золотая фольга</span></div></div>
       <div class="item"><div class="scene"><div class="wall"></div><div class="sign" id="sign"><svg viewBox="44 44 819.75 391.25"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg></div></div><div class="meta"><b>Вывеска</b><span>Световой короб</span></div></div>
     </div>
@@ -659,28 +680,7 @@ footer .meta{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
 .sheet .x{position:absolute;top:14px;right:14px;z-index:2;width:44px;height:44px;border-radius:50%;border:1px solid rgba(200,180,140,.4);background:rgba(2,17,12,.75);color:var(--cream);font-size:20px;line-height:1}
 </style>
 
-<section id="merch" class="band">
-  <div class="wrap">
-    <div class="eyebrow">03.1 · Мерч и одежда</div>
-    <h2 class="h">Мерч</h2>
-    <p style="margin-top:18px">Одежда висит на штанге боком. Листайте вниз, чтобы двигаться вдоль штанги. Зажмите вещь, и она развернётся к вам. Нажмите, чтобы посмотреть, как она выглядит вживую.</p>
-  </div>
-  <div class="rail3d" id="rail3d">
-    <div class="stick">
-      <canvas id="railCv" aria-label="3D-штанга с одеждой ФАЙЗ"></canvas>
-      <div class="load" id="railLoad">Загружаем 3D…</div>
-      <div class="hud">
-        <div class="cur"><span id="railType">Одежда</span><b id="railName">Худи</b></div>
-        <div class="tip">Зажмите — повернётся<br>Нажмите — откроется фото</div>
-      </div>
-      <div class="prog" id="railProg"></div>
-    </div>
-  </div>
-  <div class="wrap" style="padding-bottom:clamp(90px,12vw,160px)">
-    <h3 class="h" style="margin-top:20px">Аксессуары</h3>
-    <div class="acc" id="accGrid"></div>
-  </div>
-</section>
+
 
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle">
   <div class="bd" id="shBd"></div>
@@ -890,18 +890,6 @@ sc('#scBag',`<svg viewBox="0 0 400 320" style="width:70%;height:auto" class="mk"
   <path d="M110 92 L290 92 L292 108 L108 108 Z" fill="#245a40"/>
   <svg x="160" y="150" width="80" height="94" viewBox="44 44 344.5 391.25" style="fill:url(#gGoldObj)"><use href="#pF"/></svg>
   <text x="200" y="272" text-anchor="middle" font-family="Roboto Condensed" font-size="11" letter-spacing="5" fill="#c8b48c">ФАЙЗ</text></svg>`);
-sc('#scTee',`<svg viewBox="0 0 400 340" style="width:72%;height:auto" class="mk">
-  <path d="M140 30 C160 52 240 52 260 30 L340 64 L370 140 L318 160 L310 128 L310 320 L90 320 L90 128 L82 160 L30 140 L60 64 Z" fill="#0b1f16"/>
-  <path d="M140 30 C160 52 240 52 260 30 C246 62 154 62 140 30Z" fill="#06150e"/>
-  <path d="M60 64 L90 128 M340 64 L310 128" stroke="#163a29" stroke-width="2"/>
-  <svg x="230" y="98" width="56" height="26" viewBox="44 44 819.75 391.25" style="fill:#f3ebd6"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg></svg>`);
-sc('#scTote',`<svg viewBox="0 0 400 340" style="width:66%;height:auto" class="mk">
-  <path d="M150 120 C150 30 250 30 250 120" fill="none" stroke="#e6dcc2" stroke-width="10"/>
-  <rect x="90" y="110" width="220" height="215" rx="4" fill="#f3ebd6"/>
-  <defs><path id="tc" d="M200,218 m-62,0 a62,62 0 1,1 124,0 a62,62 0 1,1 -124,0"/></defs>
-  <circle cx="200" cy="218" r="76" fill="none" stroke="#1a422f" stroke-width="1.5"/>
-  <text font-family="UnifrakturMaguntia" font-size="19" fill="#1a422f"><textPath href="#tc" textLength="385">Faiz · Quality · Trust · Comfort · Choice ·</textPath></text>
-  <svg x="176" y="190" width="48" height="56" viewBox="44 44 344.5 391.25" style="fill:#1a422f"><use href="#pF"/></svg></svg>`);
 sc('#scCert',`<div class="shine" style="width:72%;aspect-ratio:2/1;border-radius:8px;background:#02110c;box-shadow:0 30px 60px rgba(0,0,0,.5);display:grid;grid-template-columns:1fr 1.4fr;align-items:center;border:1px solid rgba(200,180,140,.5);transform:rotate(-4deg)">
   <div style="display:grid;place-items:center;height:100%;border-right:1px dashed rgba(200,180,140,.4)"><svg viewBox="44 44 344.5 391.25" style="width:46%;fill:url(#gGoldObj)"><use href="#pF"/></svg></div>
   <div style="padding:8%"><div style="font-family:var(--f-acc);font-style:italic;color:#c8b48c;font-size:clamp(14px,1.6vw,22px)">Подарочный</div><div style="font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:clamp(16px,2vw,28px);color:#f3ebd6">сертификат</div>
@@ -963,8 +951,7 @@ function closeSheet(){sheet.classList.remove('on');lenis&&lenis.start();shFocus&
 $('#shX').addEventListener('click',closeSheet);$('#shBd').addEventListener('click',closeSheet);
 addEventListener('keydown',e=>{if(e.key==='Escape'&&sheet.classList.contains('on'))closeSheet();});
 // accessories (real photos)
-$('#accGrid').innerHTML=ACC.map((a,i)=>`<button class="accb" data-i="${i}"><span class="ph"><img src="img/merch/${a.id}.jpg" alt="${a.name} ФАЙЗ" loading="lazy"></span><span class="l">${a.name}<span>${a.type}</span></span></button>`).join('');
-$$('.accb').forEach(b=>b.addEventListener('click',()=>{const a=ACC[+b.dataset.i];openSheet({name:a.name,type:a.type,desc:a.desc,sizes:a.sizes,def:a.def,src:`img/merch/${a.id}.jpg`});}));
+$$('[data-acc]').forEach(b=>b.addEventListener('click',()=>{const a=ACC[+b.dataset.acc];openSheet({name:a.name,type:a.type,desc:a.desc,sizes:a.sizes,def:a.def,src:`img/merch/${a.id}.jpg`});}));
 
 /* 3D rail */
 (function(){
@@ -1051,7 +1038,10 @@ const SIDE=Math.PI*.44;
 let prog=0,camX=0;const progEl=$('#railProg');progEl.innerHTML=RAIL_ITEMS.map(()=>'<i></i>').join('');
 function size(){const r=cv.getBoundingClientRect();renderer.setSize(r.width,r.height,false);cam.aspect=r.width/r.height;cam.updateProjectionMatrix();}
 size();addEventListener('resize',size);
-const railBox=$('#rail3d');
+const railBox=$('#rail3d');let snapT=null;
+addEventListener('scroll',()=>{clearTimeout(snapT);snapT=setTimeout(()=>{const r=railBox.getBoundingClientRect(),span=r.height-innerHeight;if(r.top>0||r.bottom<innerHeight||held)return;
+  const p=-r.top/span,k=Math.round(p*(N-1)),tgt=scrollY+r.top+k/(N-1)*span;if(Math.abs(tgt-scrollY)<4)return;
+  lenis?lenis.scrollTo(tgt,{duration:.7}):scrollTo({top:tgt,behavior:'smooth'});},220);},{passive:true});
 let curI=-1;
 // interaction
 const ray=new THREE.Raycaster(),mp=new THREE.Vector2();let held=null,downT=0,downX=0,downY=0,moved=false;
@@ -1078,7 +1068,7 @@ $('#railLoad').remove();
 let last=performance.now();
 (function tick(now){requestAnimationFrame(tick);if(!visible)return;const dt=Math.min(.05,(now-last)/1000);last=now;
   {const r=railBox.getBoundingClientRect();prog=Math.max(0,Math.min(1,-r.top/Math.max(1,r.height-innerHeight)));}
-  const tx=Math.round(prog*(N-1)+.0001)*GAP;camX+=(tx-camX)*Math.min(1,dt*6);
+  const tx=prog*(N-1)*GAP;camX+=(tx-camX)*Math.min(1,dt*12);
   const asp=cam.aspect;const z=asp<.8?8.2:(asp<1.2?6.4:5.4);
   cam.position.set(camX,-.2,z);cam.lookAt(camX,-.58,0);
   const ci=Math.max(0,Math.min(N-1,Math.round(camX/GAP)));if(ci!==curI){curI=ci;$('#railName').textContent=RAIL_ITEMS[ci].name+' · '+RAIL_ITEMS[ci].cn;$('#railType').textContent=RAIL_ITEMS[ci].type==='hoodie'?'Худи':'Футболка';$$('#railProg i').forEach((e,k)=>e.classList.toggle('on',k===ci));}
