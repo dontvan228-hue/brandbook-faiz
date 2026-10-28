@@ -415,7 +415,7 @@ nav.top.open .burger i:nth-child(1){top:21px;transform:rotate(45deg)}nav.top.ope
 .story9 .bar::after{content:"";position:absolute;inset:0;width:60%;background:var(--olive)}
 
 /* ---------- invest */
-#invest{background:radial-gradient(ellipse at 50% 0%,#123726 0%,var(--ink) 60%);overflow:hidden}
+#invest{background:radial-gradient(ellipse at 50% 0%,#123726 0%,var(--ink) 60%);overflow:clip}
 #invest .huge-q{font-weight:800;text-transform:uppercase;font-size:clamp(50px,10vw,170px);line-height:.88;letter-spacing:.01em;margin:24px 0 0}
 #invest .lead{max-width:36ch;margin-top:30px}
 .ready{counter-reset:r}
@@ -778,3 +778,43 @@ footer .meta{align-items:center}
 .marq.bleed{width:100vw;margin:clamp(70px,8vw,120px) 0 0 calc(50% - 50vw)}
 .marq.bleed + .sub{margin-top:clamp(50px,6vw,80px)}
 body{margin:0}
+
+/* ---------- phones */
+.tch{display:none}
+@media (hover:none){.hov{display:none}.tch{display:inline}}
+.mcta{display:none}
+@media (max-width:760px){
+  /* readable minimum for captions and labels */
+  .bento small,.persona dt,.tov .say small,.var .lab,.photos figcaption,.spec th,.sizes-t th,.item .phtag,.tpl figcaption span,.calc .res span,.tour .card .ey,.tour .tag,.ivgal figcaption,.badge18,.sw .cp{font-size:12px!important}
+  .bento .chips span{font-size:11px}
+  .eyebrow{font-size:12px;letter-spacing:.24em}
+  p,.list li{font-size:16px}
+  .tile p,.card p{font-size:15.5px}
+  /* bigger touch targets */
+  footer .meta{gap:6px 18px}
+  footer .meta a,footer .contacts a,.ready .tile a{display:inline-block;padding:12px 0;min-height:44px}
+  .pill{padding:12px 18px;min-height:44px}
+  input[type=range]{height:34px}
+  .tester input[type=range]{width:100%}
+  /* colour ratio: stacked bars so labels are never cut */
+  .ratio{flex-direction:column;height:auto}
+  .ratio div{flex:none!important;flex-direction:row;align-items:baseline;justify-content:space-between;gap:12px;padding:12px 14px;min-height:calc(var(--h,1)*1px)}
+  .ratio div:nth-child(1){min-height:96px}.ratio div:nth-child(2){min-height:58px}.ratio div:nth-child(3){min-height:44px}.ratio div:nth-child(4){min-height:40px}
+  .ratio b{font-size:22px}
+  /* calculator: results first, then sliders, then the breakdown */
+  .calc{display:flex;flex-direction:column;gap:22px;padding:18px}
+  .calc > div:last-child{display:contents}
+  .calc .res{order:-1;position:sticky;top:78px;z-index:3;margin:0 -18px;padding:12px 18px;background:rgba(2,17,12,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);gap:10px 14px}
+  .calc .res div{border-top:0;padding-top:0}
+  .calc .res b{font-size:24px}
+  .calc .res span{letter-spacing:.1em}
+  /* sticky contact button on the investor page */
+  .mcta{position:fixed;left:16px;right:16px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:45;display:flex;justify-content:center;align-items:center;gap:10px;height:54px;border-radius:999px;text-decoration:none;font-weight:800;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:linear-gradient(100deg,#e9d6a4,#b8955c 50%,#f3e3b8);box-shadow:0 14px 40px rgba(0,0,0,.55);transform:translateY(140%);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+  .mcta.on{transform:none}
+  .mcta i{font-style:normal}
+  #invest{padding-bottom:110px}
+  /* investor intro: keep the cue clear of the ring text */
+  .iw-cue{margin-top:18px}
+  .iw-sub{font-size:15px}
+}
+@media (max-width:760px){.calc .res b{font-size:21px}.calc .res span{font-size:10.5px!important;line-height:1.3;display:block}.calc .res{row-gap:8px}}

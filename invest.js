@@ -22,6 +22,12 @@ const nav=$('#nav');const onS=()=>nav.classList.toggle('solid',scrollY>innerHeig
 {const pr=$('#prog');const upd=()=>{const m=document.documentElement.scrollHeight-innerHeight;pr.style.transform=`scaleX(${m>0?Math.min(1,scrollY/m):0})`;};
   addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();}
 
+/* ---------- phones: sticky «Обсудить партнёрство» after the intro, hidden at the contact block */
+{const b=$('#mcta'),deal=$('#deal');if(b&&deal){const seen=new Set();   // hidden over the calculator sliders and the contact block
+  const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?seen.add(e.target):seen.delete(e.target));upd();},{threshold:.15});
+  [deal,$('#calc .in')].forEach(el=>el&&io.observe(el));
+  const upd=()=>b.classList.toggle('on',scrollY>innerHeight*.8&&!seen.size);addEventListener('scroll',upd,{passive:true});upd();}}
+
 /* ---------- cursor */
 const cur=$('#cur');
 if(cur&&matchMedia('(hover:hover) and (pointer:fine)').matches){let cx=0,cy=0,tx=0,ty=0,raf=0;
