@@ -752,3 +752,24 @@ footer .meta{align-items:center}
 .howcalc li.minus b{color:rgba(243,235,214,.7)}
 .howcalc li.neg b{color:var(--bad)}
 .chart-cap{font-size:13px;color:rgba(243,235,214,.55);margin-top:10px;max-width:none}
+
+/* ---------- investor welcome intro */
+#iwel{position:relative;height:100svh;min-height:640px;overflow:hidden;display:grid;place-items:center;text-align:center;background:radial-gradient(ellipse at 50% 46%,#123726 0%,#071a12 45%,var(--ink) 78%)}
+#idust{position:absolute;inset:0;width:100%;height:100%}
+.iw-ring{position:absolute;left:50%;top:46%;width:min(118vmin,1180px);aspect-ratio:1;translate:-50% -50%;pointer-events:none}
+.iw-ring svg{width:100%;height:100%;overflow:visible;animation:iwspin 140s linear infinite}
+.iw-ring text{font-family:var(--f-head);font-weight:500;font-size:19px;letter-spacing:2px;fill:rgba(200,180,140,.42)}
+@keyframes iwspin{to{transform:rotate(360deg)}}
+.iw-in{position:relative;z-index:2;width:min(1100px,100%);padding:0 24px;display:grid;justify-items:center}
+.iw-logo{width:min(64vw,700px);height:auto;overflow:visible}
+.iw-eyebrow{margin:clamp(18px,3vh,30px) 0 0;max-width:none;font-size:13px;letter-spacing:.42em;text-transform:uppercase;color:var(--gold)}
+.iw-title{margin:14px 0 0;font-family:var(--f-acc);font-weight:500;font-size:clamp(34px,5.4vw,74px);line-height:1.04;color:var(--cream);text-wrap:balance}
+.iw-title span,.iw-title em{display:inline-block}
+.iw-title em{font-style:italic;background-size:200% 100%}
+.iw-sub{margin:18px auto 0;max-width:46ch;font-size:clamp(15px,1.3vw,18px);color:var(--muted)}
+.iw-cue{margin-top:clamp(22px,4vh,40px);display:inline-grid;justify-items:center;gap:10px;text-decoration:none;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
+.iw-cue i{width:1px;height:46px;background:rgba(243,235,214,.25);position:relative;overflow:hidden}
+.iw-cue i::after{content:"";position:absolute;left:0;top:-50%;width:1px;height:50%;background:var(--gold-hi);animation:cue 1.8s infinite}
+.iw-cue:hover{color:var(--cream)}
+@media (max-width:600px){.iw-logo{width:86vw}.iw-ring{width:150vmin}.iw-eyebrow{letter-spacing:.28em}}
+@media (prefers-reduced-motion:reduce){.iw-ring svg{animation:none}}

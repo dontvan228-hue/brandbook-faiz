@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" referrerpolicy="no-referrer" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;500;700;800&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=UnifrakturMaguntia&display=swap">
-<link rel="stylesheet" href="brand.css?v=3">
+<link rel="stylesheet" href="brand.css?v=4">
 
 
 <!-- shared vector defs -->
@@ -38,6 +38,7 @@
   </defs>
 </svg>
 
+<div id="pre" aria-hidden="true"><svg viewBox="44 44 344.5 391.25"><use href="#pF"/></svg></div>
 <div id="cur" aria-hidden="true"></div>
 <div id="prog" aria-hidden="true"></div>
 <nav class="top" id="nav" aria-label="Разделы для инвесторов">
@@ -53,15 +54,31 @@
   </ul>
 </nav>
 
-<header id="ihero">
+<header id="iwel">
+  <canvas id="idust" aria-hidden="true"></canvas>
+  <div class="iw-ring" aria-hidden="true"><svg viewBox="-500 -500 1000 1000">
+    <defs><path id="iwRingPath" d="M0,-430 a430,430 0 1,1 0,860 a430,430 0 1,1 0,-860"/></defs>
+    <circle r="468" fill="none" stroke="rgba(200,180,140,.28)"/><circle r="392" fill="none" stroke="rgba(200,180,140,.14)" stroke-dasharray="2 7"/>
+    <text><textPath href="#iwRingPath" textLength="2690">ФАЙЗ · ИНВЕСТИЦИИ · РОСТ СЕТИ · ДОВЕРИЕ · ПАРТНЁРСТВО · ФАЙЗ · ИНВЕСТИЦИИ · РОСТ СЕТИ · ДОВЕРИЕ · ПАРТНЁРСТВО ·</textPath></text>
+  </svg></div>
+  <div class="iw-in">
+    <svg class="iw-logo" id="iwLogo" viewBox="40 40 827.75 399.25" role="img" aria-label="ФАЙЗ"></svg>
+    <p class="iw-eyebrow">Сеть магазинов · 2026</p>
+    <h1 class="iw-title"><span class="iw-l1">Добро пожаловать,</span> <em class="iw-l2 gold-text">инвестор</em></h1>
+    <p class="iw-sub">Готовый бренд, отработанный формат точки и понятный план роста. Посмотрите, во что вы вкладываетесь.</p>
+    <a class="iw-cue" href="#ihero"><span>Смотреть</span><i aria-hidden="true"></i></a>
+  </div>
+</header>
+
+<section id="ihero">
   <div class="ph" aria-hidden="true"><img src="img/facade.jpg?v=7" alt=""></div>
   <div class="wrap">
     <div class="eyebrow">ФАЙЗ · инвесторам и партнёрам</div>
-    <h1 class="big-title" aria-label="Растите вместе с ФАЙЗ"><span class="ln"><span>Растите</span></span><span class="ln"><span>вместе</span></span><span class="ln"><span>с <span class="gold-text">ФАЙЗ</span></span></span></h1>
+    <h2 class="big-title" aria-label="Растите вместе с ФАЙЗ"><span class="ln"><span>Растите</span></span><span class="ln"><span>вместе</span></span><span class="ln"><span>с <span class="gold-text">ФАЙЗ</span></span></span></h2>
     <p class="lead">Бренд, формат магазина и стандарты сервиса уже собраны. Следующий шаг — тиражировать их на новые точки. Ищем партнёров, которые сделают этот шаг вместе с нами.</p>
     <div class="acts"><a class="go" href="#deal">Обсудить партнёрство →</a><a class="pill" href="index.html">Смотреть брендбук</a></div>
   </div>
-</header>
+</section>
 <div class="marq" aria-hidden="true"><div class="mi" id="mq1"></div></div>
 
 <main>
@@ -167,7 +184,7 @@
   <span class="huge"><svg viewBox="44 44 819.75 391.25" role="img" aria-label="ФАЙЗ"><use href="#pF"/><use href="#pA"/><use href="#pY"/><use href="#pB"/><use href="#pZ"/></svg></span>
   <div class="wrap">
     <div class="contacts" id="fContacts"></div>
-    <div class="meta"><span>© 2026 ФАЙЗ · 18+</span><a href="index.html">← Брендбук</a><a href="#ihero">Наверх ↑</a></div>
+    <div class="meta"><span>© 2026 ФАЙЗ · 18+</span><a href="index.html">← Брендбук</a><a href="#iwel">Наверх ↑</a></div>
   </div>
 </footer>
 
@@ -176,7 +193,7 @@
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="contacts.js?v=1"></script>
 <script src="kit.js?v=7"></script>
-<script src="invest.js?v=1"></script>
+<script src="invest.js?v=2"></script>
 
 </body>
 </html>
