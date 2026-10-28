@@ -486,6 +486,103 @@ nav.top.open .burger i:nth-child(1){top:21px;transform:rotate(45deg)}nav.top.ope
 footer .contacts{display:flex;gap:12px 28px;flex-wrap:wrap;justify-content:center;margin-top:40px}
 footer .contacts a{text-decoration:none;color:var(--cream);font-size:14px;letter-spacing:.12em;border-bottom:1px solid var(--gold-lo);padding-bottom:3px}
 </style>
+
+<style>
+/* ---------- quick bento */
+#quick{background:var(--ink)}
+.bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(190px,auto);gap:14px;margin-top:44px}
+.bento > div{position:relative;border-radius:18px;border:1px solid var(--line);padding:22px;overflow:hidden;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:14px}
+.bento .k2{grid-column:span 2;grid-row:span 2}
+.bento .w2{grid-column:span 2}
+.bento small{font-size:11px;letter-spacing:.22em;text-transform:uppercase;opacity:.75}
+.bento .big svg{width:80%;margin:auto;fill:url(#gGoldWide)}
+.bento .chips{display:flex;gap:6px;flex:1;min-height:90px}
+.bento .chips span{flex:1;border-radius:10px;border:1px solid var(--line);display:flex;align-items:flex-end;padding:8px;font-size:10px;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.bento .fnts{display:grid;gap:6px}
+.bento .fnts div{display:flex;align-items:baseline;gap:12px;color:var(--muted);font-size:13px}
+.bento .fnts b{font-size:34px;color:var(--cream);width:54px;flex:none;line-height:1}
+.bento .rules{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:15px}
+.bento .rules li{display:flex;gap:10px}
+.bento .rules .y{color:#8fc7a4}.bento .rules .n{color:var(--bad)}
+.bento .pstrip{font-family:var(--f-black);font-size:46px;line-height:1;white-space:nowrap;color:#24553d}
+@media (max-width:900px){.bento{grid-template-columns:repeat(2,minmax(0,1fr))}.bento .k2{grid-row:span 1}}
+@media (max-width:520px){.bento{grid-template-columns:1fr}.bento .k2,.bento .w2{grid-column:auto}}
+
+/* ---------- icons */
+.icons{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:40px}
+@media (max-width:900px){.icons{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:480px){.icons{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ico{border:1px solid var(--line);border-radius:14px;padding:22px 16px 16px;display:grid;justify-items:center;gap:12px;background:rgba(2,17,12,.45);transition:border-color .3s,background .3s}
+.ico:hover{border-color:var(--gold);background:rgba(26,66,47,.45)}
+.ico svg{width:52px;height:52px;fill:none;stroke:var(--gold-hi);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.ico .sm{display:flex;gap:10px;align-items:center}
+.ico .sm svg{stroke:var(--muted)}
+.ico span{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:center}
+
+/* ---------- tech pack */
+.tp{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(24px,4vw,60px);align-items:start;margin-top:30px}
+@media (max-width:900px){.tp{grid-template-columns:1fr}}
+.tp .canvas{position:relative;border-radius:18px;border:1px solid var(--line);background:radial-gradient(circle at 50% 40%,#123726,var(--deep) 70%);padding:clamp(14px,3vw,36px);aspect-ratio:1/1.05;display:grid;place-items:center}
+.tp .canvas svg{width:100%;height:100%;overflow:visible}
+.tp .canvas .gridb{position:absolute;inset:0;border-radius:18px;background-image:linear-gradient(rgba(243,235,214,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(243,235,214,.04) 1px,transparent 1px);background-size:24px 24px;pointer-events:none}
+.tp .ctrls{display:grid;gap:18px}
+.tp .ctrls .lbl{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.tp .sws{display:flex;gap:10px;flex-wrap:wrap}
+.tp .sws button{width:42px;height:42px;border-radius:50%;border:2px solid rgba(243,235,214,.25);padding:0;position:relative}
+.tp .sws button[aria-pressed="true"]{border-color:var(--gold-hi);box-shadow:0 0 0 4px rgba(200,180,140,.2)}
+.tp .sws button i{position:absolute;inset:11px;border-radius:50%}
+.spec{width:100%;border-collapse:collapse;font-size:14.5px}
+.spec th,.spec td{text-align:left;padding:11px 10px 11px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.spec th{font-weight:500;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);width:38%}
+.spec td{color:var(--cream)}
+.sizes-t{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;margin-top:6px}
+.sizes-t th,.sizes-t td{padding:9px 6px;text-align:center;border-bottom:1px solid var(--line)}
+.sizes-t th{font-size:11px;letter-spacing:.14em;color:var(--gold);font-weight:500}
+.sizes-t td:first-child,.sizes-t th:first-child{text-align:left;color:var(--muted)}
+.fadein{animation:fadein .45s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- templates */
+#templates{background:linear-gradient(180deg,var(--ink),var(--deep))}
+.howto{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:40px;counter-reset:st}
+@media (max-width:900px){.howto{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.howto figure{margin:0;display:grid;gap:12px}
+.howto .fr{aspect-ratio:3/4;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#0a1d14}
+.howto .fr svg{width:100%;height:100%;display:block}
+.howto figcaption{font-size:14px;color:var(--muted)}
+.howto figcaption b{display:block;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.tfilter{display:flex;gap:8px;flex-wrap:wrap;margin-top:30px}
+.tgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:26px;align-items:start}
+@media (max-width:1000px){.tgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.tgrid{grid-template-columns:1fr}}
+.tpl{margin:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(2,17,12,.5);transition:border-color .3s,transform .4s cubic-bezier(.2,.8,.2,1)}
+.tpl:hover{border-color:rgba(200,180,140,.55);transform:translateY(-4px)}
+.tpl[hidden]{display:none}
+.tpl .tv{display:grid;place-items:center;padding:clamp(18px,3vw,34px);background:radial-gradient(circle at 50% 30%,#163a29,#06190f 75%);min-height:260px}
+.tpl .tv svg{width:100%;height:auto;max-height:340px;filter:drop-shadow(0 20px 30px rgba(0,0,0,.45))}
+.tpl figcaption{padding:16px 18px 18px;display:grid;gap:4px}
+.tpl figcaption b{font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:16px;color:var(--cream)}
+.tpl figcaption span{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.tpl figcaption small{font-size:13.5px;color:var(--muted);line-height:1.45;margin-top:4px}
+
+/* ---------- calculator */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:clamp(24px,4vw,56px);border:1px solid var(--line);border-radius:20px;padding:clamp(20px,3.4vw,44px);background:rgba(2,17,12,.55)}
+@media (max-width:900px){.calc{grid-template-columns:1fr}}
+.calc .in{display:grid;gap:20px;align-content:start}
+.calc label{display:grid;gap:8px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.calc label b{display:flex;justify-content:space-between;gap:10px;font-weight:500}
+.calc label output{color:var(--cream);letter-spacing:.04em;font-size:15px;font-variant-numeric:tabular-nums;text-transform:none}
+.calc input[type=range]{accent-color:var(--gold);width:100%}
+.calc .res{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.calc .res div{border-top:1px solid var(--line);padding-top:10px;min-width:0}
+.calc .res b{display:block;font-size:clamp(26px,3vw,40px);font-weight:800;color:var(--cream);font-variant-numeric:tabular-nums;line-height:1.1}
+.calc .res span{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.chart{position:relative}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.chart .tip{position:absolute;pointer-events:none;background:var(--cream);color:var(--ink);border-radius:8px;padding:6px 10px;font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap;transform:translate(-50%,-120%);opacity:0;transition:opacity .15s}
+.chart .tip.on{opacity:1}
+.calc .warn{font-size:12.5px;color:rgba(243,235,214,.5);margin-top:12px}
+</style>
 <!-- Контакты и показатели для раздела «Партнёрам». Заполните — блоки появятся на сайте сами.
      kpi: [{"v":"3","l":"Магазина в сети"}, ...] — показываются, только если список не пустой. -->
 <script type="application/json" id="cfg">{"contacts":{"email":"","telegram":"","phone":""},"kpi":[]}</script>
@@ -516,11 +613,12 @@ footer .contacts a{text-decoration:none;color:var(--cream);font-size:14px;letter
   <a class="brand" href="#hero"><svg viewBox="44 44 344.5 391.25"><use href="#pF"/></svg><span>ФАЙЗ</span></a>
   <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="navList" aria-label="Меню"><i></i><i></i><i></i></button>
   <ul id="navList">
-    <li><a href="#about">О нас</a></li>
+    <li><a href="#quick">Коротко</a></li>
     <li><a href="#platform">Платформа</a></li>
     <li><a href="#logo">Логотип</a></li>
     <li><a href="#identity">Айдентика</a></li>
     <li><a href="#carriers">Носители</a></li>
+    <li><a href="#templates">Шаблоны</a></li>
     <li><a href="#store">Магазин</a></li>
     <li><a href="#invest" class="cta">Партнёрам</a></li>
   </ul>
@@ -592,6 +690,24 @@ footer .contacts a{text-decoration:none;color:var(--cream);font-size:14px;letter
   </div>
 </section>
 
+<section id="quick" class="band">
+  <div class="wrap">
+    <div class="eyebrow">Коротко</div>
+    <h2 class="h">Брендбук<br>за 30 секунд</h2>
+    <p style="margin-top:18px">Всё главное на одном экране. Распечатайте и повесьте рядом с рабочим местом дизайнера.</p>
+    <div class="bento">
+      <div class="k2 big rv" style="background:radial-gradient(circle at 50% 40%,#123726,var(--ink) 75%)"><small style="color:var(--gold)">Логотип</small><svg viewBox="44 44 819.75 391.25"><use href="#wm"/></svg><span style="font-size:14px;color:var(--muted)">Только готовым файлом, с полем X со всех сторон.</span></div>
+      <div class="rv" style="background:var(--olive)"><small>Знак</small><svg viewBox="44 44 344.5 391.25" style="width:64px;fill:url(#gGoldObj);margin:auto"><use href="#pF"/></svg><span style="font-size:13px;opacity:.8">Аватары, тиснение, иконки</span></div>
+      <div class="rv" style="background:var(--cream);color:var(--ink);justify-content:center;align-items:center;text-align:center"><b style="font-size:64px;font-weight:800;line-height:1;color:var(--olive)">18+</b><span style="font-size:13px">На каждом носителе</span></div>
+      <div class="w2 rv"><small style="color:var(--gold)">Палитра</small><div class="chips"><span style="flex:6;background:#02110c">#02110C</span><span style="flex:2.2;background:#1a422f">#1A422F</span><span style="flex:1.4;background:#f3ebd6;color:#1a422f">#F3EBD6</span><span style="flex:1;background:#c8b48c;color:#02110c">#C8B48C</span></div></div>
+      <div class="rv"><small style="color:var(--gold)">Шрифты</small><div class="fnts"><div><b style="font-weight:800">Аа</b>Roboto Condensed — всё</div><div><b style="font-family:var(--f-acc);font-style:italic">Аа</b>Cormorant — акцент</div><div><b style="font-family:var(--f-black)">Aa</b>Fraktur — паттерн</div></div></div>
+      <div class="rv"><small style="color:var(--gold)">Правила</small><ul class="rules"><li><span class="y">✓</span>Поле X вокруг логотипа</li><li><span class="y">✓</span>Золота не больше 6%</li><li><span class="n">✕</span>Не искажать и не перекрашивать</li><li><span class="n">✕</span>Не рекламировать продукцию</li></ul></div>
+      <div class="w2 rv" style="background:var(--ink)"><small style="color:var(--gold)">Паттерн</small><div class="pstrip">Faiz · Quality · Trust · Comfort · Choice</div></div>
+      <div class="w2 rv" style="grid-column:1/-1;background:linear-gradient(135deg,#e9d6a4,#b8955c 45%,#f3e3b8 70%,#9c7a45);color:var(--ink)"><small>Голос бренда</small><span style="font-family:var(--f-acc);font-style:italic;font-size:clamp(26px,3vw,40px);line-height:1.1">Уверенно. Уважительно. Честно.</span></div>
+    </div>
+  </div>
+</section>
+
 <section id="contents" class="band" style="padding-top:40px">
   <div class="wrap">
     <div class="eyebrow">Содержание</div>
@@ -599,9 +715,10 @@ footer .contacts a{text-decoration:none;color:var(--cream);font-size:14px;letter
       <a href="#platform"><span class="n">01</span><span class="nm">Платформа</span><span class="subs">Позиционирование<br>Ценности и характер<br>Аудитория<br>Тон коммуникации</span></a>
       <a href="#logo"><span class="n">02</span><span class="nm">Логотип</span><span class="subs">Основной логотип<br>Охранное поле<br>Минимальный размер<br>Файлы для скачивания</span></a>
       <a href="#identity"><span class="n">03</span><span class="nm">Айдентика</span><span class="subs">Цвета и контраст<br>Типографика<br>Паттерн и печать<br>Фотостиль</span></a>
-      <a href="#carriers"><span class="n">04</span><span class="nm">Носители</span><span class="subs">Одежда и мерч<br>Полиграфия<br>Стикеры<br>Цифровые каналы</span></a>
-      <a href="#store"><span class="n">05</span><span class="nm">Магазин</span><span class="subs">Фасад и зал<br>Стойка и стеллажи<br>Консультация<br>Зона отдыха</span></a>
-      <a href="#invest"><span class="n">06</span><span class="nm gold-text">Партнёрам</span><span class="subs">Что уже готово<br>План роста<br>Форматы участия<br>Связаться</span></a>
+      <a href="#carriers"><span class="n">04</span><span class="nm">Носители</span><span class="subs">Техкарты одежды<br>Мерч и полиграфия<br>Стикеры<br>Цифровые каналы</span></a>
+      <a href="#templates"><span class="n">05</span><span class="nm">Шаблоны</span><span class="subs">Как собрать макет<br>Полиграфия<br>Магазин и цифра<br>Команда</span></a>
+      <a href="#store"><span class="n">06</span><span class="nm">Магазин</span><span class="subs">Фасад и зал<br>Стойка и стеллажи<br>Консультация<br>Зона отдыха</span></a>
+      <a href="#invest"><span class="n">07</span><span class="nm gold-text">Партнёрам</span><span class="subs">Что уже готово<br>План роста<br>Форматы участия<br>Связаться</span></a>
     </div>
   </div>
 </section>
@@ -850,6 +967,10 @@ footer .contacts a{text-decoration:none;color:var(--cream);font-size:14px;letter
         <li>Люди, которые выглядят моложе 25 лет.</li>
       </ul></div>
     </div>
+
+    <h2 class="h" style="margin-top:clamp(110px,12vw,170px)">Иконки</h2>
+    <p style="margin-top:18px">Линейные иконки: сетка 24 × 24, линия 1,5 px, скруглённые концы, цвет — шампань или крем. Не заливаем, не делаем цветными и объёмными.</p>
+    <div class="icons" id="icons"></div>
   </div>
 </section>
 
@@ -874,7 +995,19 @@ footer .contacts a{text-decoration:none;color:var(--cream);font-size:14px;letter
     </div>
   </div>
   <div class="wrap">
-    <h3 class="h" style="margin-top:60px">Аксессуары и полиграфия</h3>
+    <h3 class="h" style="margin-top:clamp(90px,10vw,140px)">Техкарта одежды</h3>
+    <p>Готовое задание для производителя: где и какого размера наносится логотип, каким способом и в каких цветах. Выберите вещь, сторону и цвет.</p>
+    <div class="tp" id="tp">
+      <div class="canvas"><div class="gridb"></div><svg id="tpSvg" viewBox="-20 -20 440 500" role="img" aria-label="Техкарта: схема нанесения логотипа"></svg></div>
+      <div class="ctrls">
+        <div><div class="lbl">Изделие</div><div class="toggles" style="margin-top:0" role="group" aria-label="Изделие" id="tpItem"><button class="pill" data-v="tee" aria-pressed="true">Футболка</button><button class="pill" data-v="hoodie" aria-pressed="false">Худи</button></div></div>
+        <div><div class="lbl">Сторона</div><div class="toggles" style="margin-top:0" role="group" aria-label="Сторона" id="tpSide"><button class="pill" data-v="front" aria-pressed="true">Перед</button><button class="pill" data-v="back" aria-pressed="false">Спина</button></div></div>
+        <div><div class="lbl">Цвет изделия · <span id="tpCn" style="color:var(--cream)"></span></div><div class="sws" role="group" aria-label="Цвет" id="tpColor"></div></div>
+        <table class="spec" id="tpSpec"></table>
+        <div><div class="lbl" style="margin-top:6px">Размерная сетка, см</div><table class="sizes-t" id="tpSizes"></table></div>
+      </div>
+    </div>
+    <h3 class="h" style="margin-top:clamp(90px,10vw,140px)">Аксессуары и полиграфия</h3>
     <p>Тяните галерею вбок или ведите по ползунку. Нажмите на фото, чтобы выбрать размер.</p>
   </div>
   <div class="hs" id="hs">
@@ -1053,10 +1186,29 @@ footer .contacts a{text-decoration:none;color:var(--cream);font-size:14px;letter
   </div>
 </div>
 
+<section id="templates" class="band">
+  <div class="wrap">
+    <div class="eyebrow">05 · Шаблоны</div>
+    <h2 class="h">Шаблоны</h2>
+    <p style="margin-top:18px">Готовые раскладки для всего, что выпускает бренд. Меняйте только текст в отмеченных местах, а сетку, цвета и положение логотипа оставляйте как есть.</p>
+    <div class="sub">Как собрать любой макет за 4 шага</div>
+    <div class="howto" id="howto"></div>
+    <div class="sub">Библиотека шаблонов</div>
+    <div class="tfilter" role="group" aria-label="Фильтр шаблонов" id="tFilter">
+      <button class="pill" data-c="all" aria-pressed="true">Все</button>
+      <button class="pill" data-c="print" aria-pressed="false">Полиграфия</button>
+      <button class="pill" data-c="store" aria-pressed="false">Магазин</button>
+      <button class="pill" data-c="digital" aria-pressed="false">Цифра</button>
+      <button class="pill" data-c="team" aria-pressed="false">Команда</button>
+    </div>
+    <div class="tgrid" id="tGrid"></div>
+  </div>
+</section>
+
 <div class="marq" aria-hidden="true"><div class="mi" id="mq3"></div></div>
 <section id="store" class="band">
   <div class="wrap">
-    <div class="eyebrow">05 · Оформление торговой точки</div>
+    <div class="eyebrow">06 · Оформление торговой точки</div>
     <h2 class="h">Магазин</h2>
     <p style="margin-top:18px">Виртуальная экскурсия по магазину ФАЙЗ: фасад, зал, стойка, стеллажи и зона отдыха. Тяните фото, чтобы осмотреться, нажимайте на точки, чтобы перейти дальше.</p>
     <div class="tour" id="tour" aria-label="Виртуальная экскурсия по магазину ФАЙЗ" tabindex="0">
@@ -1087,7 +1239,7 @@ footer .contacts a{text-decoration:none;color:var(--cream);font-size:14px;letter
 <div class="marq rev" aria-hidden="true"><div class="mi" id="mq4"></div></div>
 <section id="invest" class="band">
   <div class="wrap">
-    <div class="eyebrow">06 · Партнёрам и инвесторам</div>
+    <div class="eyebrow">07 · Партнёрам и инвесторам</div>
     <h2 class="big-title huge-q" aria-label="Растите вместе с ФАЙЗ"><span class="ln"><span>Растите</span></span><span class="ln"><span>вместе</span></span><span class="ln"><span>с <span class="gold-text">ФАЙЗ</span></span></span></h2>
     <p class="lead rv">Бренд, формат магазина и стандарты сервиса уже собраны. Следующий шаг — тиражировать их на новые точки. Ищем партнёров, которые сделают этот шаг вместе с нами.</p>
 
@@ -1128,6 +1280,21 @@ footer .contacts a{text-decoration:none;color:var(--cream);font-size:14px;letter
       <div class="rv"><b>04</b><h4>Узнаваемость</h4><p>Вывески, полиграфия, мерч и программа лояльности.</p></div>
     </div>
 
+    <div class="sub">Калькулятор окупаемости точки</div>
+    <div class="calc" id="calc">
+      <div class="in">
+        <label><b>Вложения в открытие <output id="oInv"></output></b><input type="range" id="cInv" min="500000" max="10000000" step="100000" value="3000000"></label>
+        <label><b>Выручка в месяц <output id="oRev"></output></b><input type="range" id="cRev" min="300000" max="5000000" step="50000" value="1500000"></label>
+        <label><b>Валовая маржа <output id="oMar"></output></b><input type="range" id="cMar" min="10" max="60" step="1" value="35"></label>
+        <label><b>Расходы в месяц <output id="oOpx"></output></b><input type="range" id="cOpx" min="100000" max="2000000" step="10000" value="350000"></label>
+        <p class="warn">Значения по умолчанию — условный пример для наглядности, а не прогноз и не фактические показатели ФАЙЗ. Подставьте цифры из финансовой модели, которую мы предоставляем по запросу.</p>
+      </div>
+      <div>
+        <div class="res"><div><b id="rProfit"></b><span>Прибыль в месяц</span></div><div><b id="rPay" class="gold-text"></b><span>Окупаемость</span></div></div>
+        <div class="chart" id="chart"><svg id="chartSvg" viewBox="0 0 640 300" role="img"></svg><div class="tip" id="chartTip"></div></div>
+      </div>
+    </div>
+
     <div class="sub">Принципы для партнёров</div>
     <div class="grid3">
       <div class="rv"><h3 class="h">Прозрачность</h3><p>Понятные условия, регулярная отчётность и открытый доступ к показателям точки.</p></div>
@@ -1165,7 +1332,8 @@ footer .contacts a{text-decoration:none;color:var(--cream);font-size:14px;letter
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/environments/RoomEnvironment.js" integrity="sha384-UpJYDNQ/8wDmBlzh4lZ9VMbunag9yRAOGFiBWYVaf6/FCnrwc9qlto25EZVLhpph" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="app.js?v=4"></script>
+<script src="kit.js?v=1"></script>
+<script src="app.js?v=5"></script>
 
 </body>
 </html>
