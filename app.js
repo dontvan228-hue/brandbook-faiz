@@ -79,7 +79,7 @@ for(let i=0;i<110;i++)D.push({x:Math.random(),y:Math.random(),r:Math.random()*Ma
 
 /* marquees */
 const mqHTML=()=>{let s='';for(let k=0;k<2;k++){['Faiz','Quality','Trust','Comfort','Atmosphere','Choice'].forEach(w=>{s+=`<span>${w}<svg viewBox="44 44 344.5 391.25"><use href="#pF"/></svg></span>`});}return s};
-['#mq1','#mq2','#mq3'].forEach(s=>{$(s).innerHTML=mqHTML()});
+['#mq1','#mq2','#mq3','#mq4'].forEach(s=>{$(s).innerHTML=mqHTML()});
 
 /* ---------- logo story: build drawable paths */
 const ds=$('#drawSvg'); const parts=['F','A','Y','B','Z'];
@@ -90,9 +90,9 @@ parts.forEach(k=>{const d=document.getElementById('p'+k).getAttribute('d');
   const f=document.createElementNS(NS,'path');f.setAttribute('d',d);f.setAttribute('fill','url(#gGoldWide)');f.style.opacity=0;gFill.appendChild(f);fills.push(f);
   const s=document.createElementNS(NS,'path');s.setAttribute('d',d);s.setAttribute('fill','none');s.setAttribute('stroke','#f3e3b8');s.setAttribute('stroke-width','1.4');gStroke.appendChild(s);strokes.push(s);
   const L=s.getTotalLength();s.style.strokeDasharray=L;s.style.strokeDashoffset=L;s.dataset.l=L;});
-const caps=[["01.1","Основной логотип","Шрифтовое написание названия и фирменный знак в одной связке."],
-            ["01.2","Фирменный знак","Буква Ф с шипами — самостоятельная пиктограмма для иконок, аватаров и тиснения."],
-            ["01.3","Шрифтовой логотип","Написание «АЙЗ» продолжает знак и вместе с ним образует название."]];
+const caps=[["02.1","Основной логотип","Шрифтовое написание названия и фирменный знак в одной связке."],
+            ["02.2","Фирменный знак","Буква Ф с шипами — самостоятельная пиктограмма для иконок, аватаров и тиснения."],
+            ["02.3","Шрифтовой логотип","Написание «АЙЗ» продолжает знак и вместе с ним образует название."]];
 let capI=-1; const setCap=i=>{if(i===capI)return;capI=i;const c=caps[i];$('#capK').textContent=c[0];$('#capV').textContent=c[1];$('#capD').textContent=c[2];
   if(hasG) gsap.fromTo('.story .cap > *',{y:18,opacity:0},{y:0,opacity:1,stagger:.06,duration:.5,overwrite:true});};
 const STY={draw:(hasG&&!reduce)?0:1,scr:0};
@@ -519,6 +519,57 @@ new IntersectionObserver(es=>es.forEach(en=>{inView=en.isIntersecting;if(inView)
 show(0);
 })();
 
+/* ---------- mobile menu + reading progress */
+{const nb=$('#burger'),list=$('#navList');
+  const setMenu=on=>{nav.classList.toggle('open',on);nb.setAttribute('aria-expanded',String(on));if(lenis)on?lenis.stop():lenis.start();document.documentElement.style.overflow=on?'hidden':'';};
+  nb.addEventListener('click',()=>setMenu(!nav.classList.contains('open')));
+  list.addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false);});
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('open')){setMenu(false);nb.focus();}});
+  matchMedia('(min-width:961px)').addEventListener('change',e=>{if(e.matches)setMenu(false);});}
+{const pr=$('#prog');const upd=()=>{const m=document.documentElement.scrollHeight-innerHeight;pr.style.transform=`scaleX(${m>0?Math.min(1,scrollY/m):0})`;};
+  addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();}
+
+/* ---------- logo files: SVG built from the master paths */
+{const D=k=>document.getElementById('p'+k).getAttribute('d');
+  const GOLD='<defs><linearGradient id="g" gradientUnits="userSpaceOnUse" x1="60" y1="40" x2="860" y2="440"><stop offset="0" stop-color="#fff3cf"/><stop offset=".2" stop-color="#c9a76a"/><stop offset=".36" stop-color="#7d6136"/><stop offset=".5" stop-color="#f7e9c2"/><stop offset=".68" stop-color="#b08d55"/><stop offset=".84" stop-color="#6e5430"/><stop offset="1" stop-color="#e9d39c"/></linearGradient></defs>';
+  const make=(keys,vb,fill)=>`<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}">${fill==='gold'?GOLD:''}<g fill="${fill==='gold'?'url(#g)':fill}">${keys.map(k=>`<path d="${D(k)}"/>`).join('')}</g></svg>`;
+  const WM=['F','A','Y','B','Z'],VB='44 44 819.75 391.25',VBF='44 44 344.5 391.25';
+  const FILES=[['Логотип · золото','faiz-logo-gold.svg',WM,VB,'gold','linear-gradient(135deg,#f3e3b8,#8a6b3c)'],
+    ['Логотип · олива','faiz-logo-olive.svg',WM,VB,'#1a422f','#1a422f'],
+    ['Логотип · крем','faiz-logo-cream.svg',WM,VB,'#f3ebd6','#f3ebd6'],
+    ['Логотип · изумруд','faiz-logo-emerald.svg',WM,VB,'#02110c','#02110c'],
+    ['Знак · золото','faiz-mark-gold.svg',['F'],VBF,'gold','linear-gradient(135deg,#f3e3b8,#8a6b3c)'],
+    ['Знак · крем','faiz-mark-cream.svg',['F'],VBF,'#f3ebd6','#f3ebd6']];
+  const dl=$('#dl');
+  FILES.forEach(([lab,fn,keys,vb,fill,sw])=>{const b=document.createElement('button');b.type='button';b.className='pill';
+    const i=document.createElement('i');i.style.background=sw;b.append(i,document.createTextNode(lab+' · SVG'));
+    b.addEventListener('click',()=>{const url=URL.createObjectURL(new Blob([make(keys,vb,fill)],{type:'image/svg+xml'}));
+      const a=document.createElement('a');a.href=url;a.download=fn;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Скачивается '+fn);});
+    dl.appendChild(b);});}
+
+/* ---------- contrast pairs (WCAG 2.x) */
+{const lum=h=>{const c=rgb(h).map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*c[0]+.7152*c[1]+.0722*c[2];};
+  const ratio=(a,b)=>{const x=lum(a),y=lum(b);return (Math.max(x,y)+.05)/(Math.min(x,y)+.05);};
+  const PAIRS=[['#f3ebd6','#02110c','Крем на изумруде'],['#c8b48c','#02110c','Шампань на изумруде'],['#f3ebd6','#1a422f','Крем на оливе'],['#1a422f','#f3ebd6','Олива на креме'],['#02110c','#c8b48c','Изумруд на шампани']];
+  const box=$('#contrast');
+  PAIRS.forEach(([fg,bg,n])=>{const r=ratio(fg,bg),lvl=r>=7?'AAA':r>=4.5?'AA':r>=3?'AA крупный':'Нельзя';
+    const d=document.createElement('div');d.className='cpair rv';d.style.background=bg;d.style.color=fg;
+    d.innerHTML=`<span class="s">Аа</span><span style="font-size:12px;letter-spacing:.14em;text-transform:uppercase">${n}</span><span class="r"><span>${r.toFixed(1).replace('.',',')} : 1</span><em>${lvl}</em></span>`;
+    box.appendChild(d);});}
+
+/* ---------- partner contacts & KPIs from #cfg */
+{let cfg={};try{cfg=JSON.parse($('#cfg').textContent)||{};}catch(e){}
+  const c=cfg.contacts||{},links=[];
+  const clean=v=>String(v||'').trim();
+  if(clean(c.email))links.push(['Написать на почту','mailto:'+encodeURIComponent(clean(c.email)).replace('%40','@')+'?subject='+encodeURIComponent('Партнёрство с ФАЙЗ'),clean(c.email)]);
+  if(clean(c.telegram)){const t=clean(c.telegram).replace(/^@|^https?:\/\/t\.me\//,'');if(/^[A-Za-z0-9_]{3,64}$/.test(t))links.push(['Telegram','https://t.me/'+t,'@'+t]);}
+  if(clean(c.phone)){const p=clean(c.phone).replace(/[^\d+]/g,'');if(p.length>5)links.push(['Позвонить','tel:'+p,clean(c.phone)]);}
+  const mk=(href,txt,cls)=>{const a=document.createElement('a');a.href=href;a.textContent=txt;if(cls)a.className=cls;if(href.startsWith('https:')){a.target='_blank';a.rel='noopener';}return a;};
+  links.forEach(([lab,href,show],i)=>{$('#dealActs').appendChild(mk(href,i?lab:lab+' →',i?'':'main'));$('#fContacts').appendChild(mk(href,show));});
+  if(!links.length)$('#dealActs').hidden=true;
+  const kp=Array.isArray(cfg.kpi)?cfg.kpi.filter(k=>k&&clean(k.v)&&clean(k.l)):[];
+  if(kp.length){$('#kpiWrap').hidden=false;kp.forEach(k=>{const d=document.createElement('div');d.className='rv';const b=document.createElement('b');b.className='gold-text';b.textContent=clean(k.v);const s=document.createElement('span');s.textContent=clean(k.l);d.append(b,s);$('#kpis').appendChild(d);});}}
+
 /* ---------- GSAP choreography */
 if(hasG&&!reduce){
   gsap.registerPlugin(ScrollTrigger);
@@ -535,7 +586,12 @@ if(hasG&&!reduce){
   const skewTo=gsap.quickTo('.marq .mi','skewX',{duration:.4,ease:'power3'});
   ScrollTrigger.create({onUpdate:s=>skewTo(Math.max(-12,Math.min(12,s.getVelocity()/-260)))});
   // big title
-  gsap.from('.big-title .ln > span',{yPercent:110,rotate:4,duration:1.2,ease:'expo.out',stagger:.12,scrollTrigger:{trigger:'.big-title',start:'top 85%'}});
+  $$('.big-title').forEach(t=>gsap.from(t.querySelectorAll('.ln > span'),{yPercent:110,rotate:4,duration:1.2,ease:'expo.out',stagger:.12,scrollTrigger:{trigger:t,start:'top 85%'}}));
+  // platform scales, roadmap line
+  $$('.scale .bar').forEach(b=>gsap.from(b,{'--v':'0%',duration:1.6,ease:'expo.out',scrollTrigger:{trigger:b,start:'top 90%'}}));
+  gsap.fromTo('#road .ln',{scaleX:0,scaleY:0},{scaleX:1,scaleY:1,ease:'none',scrollTrigger:{trigger:'#road',start:'top 80%',end:'bottom 60%',scrub:true}});
+  gsap.from('.ratio > div',{flexGrow:0,duration:1.4,ease:'expo.inOut',stagger:.08,scrollTrigger:{trigger:'.ratio',start:'top 85%'}});
+  gsap.from('#deal .bgF',{rotate:-20,scale:.7,opacity:0,duration:1.6,ease:'expo.out',scrollTrigger:{trigger:'#deal',start:'top 80%'}});
   gsap.to('#ttl2',{backgroundPosition:'200% 0',ease:'none',scrollTrigger:{trigger:'#welcome',start:'top bottom',end:'bottom top',scrub:true}});
   // reveals
   $$('.rv').forEach(el=>gsap.from(el,{y:50,opacity:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
