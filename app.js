@@ -223,6 +223,35 @@ addEventListener('keydown',e=>{if(!sheet.classList.contains('on'))return;
 // accessories (real photos)
 $$('[data-acc]').forEach(b=>b.addEventListener('click',()=>{const a=ACC[+b.dataset.acc];openSheet({name:a.name,type:a.type,desc:a.desc,sizes:a.sizes,def:a.def,src:`img/merch/${a.id}.jpg`});}));
 
+/* scrubber: caterpillar slider with arrows, shared by both merch galleries */
+const ARR_L='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',ARR_R='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>';
+function scrubber(root,{n,label,names,onSeek,onEnd,onStep}){
+  root.textContent='';
+  const mk=(tag,cls)=>{const e=document.createElement(tag);if(cls)e.className=cls;return e;};
+  const prev=mk('button','arr');prev.type='button';prev.setAttribute('aria-label','Предыдущая вещь');prev.innerHTML=ARR_L;
+  const next=mk('button','arr');next.type='button';next.setAttribute('aria-label','Следующая вещь');next.innerHTML=ARR_R;
+  const tr=mk('div','scrub');tr.tabIndex=0;tr.setAttribute('role','slider');tr.setAttribute('aria-label',label);tr.setAttribute('aria-valuemin','1');tr.setAttribute('aria-valuemax',String(n));
+  const segs=[];for(let i=0;i<n;i++){const sg=mk('i');segs.push(sg);tr.appendChild(sg);}
+  const th=mk('span','th');tr.appendChild(th);
+  const cnt=mk('span','cnt');
+  root.append(prev,tr,next,cnt);
+  let p=0,idx=-1,dragging=false;
+  const pad=v=>String(v).padStart(2,'0');
+  function set(v,i){p=Math.max(0,Math.min(1,v));if(i==null)i=Math.round(p*(n-1));
+    const W=tr.clientWidth,sw=segs[0].offsetWidth||W/n;th.style.width=sw+'px';th.style.transform=`translate(${p*(W-sw)}px,-50%)`;
+    const at=p*(n-1);segs.forEach((sg,k)=>{const d=Math.abs(k-at);sg.style.height=(4+9*Math.max(0,1-d/1.5))+'px';sg.classList.toggle('near',d<1.5);});
+    if(i!==idx){idx=i;cnt.textContent=`${pad(i+1)} / ${pad(n)}`;tr.setAttribute('aria-valuenow',String(i+1));tr.setAttribute('aria-valuetext',names[i]||String(i+1));prev.disabled=i<=0;next.disabled=i>=n-1;}}
+  const seekX=x=>{const r=tr.getBoundingClientRect(),sw=segs[0].offsetWidth||r.width/n;onSeek(Math.max(0,Math.min(1,(x-r.left-sw/2)/Math.max(1,r.width-sw))));};
+  tr.addEventListener('pointerdown',e=>{if(e.button>0)return;e.preventDefault();dragging=true;tr.classList.add('drag');try{tr.setPointerCapture(e.pointerId)}catch(_){}seekX(e.clientX);});
+  tr.addEventListener('pointermove',e=>{if(dragging)seekX(e.clientX);});
+  const end=()=>{if(!dragging)return;dragging=false;tr.classList.remove('drag');onEnd();};
+  ['pointerup','pointercancel','lostpointercapture'].forEach(t=>tr.addEventListener(t,end));
+  tr.addEventListener('keydown',e=>{const k=e.key;if(k==='ArrowRight'||k==='ArrowUp'){e.preventDefault();onStep(1);}else if(k==='ArrowLeft'||k==='ArrowDown'){e.preventDefault();onStep(-1);}
+    else if(k==='Home'){e.preventDefault();onStep(-n);}else if(k==='End'){e.preventDefault();onStep(n);}});
+  prev.addEventListener('click',()=>onStep(-1));next.addEventListener('click',()=>onStep(1));
+  addEventListener('resize',()=>set(p,idx));
+  set(0);return {set};}
+
 /* 3D rail */
 (function(){
 const cv=$('#railCv'); if(!window.THREE){$('#railLoad').textContent='3D недоступно в этом браузере';return;}
@@ -304,25 +333,44 @@ RAIL_ITEMS.forEach((it,i)=>{const pivot=new THREE.Group();pivot.position.set(i*G
   const hit=new THREE.Mesh(new THREE.PlaneGeometry(1.5,1.9),new THREE.MeshBasicMaterial({visible:false}));hit.position.set(i*GAP,-.55,0);hit.userData.i=i;scene.add(hit);
   groups.push({pivot,it,yaw:Math.PI*.44,target:Math.PI*.44,hold:false,meshes:[f,b],hit,sw:Math.random()*6,back:0});});
 const SIDE=Math.PI*.44;
-// camera / scroll
-let prog=0,camX=0;const progEl=$('#railProg');progEl.innerHTML=RAIL_ITEMS.map(()=>'<i></i>').join('');
+// camera / navigation: drag the rail, use the scrubber, arrows or keyboard
+let pos=0,posV=0,camX=0;
 function size(){const r=cv.getBoundingClientRect();renderer.setSize(r.width,r.height,false);cam.aspect=r.width/r.height;cam.updateProjectionMatrix();}
 size();addEventListener('resize',size);
-const railBox=$('#rail3d');let snapT=null;
-addEventListener('scroll',()=>{clearTimeout(snapT);snapT=setTimeout(()=>{const r=railBox.getBoundingClientRect(),span=r.height-innerHeight;if(r.top>0||r.bottom<innerHeight||held)return;
-  const p=-r.top/span,k=Math.round(p*(N-1)),tgt=scrollY+r.top+k/(N-1)*span;if(Math.abs(tgt-scrollY)<4)return;
-  lenis?lenis.scrollTo(tgt,{duration:.7}):scrollTo({top:tgt,behavior:'smooth'});},220);},{passive:true});
+const clampP=v=>Math.max(0,Math.min(N-1,v));
+const goTo=i=>{pos=clampP(Math.round(i));};
+// pixels on screen per one step between garments, so the rail follows the finger exactly
+const pxPerStep=()=>{const r=cv.getBoundingClientRect();const z=cam.position.z||5.4;return Math.max(1,r.width/(2*z*Math.tan(THREE.MathUtils.degToRad(cam.fov/2))*cam.aspect)*GAP);};
 let curI=-1;
+const scr=scrubber($('#railCtl'),{n:N,label:'Одежда на штанге',names:RAIL_ITEMS.map(it=>it.name+' · '+it.cn),
+  onSeek:p=>{pos=p*(N-1);},onEnd:()=>goTo(pos),onStep:d=>goTo(Math.round(pos)+d)});
 // interaction
 let visible=true;
-const ray=new THREE.Raycaster(),mp=new THREE.Vector2();let held=null,downT=0,downX=0,downY=0,moved=false;
+const ray=new THREE.Raycaster(),mp=new THREE.Vector2();
+let held=null,holdT=0,downT=0,downX=0,downY=0,moved=false,drag=null,downG=null;
 function pick(e){const r=cv.getBoundingClientRect();mp.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(mp,cam);
   const hit=ray.intersectObjects(groups.map(g=>g.hit),false)[0];return hit?groups[hit.object.userData.i]:null;}
-cv.addEventListener('pointerdown',e=>{if(e.button>0)return;const g=pick(e);if(!g)return;held=g;g.hold=true;g.target=0;downT=performance.now();downX=e.clientX;downY=e.clientY;moved=false;cv.classList.add('hold');});
-addEventListener('pointermove',e=>{if(!held){if(!visible||e.target!==cv||e.pointerType!=='mouse')return;const g=pick(e);cv.style.cursor=g?'grab':'default';return;}const dx=e.clientX-downX,dy=e.clientY-downY;if(Math.abs(dx)+Math.abs(dy)>8)moved=true;if(Math.abs(dy)>40&&Math.abs(dy)>Math.abs(dx)*1.5){release();return;}held.target=dx*.008;});
-function release(){if(!held)return;const g=held;held=null;g.hold=false;cv.classList.remove('hold');g.back=performance.now()+1400;}
-addEventListener('pointerup',e=>{if(!held)return;const g=held;const quick=performance.now()-downT<260&&!moved;release();if(quick||!moved&&performance.now()-downT<700)open3d(g);});
-addEventListener('pointercancel',release);
+function releaseHold(){if(!held)return;const g=held;held=null;g.hold=false;cv.classList.remove('hold');g.back=performance.now()+1400;}
+cv.addEventListener('pointerdown',e=>{if(e.button>0)return;downT=performance.now();downX=e.clientX;downY=e.clientY;moved=false;downG=pick(e);
+  drag={startPos:pos,lastX:e.clientX,lastT:downT,v:0,active:false,id:e.pointerId};
+  clearTimeout(holdT);if(downG)holdT=setTimeout(()=>{if(!moved&&drag){held=downG;held.hold=true;held.target=0;cv.classList.add('hold');}},220);});
+addEventListener('pointermove',e=>{
+  if(!drag){if(!visible||e.target!==cv||e.pointerType!=='mouse')return;cv.style.cursor=pick(e)?'pointer':'grab';return;}
+  const dx=e.clientX-downX,dy=e.clientY-downY;
+  if(!drag.active){
+    if(Math.abs(dx)>8&&Math.abs(dx)>Math.abs(dy)){drag.active=true;moved=true;clearTimeout(holdT);releaseHold();cv.classList.add('drag');try{cv.setPointerCapture(drag.id)}catch(_){}}
+    else{if(Math.abs(dy)>10)moved=true;return;}}
+  const now=performance.now();pos=Math.max(-.35,Math.min(N-1+.35,drag.startPos-dx/pxPerStep()));
+  drag.v=(e.clientX-drag.lastX)/Math.max(1,now-drag.lastT);drag.lastX=e.clientX;drag.lastT=now;});
+addEventListener('pointerup',()=>{if(!drag)return;clearTimeout(holdT);const d=drag;drag=null;cv.classList.remove('drag');
+  if(d.active){goTo(pos-Math.max(-1.4,Math.min(1.4,d.v*180/pxPerStep())));return;}            // fling to the nearest garment
+  const wasHeld=!!held;releaseHold();
+  if(!moved&&downG&&performance.now()-downT<700){const i=groups.indexOf(downG);if(i!==Math.round(pos)&&!wasHeld)goTo(i);else open3d(downG);}});
+addEventListener('pointercancel',()=>{clearTimeout(holdT);if(drag&&drag.active)goTo(pos);drag=null;releaseHold();cv.classList.remove('drag');});
+// horizontal trackpad swipe moves the rail; vertical wheel keeps scrolling the page
+let wT=0;cv.addEventListener('wheel',e=>{if(Math.abs(e.deltaX)<=Math.abs(e.deltaY))return;e.preventDefault();pos=Math.max(-.35,Math.min(N-1+.35,pos+e.deltaX/pxPerStep()));clearTimeout(wT);wT=setTimeout(()=>goTo(pos),140);},{passive:false});
+cv.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();goTo(Math.round(pos)+1);}else if(e.key==='ArrowLeft'){e.preventDefault();goTo(Math.round(pos)-1);}
+  else if(e.key==='Enter'||e.key===' '){e.preventDefault();open3d(groups[clampP(Math.round(pos))]);}});
 function open3d(g){const it=g.it;let src=it.photo,note='';
   if(!src){src=snapshot(g);note='3D-превью · фото появится после съёмки';}
   openSheet({name:it.name,cn:it.cn,type:'Одежда',desc:it.desc,sizes:CLOTH_SIZES,def:'M',src,note});}
@@ -338,11 +386,12 @@ new IntersectionObserver(es=>es.forEach(en=>visible=en.isIntersecting)).observe(
 $('#railLoad').remove();
 let last=performance.now();
 (function tick(now){requestAnimationFrame(tick);if(!visible)return;const dt=Math.min(.05,(now-last)/1000);last=now;
-  {const r=railBox.getBoundingClientRect();prog=Math.max(0,Math.min(1,-r.top/Math.max(1,r.height-innerHeight)));}
-  const tx=prog*(N-1)*GAP;camX+=(tx-camX)*Math.min(1,dt*12);
+  if(!drag||!drag.active){if(pos<0||pos>N-1)pos+= (clampP(pos)-pos)*Math.min(1,dt*10);}
+  posV+=(pos-posV)*Math.min(1,dt*(drag&&drag.active?20:7));camX=posV*GAP;
   const asp=cam.aspect;const z=asp<.8?8.2:(asp<1.2?6.4:5.4);
   cam.position.set(camX,-.2,z);cam.lookAt(camX,-.58,0);
-  const ci=Math.max(0,Math.min(N-1,Math.round(camX/GAP)));if(ci!==curI){curI=ci;$('#railName').textContent=RAIL_ITEMS[ci].name+' · '+RAIL_ITEMS[ci].cn;$('#railType').textContent=RAIL_ITEMS[ci].type==='hoodie'?'Худи':'Футболка';$$('#railProg i').forEach((e,k)=>e.classList.toggle('on',k===ci));}
+  const ci=Math.max(0,Math.min(N-1,Math.round(posV)));if(ci!==curI){curI=ci;$('#railName').textContent=RAIL_ITEMS[ci].name+' · '+RAIL_ITEMS[ci].cn;$('#railType').textContent=RAIL_ITEMS[ci].type==='hoodie'?'Худи':'Футболка';}
+  scr.set(clampP(posV)/(N-1),ci);
   groups.forEach(g=>{if(!g.hold&&g.back&&now>g.back){g.target=SIDE;g.back=0;}
     g.yaw+=(g.target-g.yaw)*Math.min(1,dt*(g.hold?5:2.4));
     g.sw+=dt;const swing=reduce?0:Math.sin(g.sw*1.3)*.025*(1-Math.min(1,Math.abs(g.target-g.yaw)));
@@ -350,6 +399,30 @@ let last=performance.now();
   renderer.render(scene,cam);})(last);
 })();
 
+
+/* ---------- accessories gallery: swipe / drag / scrubber */
+(()=>{
+const track=$('#track'),items=$$('#track .item');if(!track||!items.length)return;
+const maxS=()=>Math.max(1,track.scrollWidth-track.clientWidth);
+const nearest=sl=>{if(sl<=2)return 0;if(sl>=maxS()-2)return items.length-1;const c=sl+track.clientWidth/2;let b=0,bd=1e9;items.forEach((it,i)=>{const d=Math.abs(it.offsetLeft+it.offsetWidth/2-c);if(d<bd){bd=d;b=i;}});return b;};
+const toItem=(i,smooth=true)=>{i=Math.max(0,Math.min(items.length-1,i));const it=items[i];track.scrollTo({left:Math.max(0,Math.min(maxS(),it.offsetLeft-(track.clientWidth-it.offsetWidth)/2)),behavior:smooth&&!reduce?'smooth':'auto'});};
+const hs=scrubber($('#hsCtl'),{n:items.length,label:'Аксессуары и полиграфия',names:items.map(it=>{const b=it.querySelector('.meta b');return b?b.textContent:'';}),
+  onSeek:p=>{track.classList.add('seek');track.scrollLeft=p*maxS();},onEnd:()=>{track.classList.remove('seek');toItem(nearest(track.scrollLeft));},onStep:d=>toItem(nearest(track.scrollLeft)+d)});
+const sync=()=>hs.set(track.scrollLeft/maxS(),nearest(track.scrollLeft));
+track.addEventListener('scroll',sync,{passive:true});addEventListener('resize',sync);
+// mouse drag (touch already swipes natively)
+let hd=null,suppress=0;
+track.querySelectorAll('img').forEach(im=>im.draggable=false);
+track.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button>0)return;hd={x:e.clientX,sl:track.scrollLeft,moved:false,id:e.pointerId,v:0,lx:e.clientX,lt:performance.now()};});
+track.addEventListener('pointermove',e=>{if(!hd)return;const dx=e.clientX-hd.x;
+  if(!hd.moved&&Math.abs(dx)>6){hd.moved=true;track.classList.add('drag');try{track.setPointerCapture(hd.id)}catch(_){}}
+  if(hd.moved){track.scrollLeft=hd.sl-dx;const n=performance.now();hd.v=(e.clientX-hd.lx)/Math.max(1,n-hd.lt);hd.lx=e.clientX;hd.lt=n;}});
+const hdEnd=()=>{if(!hd)return;const d=hd;hd=null;if(!d.moved)return;track.classList.remove('drag');suppress=performance.now()+80;toItem(nearest(track.scrollLeft-Math.max(-track.clientWidth*.6,Math.min(track.clientWidth*.6,d.v*220))));};
+['pointerup','pointercancel','lostpointercapture'].forEach(t=>track.addEventListener(t,hdEnd));
+// a drag must not count as a click on the photo underneath
+track.addEventListener('click',e=>{if(performance.now()<suppress){e.preventDefault();e.stopPropagation();}},true);
+sync();
+})();
 
 /* ---------- store tour */
 (()=>{
@@ -499,11 +572,6 @@ if(hasG&&!reduce){
   // seal rotation (time + scroll boost)
   let rot=0,boost=0;ScrollTrigger.create({trigger:'#seal',start:'top bottom',end:'bottom top',onUpdate:s=>{boost=Math.min(6,Math.abs(s.getVelocity())/300)}});
   gsap.ticker.add(()=>{rot+=.12+boost;boost*=.92;$('#ringA').setAttribute('transform',`rotate(${rot} 250 250)`);$('#ringB').setAttribute('transform',`rotate(${-rot*.7} 250 250)`)});
-  // horizontal carriers
-  gsap.matchMedia().add('(min-width:761px)',()=>{const tr=$('#track');
-      const tw=gsap.to(tr,{x:()=>-(tr.scrollWidth-innerWidth),ease:'none',scrollTrigger:{trigger:'#hs',start:'top top',end:()=>'+='+(tr.scrollWidth-innerWidth),pin:true,scrub:.8,invalidateOnRefresh:true,anticipatePin:1}});
-      $$('.item .scene').forEach(s=>gsap.from(s.firstElementChild,{scale:.8,rotate:-6,ease:'none',scrollTrigger:{trigger:s,containerAnimation:tw,start:'left right',end:'center center',scrub:true}}));
-    });
   gsap.from('.stk',{scale:0,rotate:-40,duration:.8,ease:'back.out(2)',stagger:.08,scrollTrigger:{trigger:'#stickers',start:'top 80%'}});
   // footer
   gsap.from('footer .huge',{yPercent:30,opacity:0,scale:.9,duration:1.4,ease:'expo.out',scrollTrigger:{trigger:'footer',start:'top 80%'}});
