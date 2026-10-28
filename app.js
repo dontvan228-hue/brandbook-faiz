@@ -428,7 +428,7 @@ sync();
 (()=>{
 const app=document.getElementById('tour'); if(!app) return;
 const S=[
-  {id:'facade',name:'Фасад',zone:'Улица',img:'img/facade.jpg?v=5',f:[.46,.6],
+  {id:'facade',name:'Фасад',zone:'Улица',img:'img/facade.jpg?v=6',f:[.46,.6],
    text:'Неоновая вывеска, панорамные витрины и узор из фирменных завитков. Дверь подсвечена — заходите.',
    door:{x:37.4,y:39.5,w:17.3,h:54.5},spots:[]},
   {id:'main',name:'Главный зал',zone:'Зал',img:'img/interior.jpg?v=5',f:[.5,.5],
