@@ -43,7 +43,16 @@ if(tp){
       outline:'M150 44 L72 68 Q44 82 36 132 L10 420 L60 432 L84 190 L84 440 L316 440 L316 190 L340 432 L390 420 L364 132 Q356 82 328 68 L250 44 Z',
       outlineB:'M150 44 L72 68 Q44 82 36 132 L10 420 L60 432 L84 190 L84 440 L316 440 L316 190 L340 432 L390 420 L364 132 Q356 82 328 68 L250 44 Z',
       seams:'M84 418 L316 418 M14 396 L62 408 M386 396 L338 408 M112 56 Q92 120 84 190 M288 56 Q308 120 316 190',
-      chest:'58',length:'70'}};
+      chest:'58',length:'70'},
+    polo:{
+      outline:'M150 30 L200 58 L250 30 L330 52 L392 120 L346 160 L318 136 L318 440 L82 440 L82 136 L54 160 L8 120 L70 52 Z',
+      outlineB:'M146 30 Q200 44 254 30 L330 52 L392 120 L346 160 L318 136 L318 440 L82 440 L82 136 L54 160 L8 120 L70 52 Z',
+      seams:'M108 40 Q92 90 82 136 M292 40 Q308 90 318 136 M82 426 L318 426 M18 128 L58 150 M382 128 L342 150 M82 400 L96 440 M318 400 L304 440'}};
+  // polo collar + button placket, drawn over the body
+  const poloTop=(c,back)=>back
+    ?`<path d="M146 30 Q200 44 254 30 L250 18 Q200 34 150 18 Z" fill="${c.body}" stroke="rgba(0,0,0,.4)" stroke-width="1.5"/>`
+    :`<rect x="191" y="58" width="18" height="74" rx="2" fill="${c.body}" stroke="rgba(0,0,0,.35)" stroke-width="1.2"/>${[76,98,120].map(y=>`<circle cx="200" cy="${y}" r="3" fill="none" stroke="${c.seam}" stroke-width="1.5"/>`).join('')}
+      <path d="M150 30 L128 46 L178 86 L200 58 Z M250 30 L272 46 L222 86 L200 58 Z" fill="${c.body}" stroke="rgba(0,0,0,.45)" stroke-width="1.5"/>`;
   // gold dimension line with end ticks and label
   const dim=(x1,y1,x2,y2,label,dx=0,dy=0)=>{const v=x1===x2;const tk=v?`M${x1-5} ${y1}h10M${x2-5} ${y2}h10`:`M${x1} ${y1-5}v10M${x2} ${y2-5}v10`;
     const lx=(x1+x2)/2+dx,ly=(y1+y2)/2+dy;
@@ -57,18 +66,24 @@ if(tp){
     'hoodie-front':{draw:c=>`<path d="M200 46 L200 440" stroke="${c.seam}" stroke-width="3"/><path d="M200 46 L200 440" stroke="${c.ink==GOLD?GD:c.ink}" stroke-width="1" stroke-dasharray="2 3" opacity=".6"/>${mk(240,96,36,c.ink)}<path d="M102 318 L176 318 L176 404 L96 404 Z M298 318 L224 318 L224 404 L304 404 Z" fill="none" stroke="${c.seam}" stroke-width="2"/><text transform="translate(48 330) rotate(-84)" font-family="${UF}" font-size="18" fill="${c.ink==GOLD?GD:c.ink}">Faiz</text>${dim(232,60,232,96,'14 см',-28)}${dim(240,142,272,142,'9 см',0,14)}${callout(272,112,366,92,'1')}${callout(46,312,-6,268,'2')}`,
       rows:[['1 · Знак «Ф»','Левая сторона груди, 14 см от плечевого шва'],['Размер','Высота 9 см'],['2 · Надпись Faiz','Левый рукав, высота 4 см'],['Нанесение','Вышивка, нить в цвет логотипа'],['Материал','Футер трёхнитка с начёсом 320–360 г/м², молния в цвет']]},
     'hoodie-back':{draw:c=>{const ic=c.ink==GOLD?GD:c.ink;return `<path d="M150 44 Q148 0 200 -2 Q252 0 250 44 Z" fill="${c.body}" stroke="rgba(0,0,0,.35)" stroke-width="1.5"/><path d="M200 -2 L200 44" stroke="${c.seam}" stroke-width="2"/><defs><path id="tpRing" d="M200 200 m-50 0 a50 50 0 1 1 100 0 a50 50 0 1 1 -100 0"/></defs><circle cx="200" cy="200" r="62" fill="none" stroke="${ic}" stroke-width="2"/><circle cx="200" cy="200" r="38" fill="none" stroke="${ic}" stroke-width="1" stroke-dasharray="2 4"/><text font-family="${UF}" font-size="13" fill="${ic}"><textPath href="#tpRing" textLength="300">Faiz · Quality · Trust · Comfort ·</textPath></text>${mk(186,184,32,c.ink)}${dim(138,286,262,286,'30 см',0,0)}${dim(300,50,300,138,'16 см',22)}${callout(250,160,350,120,'1')}`},
-      rows:[['1 · Печать','Графический элемент по центру спины, 16 см от воротника'],['Размер','Диаметр 30 см'],['Нанесение','Шелкография, для золота — металлизированная краска'],['Капюшон','Без нанесения, двойной, шнурки в цвет']]}
+      rows:[['1 · Печать','Графический элемент по центру спины, 16 см от воротника'],['Размер','Диаметр 30 см'],['Нанесение','Шелкография, для золота — металлизированная краска'],['Капюшон','Без нанесения, двойной, шнурки в цвет']]},
+    'polo-front':{draw:c=>`${mk(250,104,26,c.ink)}<rect x="104" y="106" width="56" height="20" rx="3" fill="${CR}" opacity=".92"/>${t(132,120,9,'ИМЯ',{c:OL,a:'middle',w:700,ls:1})}${dim(244,70,244,104,'8 см',-26)}${dim(250,138,273,138,'6 см',0,14)}${callout(273,110,360,90,'1')}${callout(104,116,40,92,'2')}`,
+      rows:[['1 · Знак «Ф»','Левая сторона груди, 8 см ниже плечевого шва'],['Размер','Высота 6 см'],['Нанесение','Вышивка, золотистая нить'],['2 · Бейдж','Правая сторона груди, имя сотрудника'],['Материал','Пике, хлопок 95 % + эластан 5 %, 210–230 г/м²']]},
+    'polo-back':{draw:c=>`${wm(152,72,96,c.ink)}${t(200,142,12,'КОНСУЛЬТАНТ',{c:c.ink==GOLD?GD:c.ink,a:'middle',w:700,ls:1.5})}${dim(200,40,200,72,'7 см',30)}${dim(158,166,242,166,'19 см',0,16)}${callout(248,96,350,80,'3')}${callout(240,138,350,140,'4')}`,
+      rows:[['3 · Логотип','По центру спины, 7 см от воротника'],['Размер','Ширина 22 см'],['4 · Подпись','«КОНСУЛЬТАНТ» под логотипом, отступ 2 см, ширина 19 см'],['Нанесение','Шелкография или термотрансфер']]}
   };
   const SIZES={tee:[['Размер','S','M','L','XL','XXL'],['Ширина груди','50','52','55','58','61'],['Длина','69','72','74','76','78']],
-    hoodie:[['Размер','S','M','L','XL','XXL'],['Ширина груди','56','58','61','64','67'],['Длина','68','70','72','74','76']]};
+    hoodie:[['Размер','S','M','L','XL','XXL'],['Ширина груди','56','58','61','64','67'],['Длина','68','70','72','74','76']],
+    polo:[['Размер','S','M','L','XL','XXL'],['Ширина груди','51','53','56','59','62'],['Длина','70','72','74','76','78']]};
   const svgEl=$('#tpSvg'),spec=$('#tpSpec'),sizes=$('#tpSizes');
   const render=()=>{const g=G[S.item],c=COLORS[S.c],k=S.item+'-'+S.side,back=S.side==='back';
     const body=`<path d="${back?g.outlineB:g.outline}" fill="${c.body}" stroke="rgba(0,0,0,.4)" stroke-width="1.5"/>
       ${S.item==='hoodie'&&!back?`<path d="M150 44 Q150 6 200 6 Q250 6 250 44 L238 48 Q230 22 200 22 Q170 22 162 48 Z" fill="${c.body}" stroke="rgba(0,0,0,.35)" stroke-width="1.5"/><path d="M162 48 Q170 22 200 22 Q230 22 238 48" fill="none" stroke="${c.seam}" stroke-width="2"/>`:''}
       <path d="${g.seams}" fill="none" stroke="${c.seam}" stroke-width="1.5" stroke-dasharray="${S.item==='tee'?'4 3':'0'}"/>
-      ${S.item==='tee'?`<path d="${back?g.collarB:g.collar}" fill="none" stroke="${c.seam}" stroke-width="5"/>`:''}`;
+      ${S.item==='tee'?`<path d="${back?g.collarB:g.collar}" fill="none" stroke="${c.seam}" stroke-width="5"/>`:''}
+      ${S.item==='polo'?poloTop(c,back):''}`;
     svgEl.innerHTML=`<g class="fadein">${body}${SPEC[k].draw(c)}</g>`;
-    svgEl.setAttribute('aria-label',`Техкарта: ${S.item==='tee'?'футболка':'худи'}, ${back?'спина':'перед'}, цвет ${c.n}`);
+    svgEl.setAttribute('aria-label',`Техкарта: ${({tee:'футболка',hoodie:'худи',polo:'поло персонала'})[S.item]}, ${back?'спина':'перед'}, цвет ${c.n}`);
     spec.innerHTML='';SPEC[k].rows.concat([['Цвет изделия / логотипа',`${c.n} / ${c.ink===GOLD?'золото':c.ink===CR?'крем':'олива'}`]]).forEach(([a,b])=>{const tr=document.createElement('tr');const th=document.createElement('th');th.textContent=a;const td=document.createElement('td');td.textContent=b;tr.append(th,td);spec.appendChild(tr);});
     sizes.innerHTML=SIZES[S.item].map((r,i)=>`<tr>${r.map(v=>i?`<td>${v}</td>`:`<th>${v}</th>`).join('')}</tr>`).join('');
     $('#tpCn').textContent=c.n;};
@@ -127,8 +142,10 @@ if(tp){
      `<rect width="400" height="120" rx="8" fill="#fff"/>${mk(20,32,56,OL)}<path d="M80 24V96" stroke="${GD}" stroke-width="2"/>${t(96,44,15,'Имя Фамилия',{c:'#1a1a1a',w:700})}${t(96,62,10,'Консультант · ФАЙЗ',{c:OL})}${t(96,82,10,'+7 000 000-00-00',{c:'#555'})}${t(96,98,9,'Адрес магазина · 18+',{c:'#777'})}`)],
    ['team','Бейдж сотрудника','86 × 54 мм','Имя — крупно, должность — капсом золотом. Одинаковый во всех точках.',svg('0 0 300 190',
      `<rect width="300" height="190" rx="12" fill="${CR}"/><path d="M12 0H288A12 12 0 0 1 300 12V48H0V12A12 12 0 0 1 12 0Z" fill="${OL}"/><rect x="130" y="9" width="40" height="7" rx="3.5" fill="${INK}" opacity=".45"/>${wm(20,14,62,GOLD)}${t(280,34,9,'18+',{a:'end',o:.8})}${t(20,102,32,'Имя',{c:OL,w:800})}${t(20,126,11,'КОНСУЛЬТАНТ',{c:GDK,ls:3})}<path d="M20 146H280" stroke="${OL}" opacity=".15"/>${t(20,172,13,'Спросите меня о линейках',{f:CG,it:1,c:OL})}`)],
-   ['team','Фартук консультанта','Хлопок · олива','Знак золотой вышивкой на груди, логотип на кармане.',svg('0 0 220 300',
-     `<path d="M80 6 Q110 -14 140 6" fill="none" stroke="${OL}" stroke-width="5"/><path d="M70 20H150V60Q190 70 196 110L186 292H34L24 110Q30 70 70 60Z" fill="${OL}"/><path d="M24 110 L-4 120 M196 110 L224 120" stroke="${OL}" stroke-width="5"/>${mk(97,32,30,GOLD)}<rect x="60" y="172" width="100" height="54" rx="3" fill="none" stroke="${CR}" opacity=".3" stroke-dasharray="3 3"/>${wm(78,188,64,CR,.9)}`)],
+   ['team','Поло консультанта','Пике · олива','Форма персонала: знак золотой вышивкой на груди, бейдж с именем, «КОНСУЛЬТАНТ» на спине.',svg('0 0 300 260',
+     `<g transform="translate(-6 4) scale(.56)"><path d="M150 30 L200 58 L250 30 L330 52 L392 120 L346 160 L318 136 L318 440 L82 440 L82 136 L54 160 L8 120 L70 52 Z" fill="${OL}"/><rect x="191" y="58" width="18" height="74" rx="2" fill="${OL}" stroke="rgba(0,0,0,.35)"/><path d="M150 30 L128 46 L178 86 L200 58 Z M250 30 L272 46 L222 86 L200 58 Z" fill="${OL}" stroke="rgba(0,0,0,.45)" stroke-width="1.5"/>${mk(250,104,26,GOLD)}<rect x="104" y="106" width="56" height="20" rx="3" fill="${CR}"/>${t(132,120,9,'ИМЯ',{c:OL,a:'middle',w:700})}</g>
+      <g transform="translate(160 4) scale(.36)"><path d="M146 30 Q200 44 254 30 L330 52 L392 120 L346 160 L318 136 L318 440 L82 440 L82 136 L54 160 L8 120 L70 52 Z" fill="${OL}"/>${wm(152,72,96,GOLD)}${t(200,142,12,'КОНСУЛЬТАНТ',{c:GD,a:'middle',w:700,ls:1.5})}</g>
+      ${t(116,252,9,'ПЕРЕД',{c:GD,a:'middle',ls:2})}${t(232,180,9,'СПИНА',{c:GD,a:'middle',ls:2})}`)],
    ['team','Сторис · вакансия','1080 × 1920 px','Тёмный фон, золотая кнопка, знак «Ф» водяным знаком.',svg('0 0 180 320',
      `<rect width="180" height="320" rx="14" fill="${INK}"/><rect x="14" y="14" width="152" height="3" rx="1.5" fill="${CR}" opacity=".25"/><rect x="14" y="14" width="90" height="3" rx="1.5" fill="${CR}"/>${mk(40,150,110,GD,.12)}${b18(138,26,CR,.75)}${t(18,74,19,'Мы ищем',{f:CG,it:1,c:GD})}${t(18,104,20,'КОНСУЛЬТАНТА',{w:800})}${['— обучение по стандарту','— график 2/2','— команда и рост'].map((s,i)=>t(18,136+i*16,9.5,s,{o:.75})).join('')}<rect x="18" y="262" width="144" height="30" rx="15" fill="${GD}"/>${t(90,281,9,'ОТКЛИКНУТЬСЯ',{c:INK,a:'middle',w:700,ls:2})}`)]
   ];
@@ -136,6 +153,18 @@ if(tp){
     f.innerHTML=`<div class="tv">${art}</div><figcaption><span>${size}</span><b>${title}</b><small>${desc}</small></figcaption>`;grid.appendChild(f);});
   $$('#tFilter button').forEach(b=>b.addEventListener('click',()=>{const c=b.dataset.c;$$('#tFilter button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
     $$('#tGrid .tpl').forEach(f=>{f.hidden=!(c==='all'||f.dataset.c===c);});if(window.ScrollTrigger)ScrollTrigger.refresh();}));}}
+
+/* ---------- partner contacts & KPIs from contacts.js */
+{const cfg=window.FAIZ||{},c=cfg.contacts||{},links=[];const clean=v=>String(v||'').trim();
+  if(clean(c.email))links.push(['Написать на почту','mailto:'+encodeURIComponent(clean(c.email)).replace('%40','@')+'?subject='+encodeURIComponent('Партнёрство с ФАЙЗ'),clean(c.email)]);
+  if(clean(c.telegram)){const tg=clean(c.telegram).replace(/^@|^https?:\/\/t\.me\//,'');if(/^[A-Za-z0-9_]{3,64}$/.test(tg))links.push(['Telegram','https://t.me/'+tg,'@'+tg]);}
+  if(clean(c.phone)){const p=clean(c.phone).replace(/[^\d+]/g,'');if(p.length>5)links.push(['Позвонить','tel:'+p,clean(c.phone)]);}
+  const mkA=(href,txt,cls)=>{const a=document.createElement('a');a.href=href;a.textContent=txt;if(cls)a.className=cls;if(href.startsWith('https:')){a.target='_blank';a.rel='noopener';}return a;};
+  const acts=$('#dealActs'),fc=$('#fContacts');
+  links.forEach(([lab,href,show],i)=>{if(acts)acts.appendChild(mkA(href,i?lab:lab+' →',i?'':'main'));if(fc)fc.appendChild(mkA(href,show));});
+  if(acts&&!links.length)acts.hidden=true;
+  const kp=Array.isArray(cfg.kpi)?cfg.kpi.filter(k=>k&&clean(k.v)&&clean(k.l)):[];
+  if(kp.length&&$('#kpis')){$('#kpiWrap').hidden=false;kp.forEach(k=>{const d=document.createElement('div');d.className='rv';const b=document.createElement('b');b.className='gold-text';b.textContent=clean(k.v);const sp=document.createElement('span');sp.textContent=clean(k.l);d.append(b,sp);$('#kpis').appendChild(d);});}}
 
 /* ---------- payback calculator: one series, cumulative cash vs. months */
 {const C=$('#calc');if(C){

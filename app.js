@@ -79,7 +79,7 @@ for(let i=0;i<110;i++)D.push({x:Math.random(),y:Math.random(),r:Math.random()*Ma
 
 /* marquees */
 const mqHTML=()=>{let s='';for(let k=0;k<2;k++){['Faiz','Quality','Trust','Comfort','Atmosphere','Choice'].forEach(w=>{s+=`<span>${w}<svg viewBox="44 44 344.5 391.25"><use href="#pF"/></svg></span>`});}return s};
-['#mq1','#mq2','#mq3','#mq4'].forEach(s=>{$(s).innerHTML=mqHTML()});
+['#mq1','#mq2','#mq3'].forEach(s=>{const m=$(s);if(m)m.innerHTML=mqHTML();});
 
 /* ---------- logo story: build drawable paths */
 const ds=$('#drawSvg'); const parts=['F','A','Y','B','Z'];
@@ -557,19 +557,6 @@ show(0);
     d.innerHTML=`<span class="s">Аа</span><span style="font-size:12px;letter-spacing:.14em;text-transform:uppercase">${n}</span><span class="r"><span>${r.toFixed(1).replace('.',',')} : 1</span><em>${lvl}</em></span>`;
     box.appendChild(d);});}
 
-/* ---------- partner contacts & KPIs from #cfg */
-{let cfg={};try{cfg=JSON.parse($('#cfg').textContent)||{};}catch(e){}
-  const c=cfg.contacts||{},links=[];
-  const clean=v=>String(v||'').trim();
-  if(clean(c.email))links.push(['Написать на почту','mailto:'+encodeURIComponent(clean(c.email)).replace('%40','@')+'?subject='+encodeURIComponent('Партнёрство с ФАЙЗ'),clean(c.email)]);
-  if(clean(c.telegram)){const t=clean(c.telegram).replace(/^@|^https?:\/\/t\.me\//,'');if(/^[A-Za-z0-9_]{3,64}$/.test(t))links.push(['Telegram','https://t.me/'+t,'@'+t]);}
-  if(clean(c.phone)){const p=clean(c.phone).replace(/[^\d+]/g,'');if(p.length>5)links.push(['Позвонить','tel:'+p,clean(c.phone)]);}
-  const mk=(href,txt,cls)=>{const a=document.createElement('a');a.href=href;a.textContent=txt;if(cls)a.className=cls;if(href.startsWith('https:')){a.target='_blank';a.rel='noopener';}return a;};
-  links.forEach(([lab,href,show],i)=>{$('#dealActs').appendChild(mk(href,i?lab:lab+' →',i?'':'main'));$('#fContacts').appendChild(mk(href,show));});
-  if(!links.length)$('#dealActs').hidden=true;
-  const kp=Array.isArray(cfg.kpi)?cfg.kpi.filter(k=>k&&clean(k.v)&&clean(k.l)):[];
-  if(kp.length){$('#kpiWrap').hidden=false;kp.forEach(k=>{const d=document.createElement('div');d.className='rv';const b=document.createElement('b');b.className='gold-text';b.textContent=clean(k.v);const s=document.createElement('span');s.textContent=clean(k.l);d.append(b,s);$('#kpis').appendChild(d);});}}
-
 /* ---------- GSAP choreography */
 if(hasG&&!reduce){
   gsap.registerPlugin(ScrollTrigger);
@@ -589,9 +576,7 @@ if(hasG&&!reduce){
   $$('.big-title').forEach(t=>gsap.from(t.querySelectorAll('.ln > span'),{yPercent:110,rotate:4,duration:1.2,ease:'expo.out',stagger:.12,scrollTrigger:{trigger:t,start:'top 85%'}}));
   // platform scales, roadmap line
   $$('.scale .bar').forEach(b=>{const v=b.style.getPropertyValue('--v').trim();gsap.fromTo(b,{'--v':'0%'},{'--v':v,duration:1.6,ease:'expo.out',scrollTrigger:{trigger:b,start:'top 90%'}});});
-  gsap.fromTo('#road .ln',{scaleX:0,scaleY:0},{scaleX:1,scaleY:1,ease:'none',scrollTrigger:{trigger:'#road',start:'top 80%',end:'bottom 60%',scrub:true}});
   gsap.from('.ratio > div',{flexGrow:0,duration:1.4,ease:'expo.inOut',stagger:.08,scrollTrigger:{trigger:'.ratio',start:'top 85%'}});
-  gsap.from('#deal .bgF',{rotate:-20,scale:.7,opacity:0,duration:1.6,ease:'expo.out',scrollTrigger:{trigger:'#deal',start:'top 80%'}});
   gsap.to('#ttl2',{backgroundPosition:'200% 0',ease:'none',scrollTrigger:{trigger:'#welcome',start:'top bottom',end:'bottom top',scrub:true}});
   // reveals
   $$('.rv').forEach(el=>gsap.from(el,{y:50,opacity:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
