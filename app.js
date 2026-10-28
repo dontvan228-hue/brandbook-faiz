@@ -588,7 +588,7 @@ if(hasG&&!reduce){
   // big title
   $$('.big-title').forEach(t=>gsap.from(t.querySelectorAll('.ln > span'),{yPercent:110,rotate:4,duration:1.2,ease:'expo.out',stagger:.12,scrollTrigger:{trigger:t,start:'top 85%'}}));
   // platform scales, roadmap line
-  $$('.scale .bar').forEach(b=>gsap.from(b,{'--v':'0%',duration:1.6,ease:'expo.out',scrollTrigger:{trigger:b,start:'top 90%'}}));
+  $$('.scale .bar').forEach(b=>{const v=b.style.getPropertyValue('--v').trim();gsap.fromTo(b,{'--v':'0%'},{'--v':v,duration:1.6,ease:'expo.out',scrollTrigger:{trigger:b,start:'top 90%'}});});
   gsap.fromTo('#road .ln',{scaleX:0,scaleY:0},{scaleX:1,scaleY:1,ease:'none',scrollTrigger:{trigger:'#road',start:'top 80%',end:'bottom 60%',scrub:true}});
   gsap.from('.ratio > div',{flexGrow:0,duration:1.4,ease:'expo.inOut',stagger:.08,scrollTrigger:{trigger:'.ratio',start:'top 85%'}});
   gsap.from('#deal .bgF',{rotate:-20,scale:.7,opacity:0,duration:1.6,ease:'expo.out',scrollTrigger:{trigger:'#deal',start:'top 80%'}});
