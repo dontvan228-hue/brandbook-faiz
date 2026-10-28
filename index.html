@@ -177,7 +177,7 @@ nav.top ul a:hover{color:var(--cream)} nav.top ul a:hover::after{transform:scale
 @media (max-width:480px){.mis{grid-template-columns:1fr}}
 .mcard{position:relative;border:1px solid var(--line);border-radius:10px;aspect-ratio:4/3;max-width:100%;display:grid;place-items:center;background:var(--deep);overflow:hidden}
 .mcard .lg{width:52%;transition:transform .7s cubic-bezier(.6,0,.2,1),opacity .7s,filter .7s}
-.mcard .lg svg{width:100%;height:auto;fill:var(--cream);transition:fill .7s}
+.mcard .lg svg{width:100%;height:auto;fill:var(--cream);transition:fill .7s;overflow:visible}
 .mcard .x{position:absolute;top:14px;right:14px;width:26px;height:26px;border-radius:50%;background:var(--bad);display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;transition:background .5s}
 .mcard .x::before{content:"✕"}
 .mcard .cap{position:absolute;left:16px;bottom:12px;right:16px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
@@ -696,7 +696,7 @@ footer .contacts a{text-decoration:none;color:var(--cream);font-size:14px;letter
     <h2 class="h">Брендбук<br>за 30 секунд</h2>
     <p style="margin-top:18px">Всё главное на одном экране. Распечатайте и повесьте рядом с рабочим местом дизайнера.</p>
     <div class="bento">
-      <div class="k2 big rv" style="background:radial-gradient(circle at 50% 40%,#123726,var(--ink) 75%)"><small style="color:var(--gold)">Логотип</small><svg viewBox="44 44 819.75 391.25"><use href="#wm"/></svg><span style="font-size:14px;color:var(--muted)">Только готовым файлом, с полем X со всех сторон.</span></div>
+      <div class="k2 big rv" style="background:radial-gradient(circle at 50% 40%,#123726,var(--ink) 75%)"><small style="color:var(--gold)">Логотип</small><svg viewBox="0 0 819.75 391.25"><use href="#wm"/></svg><span style="font-size:14px;color:var(--muted)">Только готовым файлом, с полем X со всех сторон.</span></div>
       <div class="rv" style="background:var(--olive)"><small>Знак</small><svg viewBox="44 44 344.5 391.25" style="width:64px;fill:url(#gGoldObj);margin:auto"><use href="#pF"/></svg><span style="font-size:13px;opacity:.8">Аватары, тиснение, иконки</span></div>
       <div class="rv" style="background:var(--cream);color:var(--ink);justify-content:center;align-items:center;text-align:center"><b style="font-size:64px;font-weight:800;line-height:1;color:var(--olive)">18+</b><span style="font-size:13px">На каждом носителе</span></div>
       <div class="w2 rv"><small style="color:var(--gold)">Палитра</small><div class="chips"><span style="flex:6;background:#02110c">#02110C</span><span style="flex:2.2;background:#1a422f">#1A422F</span><span style="flex:1.4;background:#f3ebd6;color:#1a422f">#F3EBD6</span><span style="flex:1;background:#c8b48c;color:#02110c">#C8B48C</span></div></div>
@@ -825,8 +825,8 @@ footer .contacts a{text-decoration:none;color:var(--cream);font-size:14px;letter
     <h3 class="h" style="margin-top:clamp(90px,10vw,140px)">Минимальный размер</h3>
     <p>Меньше этих размеров логотип теряет детали шипов и читаемость. Если места не хватает — используйте только фирменный знак «Ф».</p>
     <div class="sizes rv" style="margin-top:26px">
-      <figure><svg viewBox="44 44 819.75 391.25" style="width:240px"><use href="#wm"/></svg><figcaption><b>Основной</b>от 120 px · печать от 25 мм</figcaption></figure>
-      <figure><svg viewBox="44 44 819.75 391.25" style="width:120px"><use href="#wm"/></svg><figcaption><b>Минимум</b>120 px · 25 мм</figcaption></figure>
+      <figure><svg viewBox="0 0 819.75 391.25" style="width:240px"><use href="#wm"/></svg><figcaption><b>Основной</b>от 120 px · печать от 25 мм</figcaption></figure>
+      <figure><svg viewBox="0 0 819.75 391.25" style="width:120px"><use href="#wm"/></svg><figcaption><b>Минимум</b>120 px · 25 мм</figcaption></figure>
       <figure><svg viewBox="44 44 344.5 391.25" style="width:28px"><use href="#pF"/></svg><figcaption><b>Знак</b>от 24 px · 6 мм</figcaption></figure>
     </div>
 
@@ -1031,8 +1031,8 @@ footer .contacts a{text-decoration:none;color:var(--cream);font-size:14px;letter
     <p>Аватар — знак «Ф» на изумруде. Публикации рассказывают о магазине, сервисе и атмосфере, всегда с отметкой «18+».</p>
     <div class="digi">
       <figure class="rv"><div class="ava"><svg viewBox="44 44 344.5 391.25"><use href="#pF"/></svg></div><figcaption>Аватар</figcaption></figure>
-      <figure class="post rv"><div class="frame"><img src="img/facade.jpg" alt="" loading="lazy"><span class="badge18">18+</span><div class="ov"><svg viewBox="44 44 819.75 391.25"><use href="#wm"/></svg><span>Мы открылись. Заходите знакомиться.</span></div></div><figcaption>Публикация 1 : 1</figcaption></figure>
-      <figure class="rv"><div class="story9"><span class="bar"></span><span class="badge18">18+</span><svg viewBox="44 44 819.75 391.25"><use href="#wm"/></svg><div><div class="h">Ждём вас</div><div class="t">Ежедневно<br>10:00–22:00</div></div></div><figcaption>Сторис 9 : 16</figcaption></figure>
+      <figure class="post rv"><div class="frame"><img src="img/facade.jpg" alt="" loading="lazy"><span class="badge18">18+</span><div class="ov"><svg viewBox="0 0 819.75 391.25"><use href="#wm"/></svg><span>Мы открылись. Заходите знакомиться.</span></div></div><figcaption>Публикация 1 : 1</figcaption></figure>
+      <figure class="rv"><div class="story9"><span class="bar"></span><span class="badge18">18+</span><svg viewBox="0 0 819.75 391.25"><use href="#wm"/></svg><div><div class="h">Ждём вас</div><div class="t">Ежедневно<br>10:00–22:00</div></div></div><figcaption>Сторис 9 : 16</figcaption></figure>
     </div>
   </div>
 </section>
@@ -1332,7 +1332,7 @@ footer .contacts a{text-decoration:none;color:var(--cream);font-size:14px;letter
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" integrity="sha384-CI3ELBVUz9XQO+97x6nwMDPosPR5XvsxW2ua7N1Xeygeh1IxtgqtCkGfQY9WWdHu" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/environments/RoomEnvironment.js" integrity="sha384-UpJYDNQ/8wDmBlzh4lZ9VMbunag9yRAOGFiBWYVaf6/FCnrwc9qlto25EZVLhpph" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="kit.js?v=1"></script>
+<script src="kit.js?v=2"></script>
 <script src="app.js?v=6"></script>
 
 </body>
