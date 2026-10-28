@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" referrerpolicy="no-referrer" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;500;700;800&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=UnifrakturMaguntia&display=swap">
-<link rel="stylesheet" href="brand.css?v=1">
+<link rel="stylesheet" href="brand.css?v=3">
 
 
 <!-- shared vector defs -->
@@ -115,17 +115,28 @@
     </div>
 
     <div class="sub" id="calc-s">Калькулятор окупаемости точки</div>
+    <p class="calc-intro">Подставьте свои цифры — калькулятор покажет по шагам, сколько точка зарабатывает в месяц, с какой выручки она начинает приносить прибыль и за сколько месяцев вернутся вложения.</p>
     <div class="calc" id="calc">
       <div class="in">
-        <label><b>Вложения в открытие <output id="oInv"></output></b><input type="range" id="cInv" min="500000" max="10000000" step="100000" value="3000000"></label>
-        <label><b>Выручка в месяц <output id="oRev"></output></b><input type="range" id="cRev" min="300000" max="5000000" step="50000" value="1500000"></label>
-        <label><b>Валовая маржа <output id="oMar"></output></b><input type="range" id="cMar" min="10" max="60" step="1" value="35"></label>
-        <label><b>Расходы в месяц <output id="oOpx"></output></b><input type="range" id="cOpx" min="100000" max="2000000" step="10000" value="350000"></label>
+        <label><b>Вложения в открытие <output id="oInv"></output></b><input type="range" id="cInv" min="500000" max="10000000" step="100000" value="3000000"><em>Ремонт, стеллажи, вывеска, стартовый товар — один раз.</em></label>
+        <label><b>Выручка в месяц <output id="oRev"></output></b><input type="range" id="cRev" min="300000" max="5000000" step="50000" value="1500000"><em>Все продажи точки за месяц.</em></label>
+        <label><b>Валовая маржа <output id="oMar"></output></b><input type="range" id="cMar" min="10" max="60" step="1" value="35"><em>Доля выручки, которая остаётся после оплаты товара поставщику.</em></label>
+        <div class="grp-t">Расходы в месяц</div>
+        <label><b>Аренда <output id="oRent"></output></b><input type="range" id="cRent" min="0" max="800000" step="10000" value="150000"></label>
+        <label><b>Зарплаты и налоги с них <output id="oSal"></output></b><input type="range" id="cSal" min="0" max="800000" step="10000" value="150000"></label>
+        <label><b>Прочее <output id="oOth"></output></b><input type="range" id="cOth" min="0" max="500000" step="5000" value="50000"><em>Коммунальные услуги, эквайринг, бухгалтерия, налоги, реклама.</em></label>
         <p class="warn">Значения по умолчанию — условный пример для наглядности, а не прогноз и не фактические показатели ФАЙЗ. Подставьте цифры из финансовой модели, которую мы предоставляем по запросу.</p>
       </div>
       <div>
-        <div class="res"><div><b id="rProfit"></b><span>Прибыль в месяц</span></div><div><b id="rPay" class="gold-text"></b><span>Окупаемость</span></div></div>
+        <div class="res">
+          <div><b id="rProfit"></b><span>Чистая прибыль в месяц</span></div>
+          <div><b id="rPay" class="gold-text"></b><span>Окупаемость вложений</span></div>
+          <div><b id="rBe"></b><span>Безубыточность: выручка в месяц от</span></div>
+          <div><b id="rRoi"></b><span>Доходность за год</span></div>
+        </div>
+        <ol class="howcalc" id="calcSteps" aria-label="Как считается"></ol>
         <div class="chart" id="chart"><svg id="chartSvg" viewBox="0 0 640 300" role="img"></svg><div class="tip" id="chartTip"></div></div>
+        <p class="chart-cap">Деньги нарастающим итогом: в начале минус на сумму вложений, дальше каждый месяц прибавляется чистая прибыль. Где линия пересекает ноль — вложения вернулись, дальше идёт заработок.</p>
       </div>
     </div>
 
@@ -164,7 +175,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="contacts.js?v=1"></script>
-<script src="kit.js?v=5"></script>
+<script src="kit.js?v=7"></script>
 <script src="invest.js?v=1"></script>
 
 </body>

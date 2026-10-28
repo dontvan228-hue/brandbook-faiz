@@ -430,7 +430,7 @@ const app=document.getElementById('tour'); if(!app) return;
 const S=[
   {id:'facade',name:'Фасад',zone:'Улица',img:'img/facade.jpg?v=7',f:[.46,.6],
    text:'Вывеска с контурной подсветкой, панорамные витрины и узор из фирменных завитков. Дверь подсвечена — заходите.',
-   door:{x:37.4,y:39.5,w:17.3,h:54.5},spots:[]},
+   door:{x:38.61,y:42.09,w:14.45,h:48.05,poly:'1.3,3.7 100,0 100,100 0,95.9'},spots:[]},  // door leaf corners, measured on the photo (it is shot at an angle)
   {id:'main',name:'Главный зал',zone:'Зал',img:'img/interior.jpg?v=7',f:[.5,.5],
    text:'Стеклянные стеллажи с подсветкой каждой полки. Весь ассортимент стоит на виду.',
    spots:[{x:35,y:60,to:'counter',label:'Стойка'},{x:80,y:40,to:'shelves',label:'Стеллажи'},
@@ -465,7 +465,7 @@ function place(l){l.stage.style.transform=`translate3d(${l.x}px,${l.y}px,0)`;}
 const pannable=l=>l.w>app.clientWidth+2||l.h>app.clientHeight+2;
 function build(l,i){const s=S[i];l.scene=i;l.img.src=s.img;l.img.alt=s.name;l.blur.style.backgroundImage=`url(${s.img})`;l.spots.innerHTML='';
   if(s.door){const d=document.createElement('button');d.className='door';d.setAttribute('aria-label','Войти в магазин');
-    Object.assign(d.style,{left:s.door.x+'%',top:s.door.y+'%',width:s.door.w+'%',height:s.door.h+'%'});d.innerHTML='<span class="tag">Нажмите, чтобы войти</span>';
+    Object.assign(d.style,{left:s.door.x+'%',top:s.door.y+'%',width:s.door.w+'%',height:s.door.h+'%'});d.innerHTML=(s.door.poly?`<svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><polygon points="${s.door.poly}"/></svg>`:'')+'<span class="tag">Нажмите, чтобы войти</span>';if(s.door.poly)d.classList.add('poly');
     d.addEventListener('click',e=>{if(moved)return;e.stopPropagation();enter();});l.spots.appendChild(d);}
   s.spots.forEach(p=>{const b=document.createElement('button');b.className='spot'+(p.info?' info':'')+(p.left?' left':'');b.style.left=p.x+'%';b.style.top=p.y+'%';
     {const dot=document.createElement('span');dot.className='dot';const tg=document.createElement('span');tg.className='tag';tg.textContent=p.info?p.info:p.label+' →';b.append(dot,tg);}

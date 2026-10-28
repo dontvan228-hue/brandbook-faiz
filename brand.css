@@ -727,3 +727,28 @@ footer .meta{align-items:center}
 .ivgal figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;background:linear-gradient(0deg,rgba(2,17,12,.92),transparent);font-size:13.5px;color:var(--muted);line-height:1.4}
 .ivgal figcaption b{display:block;font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:15px;color:var(--cream);margin-bottom:2px}
 @media (max-width:760px){.ivgal{grid-template-columns:1fr 1fr;grid-template-rows:none;height:auto}.ivgal figure{aspect-ratio:1}.ivgal figure.big{grid-row:auto;grid-column:1/-1;aspect-ratio:4/3}}
+
+/* ---------- tour door: outline follows the door leaf in perspective */
+.tour .door.poly{border:0;border-radius:0;box-shadow:none;background:none;animation:none}
+.tour .door.poly:hover{background:none}
+.tour .door.poly svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.tour .door.poly polygon{fill:rgba(232,207,152,.05);stroke:var(--gold-hi);stroke-width:2;vector-effect:non-scaling-stroke;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(232,207,152,.75));animation:tdoorp 2.4s ease-in-out infinite;transition:fill .3s}
+.tour .door.poly:hover polygon,.tour .door.poly:focus-visible polygon{fill:rgba(232,207,152,.14)}
+@keyframes tdoorp{50%{filter:drop-shadow(0 0 16px rgba(232,207,152,1))}}
+@media (prefers-reduced-motion:reduce){.tour .door.poly polygon{animation:none}}
+
+/* ---------- calculator: hints, breakdown */
+.calc-intro{margin:-6px 0 22px;max-width:70ch}
+.calc label em{font-style:normal;font-size:12.5px;letter-spacing:.02em;text-transform:none;color:rgba(243,235,214,.45);line-height:1.4}
+.calc .grp-t{margin-top:6px;padding-top:14px;border-top:1px solid var(--line);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.calc .res{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:18px}
+.calc .res b.neg{color:var(--bad)}
+.howcalc{list-style:none;margin:0 0 20px;padding:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-variant-numeric:tabular-nums}
+.howcalc li{display:flex;justify-content:space-between;gap:12px;padding:9px 14px;font-size:14px;color:var(--muted)}
+.howcalc li + li{border-top:1px solid rgba(243,235,214,.06)}
+.howcalc li b{color:var(--cream);font-weight:500;white-space:nowrap}
+.howcalc li.tot{background:rgba(26,66,47,.45);color:var(--cream);font-weight:700}
+.howcalc li.tot b{font-weight:800}
+.howcalc li.minus b{color:rgba(243,235,214,.7)}
+.howcalc li.neg b{color:var(--bad)}
+.chart-cap{font-size:13px;color:rgba(243,235,214,.55);margin-top:10px;max-width:none}
