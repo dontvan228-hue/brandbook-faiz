@@ -79,7 +79,7 @@ for(let i=0;i<110;i++)D.push({x:Math.random(),y:Math.random(),r:Math.random()*Ma
 
 /* marquees */
 const mqHTML=()=>{let s='';for(let k=0;k<2;k++){['Faiz','Quality','Trust','Comfort','Atmosphere','Choice'].forEach(w=>{s+=`<span>${w}<svg viewBox="44 44 344.5 391.25"><use href="#pF"/></svg></span>`});}return s};
-['#mq1','#mq2','#mq3'].forEach(s=>{const m=$(s);if(m)m.innerHTML=mqHTML();});
+$$('.marq .mi').forEach(m=>{m.innerHTML=mqHTML();});
 
 /* ---------- logo story: build drawable paths */
 const ds=$('#drawSvg'); const parts=['F','A','Y','B','Z'];

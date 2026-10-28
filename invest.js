@@ -30,7 +30,7 @@ if(cur&&matchMedia('(hover:hover) and (pointer:fine)').matches){let cx=0,cy=0,tx
   document.addEventListener('pointerover',e=>{cur.classList.toggle('big',!!(e.target.closest&&e.target.closest('a,button,[role=button]')))});}
 
 /* ---------- marquee */
-{const m=$('#mq1');if(m){let s='';for(let k=0;k<2;k++)['Faiz','Quality','Trust','Comfort','Atmosphere','Choice'].forEach(w=>{s+=`<span>${w}<svg viewBox="44 44 344.5 391.25"><use href="#pF"/></svg></span>`;});m.innerHTML=s;}}
+{let h='';for(let k=0;k<2;k++)['Faiz','Quality','Trust','Comfort','Atmosphere','Choice'].forEach(w=>{h+=`<span>${w}<svg viewBox="44 44 344.5 391.25"><use href="#pF"/></svg></span>`;});$$('.marq .mi').forEach(m=>{m.innerHTML=h;});}
 
 /* ---------- welcome intro: the wordmark draws itself in gold, then the greeting */
 const NS='http://www.w3.org/2000/svg';

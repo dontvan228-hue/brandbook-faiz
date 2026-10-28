@@ -773,3 +773,8 @@ footer .meta{align-items:center}
 .iw-cue:hover{color:var(--cream)}
 @media (max-width:600px){.iw-logo{width:86vw}.iw-ring{width:150vmin}.iw-eyebrow{letter-spacing:.28em}}
 @media (prefers-reduced-motion:reduce){.iw-ring svg{animation:none}}
+
+/* ---------- marquee strips inside a content rail stretch to the full window width */
+.marq.bleed{width:100vw;margin:clamp(70px,8vw,120px) 0 0 calc(50% - 50vw)}
+.marq.bleed + .sub{margin-top:clamp(50px,6vw,80px)}
+body{margin:0}
