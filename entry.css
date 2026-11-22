@@ -34,3 +34,9 @@ a.band:focus-visible{outline:3px solid currentColor;outline-offset:-10px}
   .b-soon{justify-items:center}
 }
 @media (prefers-reduced-motion:reduce){.band,.band .logo,.band .for i{transition:none}}
+
+/* bakery band: the same living blue → cream gradient as the bakery cover, pairing the vape band's emerald glow */
+@property --gb{syntax:'<angle>';inherits:false;initial-value:115deg}
+.b-bakery{background:radial-gradient(ellipse 60% 90% at 28% 50%,rgba(196,218,232,.55),transparent 70%),linear-gradient(var(--gb),#a0beda 0%,#b5cce2 34%,#dcdcd0 62%,#efe0bd 84%,#f4deaf 100%);animation:bandsway 18s ease-in-out infinite alternate}
+@keyframes bandsway{from{--gb:100deg}to{--gb:140deg}}
+@media (prefers-reduced-motion:reduce){.b-bakery{animation:none}}
