@@ -154,3 +154,51 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
 .bakery #quick,.bakery #identity{background:var(--butter)}
 .bakery #logo,.bakery #templates{background:var(--page)}
 .bakery #carriers{background:var(--blue)}
+/* ---------- investor page (bakery) */
+.bk-tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:22px}
+.bk-tiles > div{border-radius:18px;background:var(--page);border:1px solid var(--line);padding:22px;display:flex;flex-direction:column;gap:10px}
+.bk-tiles h4{margin:0;font-family:var(--f-disp);font-weight:600;font-size:22px;color:var(--choc)}
+.bk-tiles p{font-size:15px}
+.bk-tiles .st{font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;align-self:start;padding:5px 10px;border-radius:999px}
+.bk-tiles .st.ok{background:var(--choc);color:var(--butter)}
+.bk-tiles .st.wip{background:var(--blue);color:var(--choc)}
+.bk-tiles a{margin-top:auto;font-weight:700;font-size:13px;color:var(--choc)}
+@media (max-width:1000px){.bk-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.bk-tiles{grid-template-columns:1fr}}
+.bk-road{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:22px;counter-reset:r}
+.bk-road > div{border-top:4px solid var(--choc);padding-top:16px}
+.bk-road > div.now{border-top-color:var(--blue)}
+.bk-road small{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.bk-road h4{margin:6px 0 8px;font-family:var(--f-disp);font-size:22px;font-weight:600;color:var(--choc)}
+@media (max-width:900px){.bk-road{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.bk-road{grid-template-columns:1fr}}
+.bk-cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}
+.bk-cols3 > div{border-radius:18px;background:var(--page);border:1px solid var(--line);padding:24px}
+.bk-cols3 .who{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.bk-cols3 h4{margin:8px 0 10px;font-family:var(--f-disp);font-size:22px;font-weight:600;color:var(--choc)}
+.bk-cols3 ul{margin:12px 0 0;padding-left:18px;color:var(--choc);font-size:14px;display:grid;gap:4px}
+.bk-cols3 > div.hl{background:var(--choc)}.bk-cols3 > div.hl *{color:var(--butter)}
+@media (max-width:860px){.bk-cols3{grid-template-columns:1fr}}
+/* calculator on a chocolate panel: chart and controls are drawn for a dark ground */
+.bk-calc{--ink:#34211b;--deep:#2a1a15;--olive:#4a3128;--cream:#f4deaf;--fg:#f4deaf;--gold:#f4deaf;--gold-hi:#fff3d6;--muted:rgba(244,222,175,.72);--line:rgba(244,222,175,.18);
+  background:var(--choc);color:var(--butter);border-radius:24px;padding:clamp(18px,3vw,36px);margin-top:22px}
+.bk-calc .calc{border:0;padding:0;background:none}
+.bk-calc .calc label em,.bk-calc .calc .warn{color:rgba(244,222,175,.6)}
+.bk-calc .calc input[type=range]{accent-color:var(--blue)}
+.bk-calc .howcalc li,.bk-calc .howcalc b,.bk-calc .chart-cap{color:var(--butter)}
+.bk-calc .howcalc li.minus span,.bk-calc .chart-cap{color:rgba(244,222,175,.72)}
+.bk-deal{background:var(--blue);border-radius:24px;padding:clamp(24px,4vw,56px);margin-top:22px}
+.bk-deal h3{margin:0 0 10px;font-family:var(--f-disp);font-size:clamp(28px,3vw,44px);font-weight:600;color:var(--choc)}
+.bk-deal p{color:var(--choc)}
+.bk-deal .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.bk-deal .acts a{display:inline-flex;padding:12px 18px;border-radius:999px;background:var(--choc);color:var(--butter);text-decoration:none;font-weight:700;font-size:14px}
+.bk-deal .acts a:not(.main){background:transparent;color:var(--choc);border:1.5px solid var(--choc)}
+.bk-deal .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:24px;color:var(--choc);font-size:14px}
+.bk-deal .steps b{display:block}
+@media (max-width:700px){.bk-deal .steps{grid-template-columns:1fr}}
+.bk-disc{font-size:12.5px;margin-top:18px}
+.bk-foot .contacts{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin-bottom:24px}
+.bk-foot .contacts a{color:var(--butter);font-weight:700}
+.bk-calc .howcalc li.tot{background:rgba(160,190,218,.18)}
+.bk-calc .howcalc li + li{border-top-color:rgba(244,222,175,.08)}
+.bk-calc .calc .res{background:rgba(52,33,27,.96)}

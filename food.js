@@ -57,5 +57,6 @@ if(hasG&&!reduce){gsap.registerPlugin(ScrollTrigger);
   $$('.rv').forEach(el=>gsap.from(el,{y:20,opacity:0,duration:.6,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 95%'}}));
   $$('h3.st').forEach(el=>gsap.from(el,{y:16,opacity:0,duration:.5,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 95%'}}));}
 
-window.initSubnav&&initSubnav({sections:['quick','logo','identity','carriers','templates'],lenis,reduce});
+const SEC=(document.body.dataset.subnav||'quick logo identity carriers templates').split(/\s+/);
+window.initSubnav&&initSubnav({sections:SEC,lenis,reduce});
 })();
