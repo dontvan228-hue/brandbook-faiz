@@ -9,7 +9,8 @@ body{font-family:"Roboto Condensed","Arial Narrow",Arial,sans-serif;color:var(--
   padding:clamp(20px,4vh,44px) max(24px,env(safe-area-inset-right,0px)) clamp(20px,4vh,44px) max(24px,env(safe-area-inset-left,0px));
   text-decoration:none;color:inherit;overflow:hidden;transition:flex-grow .5s cubic-bezier(.2,.7,.2,1)}
 a.band:hover,a.band:focus-visible{flex-grow:1.18}
-.band .logo{display:block;height:clamp(64px,22vh,190px);width:auto;max-width:100%;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+/* both logos get the same width; capped so the taller gothic one (2.19 : 1) still fits half a short screen */
+.band .logo{display:block;width:min(36vw,540px,calc((50svh - 110px) * 2.18));height:auto;max-width:100%;overflow:visible;transform-origin:left center;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
 a.band:hover .logo,a.band:focus-visible .logo{transform:scale(1.04)}
 .band .for{display:flex;align-items:center;gap:16px;font-weight:700;font-size:clamp(14px,1.6vw,20px);letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
 .band .for i{font-style:normal;display:grid;place-items:center;width:clamp(40px,4vw,54px);aspect-ratio:1;border-radius:50%;border:1.5px solid currentColor;transition:transform .4s}
@@ -29,7 +30,7 @@ a.band:focus-visible{outline:3px solid currentColor;outline-offset:-10px}
 .top{position:absolute;z-index:2;top:max(14px,env(safe-area-inset-top,0px));left:max(24px,env(safe-area-inset-left,0px));font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:rgba(200,180,140,.75)}
 @media (max-width:640px){
   .band{grid-template-columns:1fr;justify-items:start;gap:14px}
-  .band .logo{height:auto;width:min(78vw,420px)}
+  .band .logo{width:min(70vw,360px);max-height:none}
   .b-soon{justify-items:center}
 }
 @media (prefers-reduced-motion:reduce){.band,.band .logo,.band .for i{transition:none}}
