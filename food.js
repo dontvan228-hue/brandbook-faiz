@@ -32,6 +32,22 @@ const nav=$('#nav');const onS=()=>nav.classList.toggle('solid',scrollY>40);addEv
     (function spin(){requestAnimationFrame(spin);if(!on)return;rot+=.12+boost;boost*=.94;
       r1.setAttribute('transform',`rotate(${rot})`);r2.setAttribute('transform',`rotate(${-rot*.7})`);r4&&r4.setAttribute('transform',`rotate(${rot*.35})`);})();}}
 
+/* flour: a small puff around the Ф disc at the top of each breath (4.6 s, in step with the CSS) and a little more while the pointer stirs the mark */
+{const seal=$('#bkSeal');if(seal&&!reduce){const cv=document.createElement('canvas');cv.className='puff';cv.setAttribute('aria-hidden','true');seal.appendChild(cv);
+  const g=cv.getContext('2d');let W=0,H=0,R=0,dpr=Math.min(2,devicePixelRatio||1),P=[],on=true,last=0;
+  const size=()=>{const r=cv.getBoundingClientRect();W=r.width;H=r.height;R=seal.getBoundingClientRect().width*.212;cv.width=W*dpr;cv.height=H*dpr;g.setTransform(dpr,0,0,dpr,0,0);};
+  size();addEventListener('resize',size);
+  const puff=n=>{for(let i=0;i<n;i++){const a=Math.random()*6.283,d=R*(.72+Math.random()*.34),sp=.18+Math.random()*.55;
+    P.push({x:W/2+Math.cos(a)*d,y:H/2+Math.sin(a)*d*.96+R*.08,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-.28-Math.random()*.2,r:.7+Math.random()*2.3,t:0,life:110+Math.random()*110,a:.45+Math.random()*.4});}};
+  seal.addEventListener('pointermove',()=>{const now=performance.now();if(now-last>60){last=now;puff(3);}});
+  new IntersectionObserver(es=>es.forEach(e=>on=e.isIntersecting)).observe(seal);
+  // first puff when the Ф has settled (intro ends ~4.3 s), then at every breath peak
+  setTimeout(()=>{puff(34);setInterval(()=>{if(on&&!document.hidden)puff(26);},4600);},4300+2300);
+  (function tick(){requestAnimationFrame(tick);if(!on)return;g.clearRect(0,0,W,H);
+    for(let i=P.length-1;i>=0;i--){const p=P[i];p.t++;p.x+=p.vx;p.y+=p.vy;p.vx*=.985;p.vy=p.vy*.985-.004;
+      const k=p.t/p.life;if(k>=1){P.splice(i,1);continue;}const al=p.a*Math.min(1,p.t/12)*(1-k);
+      g.beginPath();g.arc(p.x,p.y,p.r*(1+k*.6),0,6.283);g.fillStyle=`rgba(255,253,247,${al})`;g.fill();}})();}}
+
 /* toast + copy colour */
 const toast=m=>{const t=$('#toast');if(!t)return;t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),1600);};
 $$('[data-copy]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.copy;const done=()=>toast('Скопировано '+v);try{navigator.clipboard.writeText(v).then(done,()=>toast(v));}catch(e){toast(v);}}));
