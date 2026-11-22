@@ -31,10 +31,12 @@ $$('[data-copy]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.c
 /* ---------- drawn mockups */
 const logo=(cx,cy,w,fill)=>{const h=w/LR;return `<use href="#fl" x="${(cx-w/2).toFixed(1)}" y="${(cy-h/2).toFixed(1)}" width="${w}" height="${h.toFixed(1)}" fill="${fill}"/>`;};
 const tx=(x,y,s,t,o={})=>`<text x="${x}" y="${y}" font-family="${o.d?FONT_D:FONT_T}" font-size="${s}" font-weight="${o.w||500}"${o.it?' font-style="italic"':''} fill="${o.c||C.choc}" text-anchor="${o.a||'middle'}"${o.ls?` letter-spacing="${o.ls}"`:''}>${t}</text>`;
+// awning strip: stripes of width s from x over w, band height h, one scallop per stripe, chocolate rod on top
+const awn=(x,y,w,s,h)=>{let o='';for(let i=0,k=0;i<w-.5;i+=s,k++){const c=k%2?C.page:'#8fb0cf',sw=Math.min(s,w-i);o+=`<rect x="${x+i}" y="${y}" width="${sw}" height="${h}" fill="${c}"/><path d="M${x+i} ${y+h} a${sw/2} ${sw/2} 0 0 0 ${sw} 0 Z" fill="${c}"/>`;}return o+`<rect x="${x}" y="${y}" width="${w}" height="3" fill="${C.choc}"/>`;};
 const shadow=(cx,cy,rx)=>`<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${rx*.09}" fill="#5c3a28" opacity=".12"/>`;
 const svg=(body,bg=C.page,vb='0 0 400 300')=>`<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100%" height="100%" fill="${bg}"/>${body}</svg>`;
 const M={
-  bag:()=>svg(`${shadow(200,262,110)}<path d="M150 70 Q150 38 200 38 Q250 38 250 70" fill="none" stroke="${C.choc}" stroke-width="6"/><path d="M110 70 H290 L304 260 H96 Z" fill="${C.butter}" stroke="rgba(92,58,40,.25)"/><path d="M110 70 H290 L292 96 H108 Z" fill="${C.blue}"/>${logo(200,170,150,C.choc)}${tx(200,228,11,'СВЕЖАЯ ВЫПЕЧКА',{ls:3,w:700})}`),
+  bag:()=>svg(`${shadow(200,262,110)}<path d="M150 70 Q150 38 200 38 Q250 38 250 70" fill="none" stroke="${C.choc}" stroke-width="6"/><path d="M110 70 H290 L304 260 H96 Z" fill="${C.butter}" stroke="rgba(92,58,40,.25)"/>${awn(110,70,180,16,12)}${logo(200,170,150,C.choc)}${tx(200,228,11,'СВЕЖАЯ ВЫПЕЧКА',{ls:3,w:700})}`),
   box:()=>svg(`${shadow(200,262,140)}<path d="M70 120 L200 90 L330 120 L200 150 Z" fill="#b9cfe4"/><path d="M70 120 L200 150 V256 L70 226 Z" fill="${C.blue}"/><path d="M330 120 L200 150 V256 L330 226 Z" fill="#8fb0cf"/><path d="M136 105 L264 135 M200 90 V150" stroke="${C.choc}" stroke-width="3" opacity=".8"/><g transform="matrix(1 .23 0 1 0 0)">${logo(135,168,88,C.choc)}</g><g transform="matrix(1 -.23 0 1 0 0)">${logo(265,262,88,C.choc)}</g>`),
   cup:()=>svg(`${shadow(200,266,70)}<path d="M138 64 H262 L248 262 H152 Z" fill="${C.butter}" stroke="rgba(92,58,40,.25)"/><path d="M130 50 H270 V68 H130 Z" fill="${C.choc}"/><path d="M142 120 H258 L252 200 H148 Z" fill="${C.blue}"/>${logo(200,160,92,C.choc)}`),
   sticker:()=>svg(`<circle cx="200" cy="150" r="104" fill="${C.choc}"/><circle cx="200" cy="150" r="90" fill="none" stroke="${C.butter}" stroke-dasharray="3 6" opacity=".6"/>${logo(200,146,130,C.butter)}${tx(200,196,11,'С ЛЮБОВЬЮ ИЗ ПЕЧИ',{c:C.butter,ls:2.5,w:700})}`,C.blue),
@@ -52,10 +54,32 @@ const M={
 };
 $$('[data-mock]').forEach(el=>{const f=M[el.dataset.mock];if(f)el.innerHTML=f();});
 
+/* the network's brand words — same as the vape pattern, set in bakery type and colours */
+const WORDS=['Faiz','Quality','Trust','Comfort','Atmosphere','Style','Choice'];
+const NS='http://www.w3.org/2000/svg';
+const miniLogo=()=>{const s=document.createElementNS(NS,'svg');s.setAttribute('viewBox','0 0 861.25 224.75');s.setAttribute('aria-hidden','true');const u=document.createElementNS(NS,'use');u.setAttribute('href','#fl');s.appendChild(u);return s;};
+/* running line, doubled so the loop is seamless */
+$$('.bk-marq .mi').forEach(m=>{m.textContent='';for(let k=0;k<4;k++)WORDS.forEach(w=>{const s=document.createElement('span');s.textContent=w;s.appendChild(miniLogo());m.appendChild(s);});});
+/* pattern rows: words with the logo every third word, offset per row */
+$$('#bkPatt .row').forEach((r,i)=>{for(let k=0;k<4;k++)WORDS.forEach((w,j)=>{const s=document.createElement('span');s.textContent=w;r.appendChild(s);if((j+i)%3===0){const l=document.createElement('span');l.appendChild(miniLogo());r.appendChild(l);}});r.style.transform=`translateX(${-200*i}px)`;});
+$$('[data-ptone]').forEach(b=>b.addEventListener('click',()=>{const p=$('#bkPatt');if(p)p.dataset.tone=b.dataset.ptone;$$('[data-ptone]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));}));
+
+/* flour in the air over the hero: slow cream specks, paused off-screen */
+{const cv=$('.bk-hero canvas.flour');if(cv&&!reduce){const g=cv.getContext('2d');let W=0,H=0,P=[],on=true,dpr=Math.min(2,devicePixelRatio||1);
+  const size=()=>{const r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;g.setTransform(dpr,0,0,dpr,0,0);
+    const n=Math.round(Math.min(90,W*H/14000));P=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,r:.6+Math.random()*2.2,v:.08+Math.random()*.25,ph:Math.random()*6.28,a:.25+Math.random()*.5}));};
+  size();addEventListener('resize',size);
+  new IntersectionObserver(es=>es.forEach(e=>on=e.isIntersecting)).observe(cv);
+  (function tick(t){requestAnimationFrame(tick);if(!on)return;g.clearRect(0,0,W,H);
+    for(const p of P){p.y+=p.v;p.x+=Math.sin(t/2400+p.ph)*.18;if(p.y>H+4){p.y=-4;p.x=Math.random()*W;}
+      g.beginPath();g.arc(p.x,p.y,p.r,0,6.283);g.fillStyle=`rgba(251,244,230,${p.a})`;g.fill();}})(0);}}
+
 /* reveal */
 if(hasG&&!reduce){gsap.registerPlugin(ScrollTrigger);
   $$('.rv').forEach(el=>gsap.from(el,{y:20,opacity:0,duration:.6,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 95%'}}));
-  $$('h3.st').forEach(el=>gsap.from(el,{y:16,opacity:0,duration:.5,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 95%'}}));}
+  $$('h3.st').forEach(el=>gsap.from(el,{y:16,opacity:0,duration:.5,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 95%'}}));
+  $$('#bkPatt .row').forEach((r,i)=>{const dir=+r.dataset.dir;gsap.fromTo(r,{x:dir>0?-600-i*120:-200-i*80},{x:dir>0?-100-i*120:-700-i*80,ease:'none',scrollTrigger:{trigger:'#bkPatt',start:'top bottom',end:'bottom top',scrub:true}});});
+  gsap.from('#bkPatt .over svg',{scale:.7,opacity:0,duration:1.1,ease:'expo.out',scrollTrigger:{trigger:'#bkPatt',start:'top 70%'}});}
 
 const SEC=(document.body.dataset.subnav||'quick logo identity carriers templates').split(/\s+/);
 window.initSubnav&&initSubnav({sections:SEC,lenis,reduce});
