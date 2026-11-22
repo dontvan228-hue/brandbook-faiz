@@ -187,13 +187,13 @@ ringIn.addEventListener('input',()=>{let v=ringIn.value.trim()||'ФАЙЗ';if(!/
 const man=$('#manifest');{const words=man.textContent.split(' ');man.textContent='';words.forEach((w,i)=>{const sp=document.createElement('span');sp.className='w';sp.textContent=w;man.appendChild(sp);if(i<words.length-1)man.appendChild(document.createTextNode(' '));});}
 const mw=$$('#manifest .w');
 
-/* ---------- 3D merch rail */
-const RAIL_ITEMS=[
-  {type:'hoodie',body:'#121212',logo:'#efe9dc',name:'Худи на молнии',cn:'Чёрный',photo:'img/merch/hoodie.jpg',desc:'Оверсайз-худи на молнии с крупным логотипом на груди. Плотный футер, капюшон, карманы-кенгуру.'},
-  {type:'tee',body:'#141414',logo:'#efe9dc',name:'Футболка',cn:'Чёрный',desc:'Хлопковая футболка свободного кроя с логотипом на груди.'},
-  {type:'hoodie',body:'#1a422f',logo:'#efe9dc',name:'Худи на молнии',cn:'Изумруд',desc:'Худи в фирменном изумрудном цвете с кремовым логотипом.'},
-  {type:'tee',body:'#e7dec6',logo:'#1a422f',name:'Футболка',cn:'Крем',desc:'Кремовая футболка с логотипом в оливковом цвете.'},
-  {type:'tee',body:'#1a422f',logo:'#e3d2a6',name:'Футболка',cn:'Изумруд',desc:'Изумрудная футболка с логотипом цвета шампань.'}
+/* ---------- clothes (real photos) */
+const CLOTH=[
+  {name:'Худи на молнии',cn:'Чёрный',photo:'img/merch/hoodie.jpg',desc:'Оверсайз-худи на молнии с крупным логотипом на груди. Плотный футер, капюшон, карманы-кенгуру.'},
+  {name:'Футболка',cn:'Чёрный',photo:'img/merch/tee-black.jpg',desc:'Хлопковая футболка свободного кроя с кремовым логотипом на груди.'},
+  {name:'Худи на молнии',cn:'Изумруд',photo:'img/merch/hoodie-emerald.jpg',desc:'Худи в фирменном изумрудном цвете с кремовым логотипом.'},
+  {name:'Футболка',cn:'Крем',photo:'img/merch/tee-cream.jpg',desc:'Кремовая футболка с логотипом в оливковом цвете.'},
+  {name:'Футболка',cn:'Изумруд',photo:'img/merch/tee-emerald.jpg',desc:'Изумрудная футболка с логотипом цвета шампань.'}
 ];
 const ACC=[{id:'cap',name:'Бейсболка',type:'Головные уборы',sizes:['S–M','L–XL'],def:'L–XL',desc:'Шестипанельная кепка с объёмной вышивкой логотипа. Регулируемый ремешок сзади.'},
            {id:'tote',name:'Шоппер',type:'Сумки',sizes:['Единый'],def:'Единый',desc:'Хлопковый шоппер с длинными ручками и печатью логотипа по центру.'},
@@ -220,6 +220,8 @@ addEventListener('keydown',e=>{if(!sheet.classList.contains('on'))return;
     if(!sheet.contains(document.activeElement)){e.preventDefault();a.focus();}
     else if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus();}
     else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus();}}});
+// clothes (real photos)
+$$('[data-cloth]').forEach(b=>b.addEventListener('click',()=>{const c=CLOTH[+b.dataset.cloth];openSheet({name:c.name,cn:c.cn,type:'Одежда',desc:c.desc,sizes:CLOTH_SIZES,def:'M',src:c.photo});}));
 // accessories (real photos)
 $$('[data-acc]').forEach(b=>b.addEventListener('click',()=>{const a=ACC[+b.dataset.acc];openSheet({name:a.name,type:a.type,desc:a.desc,sizes:a.sizes,def:a.def,src:`img/merch/${a.id}.jpg`});}));
 
@@ -252,161 +254,14 @@ function scrubber(root,{n,label,names,onSeek,onEnd,onStep}){
   addEventListener('resize',()=>set(p,idx));
   set(0);return {set};}
 
-/* 3D rail */
-(function(){
-const cv=$('#railCv'); if(!window.THREE){$('#railLoad').textContent='3D недоступно в этом браузере';return;}
-let renderer;try{renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});}catch(e){$('#railLoad').textContent='3D недоступно в этом браузере';return;}
-renderer.setPixelRatio(Math.min(2,devicePixelRatio||1));renderer.outputEncoding=THREE.sRGBEncoding;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
-const scene=new THREE.Scene();
-const pm=new THREE.PMREMGenerator(renderer);if(THREE.RoomEnvironment)scene.environment=pm.fromScene(new THREE.RoomEnvironment(),0.04).texture;
-const cam=new THREE.PerspectiveCamera(30,1,0.1,100);
-const key=new THREE.DirectionalLight(0xfff1d6,1.1);key.position.set(-2,3,4);scene.add(key);
-const rim=new THREE.DirectionalLight(0x7fe0b0,.6);rim.position.set(3,1,-3);scene.add(rim);
-scene.add(new THREE.AmbientLight(0xffffff,.18));
-const GAP=1.95,N=RAIL_ITEMS.length,RAILY=0.36;
-// rail
-const gold=new THREE.MeshStandardMaterial({color:0xc8a86a,metalness:1,roughness:.28});
-const rail=new THREE.Mesh(new THREE.CylinderGeometry(.028,.028,GAP*(N-1)+4,24),gold);rail.rotation.z=Math.PI/2;rail.position.set(GAP*(N-1)/2,RAILY,0);scene.add(rail);
-[-2+0.02,GAP*(N-1)+2-0.02].forEach(x=>{const c=new THREE.Mesh(new THREE.SphereGeometry(.05,20,16),gold);c.position.set(x,RAILY,0);scene.add(c);});
-// fabric bump
-const nz=document.createElement('canvas');nz.width=nz.height=256;{const c=nz.getContext('2d'),d=c.createImageData(256,256);for(let i=0;i<256*256;i++){const x=i%256,y=(i/256)|0;const v=128+40*Math.sin(x*1.6)*Math.sin(y*.8)+Math.random()*50-25;d.data[i*4]=d.data[i*4+1]=d.data[i*4+2]=v;d.data[i*4+3]=255;}c.putImageData(d,0,0);}
-const bump=new THREE.CanvasTexture(nz);bump.wrapS=bump.wrapT=THREE.RepeatWrapping;bump.repeat.set(10,10);
-// outlines (right halves, top -> bottom)
-const OUT={tee:[[0,-.11],[.09,-.07],[.16,0],[.3,-.03],[.46,-.08],[.6,-.18],[.78,-.36],[.71,-.45],[.64,-.52],[.47,-.42],[.47,-.8],[.48,-1.2],[.47,-1.46],[.3,-1.48],[0,-1.49]],
-           hoodie:[[0,.34],[.12,.32],[.22,.24],[.27,.11],[.29,-.02],[.42,-.08],[.55,-.14],[.66,-.3],[.76,-.6],[.84,-1.0],[.89,-1.3],[.87,-1.43],[.72,-1.45],[.7,-1.3],[.62,-.85],[.53,-.56],[.53,-1.0],[.54,-1.4],[.5,-1.56],[.3,-1.58],[0,-1.58]]};
-function outline(type){const r=OUT[type];const pts=[...r,...r.slice(1,-1).reverse().map(([x,y])=>[-x,y])];
-  const curve=new THREE.CatmullRomCurve3(pts.map(([x,y])=>new THREE.Vector3(x,y,0)),true,'centripetal');return curve.getSpacedPoints(360).slice(0,-1).map(v=>[v.x,v.y]);}
-function inside(poly,x,y){let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const [xi,yi]=poly[i],[xj,yj]=poly[j];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c;}return c;}
-function nearest(poly,x,y){let best=1e9,bx=0,by=0;for(let i=0;i<poly.length;i++){const [ax,ay]=poly[i],[cx,cy]=poly[(i+1)%poly.length];const dx=cx-ax,dy=cy-ay;let t=((x-ax)*dx+(y-ay)*dy)/(dx*dx+dy*dy);t=Math.max(0,Math.min(1,t));const px=ax+t*dx,py=ay+t*dy,d=(px-x)**2+(py-y)**2;if(d<best){best=d;bx=px;by=py;}}return [bx,by,Math.sqrt(best)];}
-function surface(type){const poly=outline(type);let minx=1e9,maxx=-1e9,miny=1e9,maxy=-1e9;poly.forEach(([x,y])=>{minx=Math.min(minx,x);maxx=Math.max(maxx,x);miny=Math.min(miny,y);maxy=Math.max(maxy,y);});
-  const NX=110,NY=Math.round(NX*(maxy-miny)/(maxx-minx));const W=maxx-minx,H=maxy-miny;
-  const pos=[],uv=[],ins=[],idx=[];const R=type==='hoodie'?.16:.13,T=type==='hoodie'?.12:.085;
-  for(let j=0;j<=NY;j++)for(let i=0;i<=NX;i++){let x=minx+W*i/NX,y=miny+H*j/NY;const inn=inside(poly,x,y);let d;
-    const [bx,by,dist]=nearest(poly,x,y);if(!inn){x=bx;y=by;d=0;}else d=dist;
-    const k=Math.min(1,d/R);let z=T*(1-(1-k)*(1-k));
-    const torso=Math.abs(x)<.5?1:Math.max(0,1-(Math.abs(x)-.5)/.12);
-    z+=torso*.06*Math.cos(x*1.9)*k; z+=(.007*Math.sin(y*13+x*5)+.004*Math.sin(x*21-y*7))*k;
-    if(type==='hoodie'&&Math.abs(x)<.2&&y>-.2) z-=.05*k*(1-Math.abs(x)/.2);
-    pos.push(x,y,z);uv.push((x-minx)/W,(y-miny)/H);ins.push(inn);}
-  for(let j=0;j<NY;j++)for(let i=0;i<NX;i++){const a=j*(NX+1)+i,b=a+1,c=a+NX+1,d=c+1;if(ins[a]||ins[b]||ins[c])idx.push(a,b,c);if(ins[b]||ins[d]||ins[c])idx.push(b,d,c);}
-  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));g.setIndex(idx);g.computeVertexNormals();
-  return {g,box:{minx,maxx,miny,maxy,W,H}};}
-const SURF={tee:surface('tee'),hoodie:surface('hoodie')};
-const LP=['pF','pA','pY','pB','pZ'].map(id=>new Path2D(document.getElementById(id).getAttribute('d')));
-function skin(it,front){const {box}=SURF[it.type];const CW=1024,CH=Math.round(CW*box.H/box.W);const c=document.createElement('canvas');c.width=CW;c.height=CH;const x=c.getContext('2d');
-  const X=u=>(u-box.minx)/box.W*CW,Y=v=>(box.maxy-v)/box.H*CH,S=CW/box.W;
-  x.fillStyle=it.body;x.fillRect(0,0,CW,CH);
-  const light=parseInt(it.body.slice(1,3),16)>120;const line=light?'rgba(0,0,0,.18)':'rgba(255,255,255,.07)',dark=light?'rgba(0,0,0,.12)':'rgba(0,0,0,.45)';
-  x.lineWidth=3;x.strokeStyle=line;
-  if(it.type==='hoodie'){
-    if(front){x.fillStyle=dark;x.beginPath();x.ellipse(X(0),Y(.1),.17*S,.2*S,0,0,7);x.fill();
-      x.strokeStyle=light?'rgba(0,0,0,.35)':'rgba(255,255,255,.18)';x.lineWidth=4;x.beginPath();x.moveTo(X(0),Y(-.12));x.lineTo(X(0),Y(-1.54));x.stroke();
-      x.lineWidth=3;x.strokeStyle=line;x.beginPath();x.moveTo(X(-.3),Y(-.98));x.lineTo(X(.3),Y(-.98));x.lineTo(X(.38),Y(-1.34));x.lineTo(X(-.38),Y(-1.34));x.closePath();x.stroke();
-      x.lineWidth=4;x.strokeStyle=light?'rgba(0,0,0,.2)':'rgba(200,200,200,.18)';[-.07,.07].forEach(dx=>{x.beginPath();x.moveTo(X(dx),Y(-.08));x.quadraticCurveTo(X(dx*1.6),Y(-.3),X(dx*1.2),Y(-.48));x.stroke();});}
-    x.fillStyle=dark;x.fillRect(X(-.54),Y(-1.47),(1.08)*S,.1*S);
-    [[.7,-1.32],[-.89,-1.32]].forEach(([u,v])=>{x.fillRect(X(u),Y(v),.19*S,.12*S);});
-  }else{
-    if(front){x.strokeStyle=light?'rgba(0,0,0,.3)':'rgba(255,255,255,.12)';x.lineWidth=10;x.beginPath();x.moveTo(X(-.165),Y(0));x.quadraticCurveTo(X(0),Y(-.2),X(.165),Y(0));x.stroke();}
-    x.strokeStyle=line;x.lineWidth=3;x.beginPath();x.moveTo(X(-.47),Y(-1.4));x.lineTo(X(.47),Y(-1.4));x.stroke();
-    [[.64,-.46],[-.64,-.46]].forEach(()=>{});
-  }
-  if(front){const w=it.type==='hoodie'?.86:.62,cy=it.type==='hoodie'?-.55:-.42;const s=w*S/787.75;
-    x.save();x.translate(X(-w/2),Y(cy)-359.25*s/2);x.scale(s,s);x.translate(-60,-60);x.fillStyle=it.logo;LP.forEach(p=>x.fill(p));x.restore();}
-  const t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=8;return t;}
-function hanger(){const g=new THREE.Group();
-  const bar=new THREE.TubeGeometry(new THREE.QuadraticBezierCurve3(new THREE.Vector3(-.45,-.03,0),new THREE.Vector3(0,.16,0),new THREE.Vector3(.45,-.03,0)),40,.018,10,false);
-  g.add(new THREE.Mesh(bar,gold));
-  const stem=new THREE.Mesh(new THREE.CylinderGeometry(.008,.008,.17,10),gold);stem.position.set(0,.165,0);g.add(stem);
-  const hook=new THREE.Mesh(new THREE.TorusGeometry(.045,.008,10,30,Math.PI*1.35),gold);hook.position.set(0,RAILY-.0,0);hook.rotation.z=-Math.PI*.18;hook.rotation.y=Math.PI/2;g.add(hook);
-  return g;}
-const groups=[];
-RAIL_ITEMS.forEach((it,i)=>{const pivot=new THREE.Group();pivot.position.set(i*GAP,RAILY,0);scene.add(pivot);
-  const g=new THREE.Group();g.position.y=-RAILY;pivot.add(g);
-  const hg=hanger();hg.position.y=-.02;g.add(hg);
-  const top=new THREE.Group();top.position.y=it.type==='hoodie'?-.1:-.04;g.add(top);
-  const {g:geo}=SURF[it.type];
-  const mF=new THREE.MeshStandardMaterial({map:skin(it,true),roughness:.92,metalness:0,bumpMap:bump,bumpScale:.0025});
-  const mB=new THREE.MeshStandardMaterial({map:skin(it,false),roughness:.95,metalness:0,bumpMap:bump,bumpScale:.0025});
-  const f=new THREE.Mesh(geo,mF);const b=new THREE.Mesh(geo,mB);b.scale.z=-1;mB.side=THREE.DoubleSide;mF.side=THREE.DoubleSide;
-  top.add(f,b);
-  f.userData.i=i;b.userData.i=i;
-  const hit=new THREE.Mesh(new THREE.PlaneGeometry(1.5,1.9),new THREE.MeshBasicMaterial({visible:false}));hit.position.set(i*GAP,-.55,0);hit.userData.i=i;scene.add(hit);
-  groups.push({pivot,it,yaw:Math.PI*.44,target:Math.PI*.44,hold:false,meshes:[f,b],hit,sw:Math.random()*6,back:0});});
-const SIDE=Math.PI*.44;
-// camera / navigation: drag the rail, use the scrubber, arrows or keyboard
-let pos=0,posV=0,camX=0;
-function size(){const r=cv.getBoundingClientRect();renderer.setSize(r.width,r.height,false);cam.aspect=r.width/r.height;cam.updateProjectionMatrix();}
-size();addEventListener('resize',size);
-const clampP=v=>Math.max(0,Math.min(N-1,v));
-const goTo=i=>{pos=clampP(Math.round(i));};
-// pixels on screen per one step between garments, so the rail follows the finger exactly
-const pxPerStep=()=>{const r=cv.getBoundingClientRect();const z=cam.position.z||5.4;return Math.max(1,r.width/(2*z*Math.tan(THREE.MathUtils.degToRad(cam.fov/2))*cam.aspect)*GAP);};
-let curI=-1;
-const scr=scrubber($('#railCtl'),{n:N,label:'Одежда на штанге',names:RAIL_ITEMS.map(it=>it.name+' · '+it.cn),
-  onSeek:p=>{pos=p*(N-1);},onEnd:()=>goTo(pos),onStep:d=>goTo(Math.round(pos)+d)});
-// interaction
-let visible=true;
-const ray=new THREE.Raycaster(),mp=new THREE.Vector2();
-let held=null,holdT=0,downT=0,downX=0,downY=0,moved=false,drag=null,downG=null;
-function pick(e){const r=cv.getBoundingClientRect();mp.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(mp,cam);
-  const hit=ray.intersectObjects(groups.map(g=>g.hit),false)[0];return hit?groups[hit.object.userData.i]:null;}
-function releaseHold(){if(!held)return;const g=held;held=null;g.hold=false;cv.classList.remove('hold');g.back=performance.now()+1400;}
-cv.addEventListener('pointerdown',e=>{if(e.button>0)return;downT=performance.now();downX=e.clientX;downY=e.clientY;moved=false;downG=pick(e);
-  drag={startPos:pos,lastX:e.clientX,lastT:downT,v:0,active:false,id:e.pointerId};
-  clearTimeout(holdT);if(downG)holdT=setTimeout(()=>{if(!moved&&drag){held=downG;held.hold=true;held.target=0;cv.classList.add('hold');}},220);});
-addEventListener('pointermove',e=>{
-  if(!drag){if(!visible||e.target!==cv||e.pointerType!=='mouse')return;cv.style.cursor=pick(e)?'pointer':'grab';return;}
-  const dx=e.clientX-downX,dy=e.clientY-downY;
-  if(!drag.active){
-    if(Math.abs(dx)>8&&Math.abs(dx)>Math.abs(dy)){drag.active=true;moved=true;clearTimeout(holdT);releaseHold();cv.classList.add('drag');try{cv.setPointerCapture(drag.id)}catch(_){}}
-    else{if(Math.abs(dy)>10)moved=true;return;}}
-  const now=performance.now();pos=Math.max(-.35,Math.min(N-1+.35,drag.startPos-dx/pxPerStep()));
-  drag.v=(e.clientX-drag.lastX)/Math.max(1,now-drag.lastT);drag.lastX=e.clientX;drag.lastT=now;});
-addEventListener('pointerup',()=>{if(!drag)return;clearTimeout(holdT);const d=drag;drag=null;cv.classList.remove('drag');
-  if(d.active){goTo(pos-Math.max(-1.4,Math.min(1.4,d.v*180/pxPerStep())));return;}            // fling to the nearest garment
-  const wasHeld=!!held;releaseHold();
-  if(!moved&&downG&&performance.now()-downT<700){const i=groups.indexOf(downG);if(i!==Math.round(pos)&&!wasHeld)goTo(i);else open3d(downG);}});
-addEventListener('pointercancel',()=>{clearTimeout(holdT);if(drag&&drag.active)goTo(pos);drag=null;releaseHold();cv.classList.remove('drag');});
-// horizontal trackpad swipe moves the rail; vertical wheel keeps scrolling the page
-let wT=0;cv.addEventListener('wheel',e=>{if(Math.abs(e.deltaX)<=Math.abs(e.deltaY))return;e.preventDefault();pos=Math.max(-.35,Math.min(N-1+.35,pos+e.deltaX/pxPerStep()));clearTimeout(wT);wT=setTimeout(()=>goTo(pos),140);},{passive:false});
-cv.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){e.preventDefault();goTo(Math.round(pos)+1);}else if(e.key==='ArrowLeft'){e.preventDefault();goTo(Math.round(pos)-1);}
-  else if(e.key==='Enter'||e.key===' '){e.preventDefault();open3d(groups[clampP(Math.round(pos))]);}});
-function open3d(g){const it=g.it;let src=it.photo,note='';
-  if(!src){src=snapshot(g);note='3D-превью · фото появится после съёмки';}
-  openSheet({name:it.name,cn:it.cn,type:'Одежда',desc:it.desc,sizes:CLOTH_SIZES,def:'M',src,note});}
-function snapshot(g){const keep={yaw:g.yaw,x:cam.position.x,y:cam.position.y,z:cam.position.z,bg:scene.background};
-  g.pivot.rotation.y=0;g.pivot.rotation.z=0;scene.background=new THREE.Color(0xe9e7e2);
-  const r=cv.getBoundingClientRect(),asp=r.width/r.height;const dist=(g.it.type==='hoodie'?2.2:2.0)/Math.tan(THREE.MathUtils.degToRad(cam.fov/2))/2*Math.max(1,1/asp);
-  groups.forEach(o=>o.pivot.visible=o===g);rail.visible=false;
-  cam.position.set(g.pivot.position.x,-.45,dist);cam.lookAt(g.pivot.position.x,-.5,0);renderer.render(scene,cam);
-  const url=cv.toDataURL('image/jpeg',.9);
-  groups.forEach(o=>o.pivot.visible=true);rail.visible=true;scene.background=keep.bg;g.yaw=keep.yaw;return url;}
-// loop
-new IntersectionObserver(es=>es.forEach(en=>visible=en.isIntersecting)).observe(cv);
-$('#railLoad').remove();
-let last=performance.now();
-(function tick(now){requestAnimationFrame(tick);if(!visible)return;const dt=Math.min(.05,(now-last)/1000);last=now;
-  if(!drag||!drag.active){if(pos<0||pos>N-1)pos+= (clampP(pos)-pos)*Math.min(1,dt*10);}
-  posV+=(pos-posV)*Math.min(1,dt*(drag&&drag.active?20:7));camX=posV*GAP;
-  const asp=cam.aspect;const z=asp<.8?8.2:(asp<1.2?6.4:5.4);
-  cam.position.set(camX,-.2,z);cam.lookAt(camX,-.58,0);
-  const ci=Math.max(0,Math.min(N-1,Math.round(posV)));if(ci!==curI){curI=ci;$('#railName').textContent=RAIL_ITEMS[ci].name+' · '+RAIL_ITEMS[ci].cn;$('#railType').textContent=RAIL_ITEMS[ci].type==='hoodie'?'Худи':'Футболка';}
-  scr.set(clampP(posV)/(N-1),ci);
-  groups.forEach(g=>{if(!g.hold&&g.back&&now>g.back){g.target=SIDE;g.back=0;}
-    g.yaw+=(g.target-g.yaw)*Math.min(1,dt*(g.hold?5:2.4));
-    g.sw+=dt;const swing=reduce?0:Math.sin(g.sw*1.3)*.025*(1-Math.min(1,Math.abs(g.target-g.yaw)));
-    g.pivot.rotation.y=g.yaw;g.pivot.rotation.z=swing+(g.target-g.yaw)*.05;});
-  renderer.render(scene,cam);})(last);
-})();
-
 
 /* ---------- accessories gallery: swipe / drag / scrubber */
-(()=>{
-const track=$('#track'),items=$$('#track .item');if(!track||!items.length)return;
+function gallery(tSel,cSel,label){
+const track=$(tSel),items=$$(tSel+' .item');if(!track||!items.length)return;
 const maxS=()=>Math.max(1,track.scrollWidth-track.clientWidth);
 const nearest=sl=>{if(sl<=2)return 0;if(sl>=maxS()-2)return items.length-1;const c=sl+track.clientWidth/2;let b=0,bd=1e9;items.forEach((it,i)=>{const d=Math.abs(it.offsetLeft+it.offsetWidth/2-c);if(d<bd){bd=d;b=i;}});return b;};
 const toItem=(i,smooth=true)=>{i=Math.max(0,Math.min(items.length-1,i));const it=items[i];track.scrollTo({left:Math.max(0,Math.min(maxS(),it.offsetLeft-(track.clientWidth-it.offsetWidth)/2)),behavior:smooth&&!reduce?'smooth':'auto'});};
-const hs=scrubber($('#hsCtl'),{n:items.length,label:'Аксессуары и полиграфия',names:items.map(it=>{const b=it.querySelector('.meta b');return b?b.textContent:'';}),
+const hs=scrubber($(cSel),{n:items.length,label,names:items.map(it=>{const b=it.querySelector('.meta b');return b?b.textContent:'';}),
   onSeek:p=>{track.classList.add('seek');track.scrollLeft=p*maxS();},onEnd:()=>{track.classList.remove('seek');toItem(nearest(track.scrollLeft));},onStep:d=>toItem(nearest(track.scrollLeft)+d)});
 const sync=()=>hs.set(track.scrollLeft/maxS(),nearest(track.scrollLeft));
 track.addEventListener('scroll',sync,{passive:true});addEventListener('resize',sync);
@@ -422,7 +277,9 @@ const hdEnd=()=>{if(!hd)return;const d=hd;hd=null;if(!d.moved)return;track.class
 // a drag must not count as a click on the photo underneath
 track.addEventListener('click',e=>{if(performance.now()<suppress){e.preventDefault();e.stopPropagation();}},true);
 sync();
-})();
+}
+gallery('#trackCloth','#clothCtl','Одежда');
+gallery('#track','#hsCtl','Аксессуары и полиграфия');
 
 /* ---------- store tour */
 (()=>{
@@ -574,8 +431,7 @@ if(hasG&&!reduce){
   ScrollTrigger.create({onUpdate:s=>skewTo(Math.max(-12,Math.min(12,s.getVelocity()/-260)))});
   // big title
   $$('.big-title').forEach(t=>gsap.from(t.querySelectorAll('.ln > span'),{yPercent:110,rotate:4,duration:1.2,ease:'expo.out',stagger:.12,scrollTrigger:{trigger:t,start:'top 85%'}}));
-  // platform scales, roadmap line
-  $$('.scale .bar').forEach(b=>{const v=b.style.getPropertyValue('--v').trim();gsap.fromTo(b,{'--v':'0%'},{'--v':v,duration:1.6,ease:'expo.out',scrollTrigger:{trigger:b,start:'top 90%'}});});
+  // roadmap line
   gsap.from('.ratio > div',{flexGrow:0,duration:1.4,ease:'expo.inOut',stagger:.08,scrollTrigger:{trigger:'.ratio',start:'top 85%'}});
   gsap.to('#ttl2',{backgroundPosition:'200% 0',ease:'none',scrollTrigger:{trigger:'#welcome',start:'top bottom',end:'bottom top',scrub:true}});
   // reveals
