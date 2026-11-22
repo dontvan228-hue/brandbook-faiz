@@ -435,8 +435,9 @@ if(hasG&&!reduce){
   gsap.from('.ratio > div',{flexGrow:0,duration:1.4,ease:'expo.inOut',stagger:.08,scrollTrigger:{trigger:'.ratio',start:'top 85%'}});
   gsap.to('#ttl2',{backgroundPosition:'200% 0',ease:'none',scrollTrigger:{trigger:'#welcome',start:'top bottom',end:'bottom top',scrub:true}});
   // reveals
-  $$('.rv').forEach(el=>gsap.from(el,{y:50,opacity:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
-  $$('h2.h').forEach(el=>gsap.from(el.querySelectorAll('.ch'),{yPercent:110,rotateX:-80,opacity:0,duration:1,ease:'expo.out',stagger:.025,scrollTrigger:{trigger:el,start:'top 90%'}}));
+  $$('.rv').forEach(el=>gsap.from(el,{y:20,opacity:0,duration:.6,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 95%'}}));
+  $$('h2.h').forEach(el=>gsap.from(el.querySelectorAll('.ch'),{yPercent:40,opacity:0,duration:.6,ease:'power2.out',stagger:.012,scrollTrigger:{trigger:el,start:'top 92%'}}));
+  $$('h3.st').forEach(el=>gsap.from(el,{y:16,opacity:0,duration:.5,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 95%'}}));
   // palette liquid reveal
   gsap.from('#pal .sw',{clipPath:'inset(100% 0% 0% 0%)',duration:1.3,ease:'expo.inOut',stagger:.12,scrollTrigger:{trigger:'#pal',start:'top 80%'}});
   // variation logos zoom in
@@ -453,16 +454,15 @@ if(hasG&&!reduce){
   // manifesto word lighting
   ScrollTrigger.create({trigger:man,start:'top 80%',end:'bottom 45%',scrub:true,onUpdate:s=>{const n=Math.round(s.progress*mw.length);mw.forEach((w,i)=>w.style.opacity=i<n?1:.22)}});
   // toc rows
-  gsap.from('.toc a',{x:-60,opacity:0,duration:.9,ease:'power3.out',stagger:.12,scrollTrigger:{trigger:'.toc',start:'top 85%'}});
   // logo story
   ScrollTrigger.create({trigger:'#story',start:'top 85%',once:true,onEnter:()=>gsap.to(STY,{draw:1,duration:2.2,ease:'power2.inOut',onUpdate:storyRender})});
   ScrollTrigger.create({trigger:'#story',start:'top top',end:'bottom bottom',scrub:.6,onUpdate:s=>storyAt(s.progress)});
   gsap.fromTo('#drawSvg',{scale:.9},{scale:1.04,ease:'none',scrollTrigger:{trigger:'#story',start:'top bottom',end:'bottom bottom',scrub:true}});
   // cards
-  gsap.from('.var',{y:80,opacity:0,rotateX:-18,duration:1,ease:'power3.out',stagger:.1,scrollTrigger:{trigger:'.vars',start:'top 85%'}});
-  gsap.from('.mcard',{y:60,opacity:0,duration:.8,ease:'power3.out',stagger:.07,scrollTrigger:{trigger:'.mis',start:'top 85%'}});
-  gsap.from('.combo',{scale:.7,opacity:0,duration:.8,ease:'back.out(1.6)',stagger:.08,scrollTrigger:{trigger:'.combos',start:'top 90%'}});
-  gsap.from('.tcard',{y:60,opacity:0,duration:.9,stagger:.1,ease:'power3.out',scrollTrigger:{trigger:'.types',start:'top 88%'}});
+  gsap.from('.var',{y:24,opacity:0,duration:.6,ease:'power2.out',stagger:.06,scrollTrigger:{trigger:'.vars',start:'top 92%'}});
+  gsap.from('.mcard',{y:24,opacity:0,duration:.6,ease:'power2.out',stagger:.05,scrollTrigger:{trigger:'.mis',start:'top 92%'}});
+  gsap.from('.combo',{y:16,opacity:0,duration:.6,ease:'power2.out',stagger:.06,scrollTrigger:{trigger:'.combos',start:'top 94%'}});
+  gsap.from('.tcard',{y:24,opacity:0,duration:.6,stagger:.06,ease:'power2.out',scrollTrigger:{trigger:'.types',start:'top 92%'}});
   // pattern rows follow scroll
   $$('#patt .row').forEach((r,i)=>{const dir=+r.dataset.dir;gsap.fromTo(r,{x:dir>0?-600-i*120:-200-i*80},{x:dir>0?-100-i*120:-700-i*80,ease:'none',scrollTrigger:{trigger:'#patt',start:'top bottom',end:'bottom top',scrub:true}})});
   gsap.from('#patt .over svg',{scale:.6,opacity:0,duration:1.2,ease:'expo.out',scrollTrigger:{trigger:'#patt',start:'top 70%'}});
@@ -477,4 +477,28 @@ if(hasG&&!reduce){
 
 /* rotate seal without gsap */
 if(!hasG&&!reduce){let r=0;(function sp(){r+=.12;const a=$('#ringA'),b=$('#ringB');a&&a.setAttribute('transform',`rotate(${r} 250 250)`);b&&b.setAttribute('transform',`rotate(${-r*.7} 250 250)`);requestAnimationFrame(sp)})();}
+})();
+
+/* ---------- section subnav: where am I, and jump to any subsection */
+(()=>{
+const nav=document.getElementById('nav'),sn=document.getElementById('subnav');if(!nav||!sn)return;
+const data=['logo','identity','carriers','templates'].map(id=>document.getElementById(id)).filter(Boolean).map(s=>{
+  const sts=[...s.querySelectorAll('h3.st')];sts.forEach((h,i)=>{if(!h.id)h.id=s.id+'-'+(i+1);});
+  const ey=s.querySelector('.eyebrow');return {s,sts,label:ey?ey.textContent.trim():''};}).filter(d=>d.sts.length);
+const navLinks=[...document.querySelectorAll('#navList a[href^="#"]')];
+let cur=null,act=null;
+const gap=()=>sn.getBoundingClientRect().bottom+18;
+function go(h){if(lenis)lenis.scrollTo(h,{offset:-gap(),duration:1.1});else window.scrollTo({top:h.getBoundingClientRect().top+scrollY-gap(),behavior:reduce?'auto':'smooth'});}
+function build(d){sn.textContent='';const b=document.createElement('b');b.textContent=d.label;sn.appendChild(b);
+  d.sts.forEach(h=>{const a=document.createElement('a');a.href='#'+h.id;a.textContent=h.textContent;a.addEventListener('click',e=>{e.preventDefault();go(h);});sn.appendChild(a);});}
+function place(){sn.style.top=Math.round(nav.getBoundingClientRect().bottom)+'px';}
+function upd(){const y=innerHeight*.3;let d=null;
+  for(const x of data){const r=x.s.getBoundingClientRect();if(r.top<=y&&r.bottom>y){d=x;break;}}
+  if(d!==cur){cur=d;act=null;if(d)build(d);sn.classList.toggle('on',!!d);}
+  navLinks.forEach(a=>{const s=document.querySelector(a.getAttribute('href'));if(!s)return;const r=s.getBoundingClientRect();a.classList.toggle('on',r.top<=y&&r.bottom>y);});
+  if(!d)return;let h=null;d.sts.forEach(x=>{if(x.getBoundingClientRect().top<=y+60)h=x;});
+  if(h!==act){act=h;[...sn.querySelectorAll('a')].forEach(a=>{const on=!!h&&a.getAttribute('href')==='#'+h.id;a.classList.toggle('on',on);
+    if(on)sn.scrollTo({left:a.offsetLeft-(sn.clientWidth-a.offsetWidth)/2,behavior:reduce?'auto':'smooth'});});}}
+let q=0;addEventListener('scroll',()=>{if(q)return;q=requestAnimationFrame(()=>{q=0;upd();});},{passive:true});
+addEventListener('resize',()=>{place();upd();});place();upd();
 })();

@@ -772,3 +772,32 @@ body{margin:0}
   .iw-sub{font-size:15px}
 }
 @media (max-width:760px){.calc .res b{font-size:21px}.calc .res span{font-size:10.5px!important;line-height:1.3;display:block}.calc .res{row-gap:8px}}
+
+/* ---------- composition: three heading levels, calmer rhythm, sizes that respect short screens */
+.band{padding-block:clamp(64px,min(9vw,13vh),130px)}
+h2.h{font-size:clamp(40px,min(7.4vw,15vh),112px)}
+.big-title{font-size:clamp(54px,min(12.5vw,24vh),210px)}
+.manifest{font-size:clamp(26px,min(4vw,7vh),56px)}
+.mission{margin-top:clamp(40px,6vw,80px)}
+.story{height:180vh}
+/* level 2: subsection inside a section */
+h3.st{font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(24px,min(2.6vw,5vh),38px);line-height:1.05;color:var(--cream);margin:clamp(72px,min(8vw,13vh),120px) 0 18px;scroll-margin-top:130px;text-wrap:balance;max-width:none}
+h3.st::before{content:"";display:block;width:34px;height:2px;background:var(--gold);margin-bottom:16px}
+h2.h + h3.st,.wrap > h3.st:first-child{margin-top:clamp(40px,5vw,64px)}
+h3.st + p{margin-top:0}
+/* level 3: small gold label */
+.sub{margin:clamp(44px,5vw,72px) 0 18px}
+/* section subnav under the top bar */
+#subnav{position:fixed;left:0;right:0;top:66px;z-index:49;display:flex;gap:6px;align-items:center;padding:8px max(24px,env(safe-area-inset-right,0px)) 8px max(24px,env(safe-area-inset-left,0px));background:rgba(2,17,12,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-block:1px solid var(--line);overflow-x:auto;scrollbar-width:none;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .3s,transform .3s}
+#subnav::-webkit-scrollbar{display:none}
+#subnav.on{opacity:1;transform:none;pointer-events:auto}
+#subnav b{flex:none;font-size:12px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-right:12px;white-space:nowrap}
+#subnav a{flex:none;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:999px;white-space:nowrap;transition:background .25s,color .25s}
+#subnav a:hover{color:var(--cream)}
+#subnav a.on{color:var(--ink);background:var(--gold)}
+nav.top ul a.on{color:var(--cream)}
+nav.top ul a.on::after{transform:scaleX(1)}
+@media (max-width:960px){#subnav b{display:none}}/* section rhythm: alternate two emerald tones, hairline between sections */
+#quick,#identity,#templates{background:linear-gradient(180deg,#0b2619 0,var(--deep) 220px,var(--deep))}
+#logo,#carriers,#store{background:var(--ink)}
+main > section + section{border-top:1px solid var(--line)}
