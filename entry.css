@@ -1,0 +1,35 @@
+/* ФАЙЗ — вход: три полосы-заведения одна под другой */
+:root{--vape:#02110c;--vape-2:#1a422f;--gold:#c8b48c;--blue:#a0beda;--choc:#34211b;--butter:#f4deaf;--neutral:#e6e0d5;--neutral-ink:#6f675b}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--vape)}
+body{font-family:"Roboto Condensed","Arial Narrow",Arial,sans-serif;color:var(--butter);overflow-x:clip}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.entry{display:flex;flex-direction:column;min-height:100svh}
+.band{position:relative;flex:1 1 0;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:clamp(16px,4vw,60px);
+  padding:clamp(20px,4vh,44px) max(24px,env(safe-area-inset-right,0px)) clamp(20px,4vh,44px) max(24px,env(safe-area-inset-left,0px));
+  text-decoration:none;color:inherit;overflow:hidden;transition:flex-grow .5s cubic-bezier(.2,.7,.2,1)}
+a.band:hover,a.band:focus-visible{flex-grow:1.18}
+.band .logo{display:block;height:clamp(64px,22vh,190px);width:auto;max-width:100%;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+a.band:hover .logo,a.band:focus-visible .logo{transform:scale(1.04)}
+.band .for{display:flex;align-items:center;gap:16px;font-weight:700;font-size:clamp(14px,1.6vw,20px);letter-spacing:.24em;text-transform:uppercase;white-space:nowrap}
+.band .for i{font-style:normal;display:grid;place-items:center;width:clamp(40px,4vw,54px);aspect-ratio:1;border-radius:50%;border:1.5px solid currentColor;transition:transform .4s}
+a.band:hover .for i,a.band:focus-visible .for i{transform:translateX(6px)}
+a.band:focus-visible{outline:3px solid currentColor;outline-offset:-10px}
+/* 1 · вейп-шоп */
+.b-vape{background:radial-gradient(ellipse at 30% 50%,#123726 0%,var(--vape) 70%);color:var(--gold)}
+.b-vape .logo{fill:url(#gGoldWide)}
+/* 2 · пекарня */
+.b-bakery{background:var(--blue);color:var(--choc)}
+.b-bakery .logo{fill:var(--choc)}
+.b-bakery .for{font-family:"Manrope",system-ui,sans-serif;font-weight:700}
+/* 3 · в разработке */
+.b-soon{flex:0 0 auto;min-height:clamp(64px,13vh,110px);background:var(--neutral);color:var(--neutral-ink);grid-template-columns:1fr}
+.b-soon span{font-size:clamp(12px,1.2vw,15px);letter-spacing:.3em;text-transform:uppercase;text-align:center}
+/* верхняя подпись */
+.top{position:absolute;z-index:2;top:max(14px,env(safe-area-inset-top,0px));left:max(24px,env(safe-area-inset-left,0px));font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:rgba(200,180,140,.75)}
+@media (max-width:640px){
+  .band{grid-template-columns:1fr;justify-items:start;gap:14px}
+  .band .logo{height:auto;width:min(78vw,420px)}
+  .b-soon{justify-items:center}
+}
+@media (prefers-reduced-motion:reduce){.band,.band .logo,.band .for i{transition:none}}

@@ -44,8 +44,8 @@ if 'invest.html' in html and 'invest-vape.html' not in html['invest.html']:
     errors.append('invest.html does not redirect to invest-vape.html')
 if 'index.html' in html:
     for a in ('logo', 'identity', 'carriers', 'templates', 'store', 'quick'):
-        if a not in html['index.html']:
-            errors.append(f'index.html does not handle legacy #{a}')
+        if a not in (ROOT / 'entry.js').read_text(encoding='utf-8'):
+            errors.append(f'entry.js does not redirect legacy #{a}')
     for need in ('vape.html', 'bakery.html', 'в разработке'):
         if need not in html['index.html']:
             errors.append(f'index.html entrance lacks {need}')
