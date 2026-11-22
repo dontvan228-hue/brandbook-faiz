@@ -97,13 +97,21 @@ if(tp){
 
 /* ---------- layout how-to: one poster built in 4 steps */
 {const box=$('#howto');if(box){
-  const L=[`<rect width="300" height="400" fill="${INK}"/><circle cx="150" cy="150" r="170" fill="#123726" opacity=".6"/>`,
-    `<rect x="24" y="24" width="252" height="352" fill="none" stroke="${GD}" stroke-dasharray="5 4" opacity=".8"/>${[1,2,3].map(i=>`<path d="M${24+i*63} 24V376" stroke="${GD}" opacity=".18"/>`).join('')}${t(12,16,9,'X',{c:GD})}${t(150,16,9,'X = 24',{c:GD,a:'middle'})}`,
-    wm(90,48,120,GOLD),
-    `${t(24,262,42,'НОВЫЙ',{w:800,ls:1})}${t(24,304,42,'МАГАЗИН',{w:800,ls:1})}<path d="M24 322H84" stroke="${GD}" stroke-width="2"/>${t(24,346,15,'Адрес · дата открытия',{f:CG,it:1,c:GD})}${b18(246,355,CR)}`];
-  const CAP=[['Шаг 1 · Фон','Один цвет палитры на весь фон: изумруд, олива или крем.'],['Шаг 2 · Поля и сетка','Поле X = 1/12 ширины со всех сторон, 4 колонки.'],['Шаг 3 · Логотип','Сверху по центру или в левом верхнем углу, не меньше минимума.'],['Шаг 4 · Текст и 18+','Заголовок капсом, акцент курсивом, «18+» в правом нижнем углу.']];
+  // one poster built step by step: what this step adds is drawn in full with a gold frame, earlier steps are dimmed
+  const hi=(x,y,w,h)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="none" stroke="${GD}" stroke-width="2" stroke-dasharray="6 4"/>`;
+  const sw=(x,c,n,tc)=>`<rect x="${x}" y="300" width="72" height="48" rx="6" fill="${c}" stroke="rgba(243,235,214,.35)"/>${t(x+36,329,11,n,{c:tc,a:'middle',w:700,ls:1})}`;
+  const L=[
+    {base:`<rect width="300" height="400" fill="${INK}"/>`,
+     add:`${t(150,190,15,'Один цвет на весь фон',{c:CR,a:'middle',w:700,ls:1})}${t(150,272,11,'на выбор:',{c:GD,a:'middle',ls:2})}${sw(30,INK,'ИЗУМРУД',CR)}${sw(114,OL,'ОЛИВА',CR)}${sw(198,CR,'КРЕМ',OL)}`},
+    {base:`<rect x="24" y="24" width="252" height="352" fill="none" stroke="${GD}" stroke-dasharray="5 4"/>${[1,2,3].map(i=>`<path d="M${24+i*63} 24V376" stroke="${GD}" opacity=".3"/>`).join('')}`,
+     add:`${t(12,18,13,'X',{c:GD,w:700})}${t(150,200,13,'отступ X = 1/12 ширины',{c:GD,a:'middle',w:700})}${t(150,220,13,'4 колонки',{c:GD,a:'middle'})}`},
+    {base:wm(90,48,120,GOLD),add:hi(80,38,140,78)},
+    {base:`${t(24,262,42,'НОВЫЙ',{w:800,ls:1})}${t(24,304,42,'МАГАЗИН',{w:800,ls:1})}<path d="M24 322H84" stroke="${GD}" stroke-width="2"/>${t(24,346,15,'Адрес · дата открытия',{f:CG,it:1,c:GD})}${b18(246,355,CR)}`,
+     add:`${hi(16,222,210,134)}${hi(240,349,42,29)}`}];
+  const CAP=[['Фон','Один фирменный цвет на весь фон: изумруд, олива или крем.'],['Поля и сетка','Отступ X от краёв со всех сторон и 4 колонки — внутри всё выравнивается по ним.'],['Логотип','Сверху по центру или в левом верхнем углу, не меньше минимального размера.'],['Текст и 18+','Заголовок капсом, подпись курсивом, «18+» в правом нижнем углу.']];
   CAP.forEach(([h,p],i)=>{const f=document.createElement('figure');f.className='rv';
-    f.innerHTML=`<div class="fr">${svg('0 0 300 400',L.slice(0,i+1).join(''))}</div><figcaption><b>${h}</b>${p}</figcaption>`;box.appendChild(f);});}}
+    const body=L.map((l,k)=>k===0?(i===0?l.base+l.add:l.base):k<i?`<g opacity=".3">${l.base}</g>`:k===i?l.base+l.add:'').join('');
+    f.innerHTML=`<figcaption><span class="n">${i+1}</span><b>${h}</b><span class="d">${p}</span></figcaption><div class="fr">${svg('0 0 300 400',body)}</div>`;box.appendChild(f);});}}
 
 /* ---------- template library */
 {const grid=$('#tGrid');if(grid){
