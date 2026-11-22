@@ -62,15 +62,6 @@ $$('.bk-marq .mi').forEach(m=>{m.textContent='';for(let k=0;k<4;k++)WORDS.forEac
 $$('#bkPatt .row').forEach((r,i)=>{for(let k=0;k<4;k++)WORDS.forEach((w,j)=>{const s=document.createElement('span');s.textContent=w;r.appendChild(s);if((j+i)%3===0){const l=document.createElement('span');l.appendChild(miniLogo());r.appendChild(l);}});r.style.transform=`translateX(${-200*i}px)`;});
 $$('[data-ptone]').forEach(b=>b.addEventListener('click',()=>{const p=$('#bkPatt');if(p)p.dataset.tone=b.dataset.ptone;$$('[data-ptone]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));}));
 
-/* flour in the air over the hero: slow cream specks, paused off-screen */
-{const cv=$('.bk-hero canvas.flour');if(cv&&!reduce){const g=cv.getContext('2d');let W=0,H=0,P=[],on=true,dpr=Math.min(2,devicePixelRatio||1);
-  const size=()=>{const r=cv.getBoundingClientRect();W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;g.setTransform(dpr,0,0,dpr,0,0);
-    const n=Math.round(Math.min(90,W*H/14000));P=Array.from({length:n},()=>({x:Math.random()*W,y:Math.random()*H,r:.6+Math.random()*2.2,v:.08+Math.random()*.25,ph:Math.random()*6.28,a:.25+Math.random()*.5}));};
-  size();addEventListener('resize',size);
-  new IntersectionObserver(es=>es.forEach(e=>on=e.isIntersecting)).observe(cv);
-  (function tick(t){requestAnimationFrame(tick);if(!on)return;g.clearRect(0,0,W,H);
-    for(const p of P){p.y+=p.v;p.x+=Math.sin(t/2400+p.ph)*.18;if(p.y>H+4){p.y=-4;p.x=Math.random()*W;}
-      g.beginPath();g.arc(p.x,p.y,p.r,0,6.283);g.fillStyle=`rgba(251,244,230,${p.a})`;g.fill();}})(0);}}
 
 /* reveal */
 if(hasG&&!reduce){gsap.registerPlugin(ScrollTrigger);

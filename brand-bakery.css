@@ -206,7 +206,7 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
 .bk-files-more{margin-top:14px;font-size:14px;color:var(--muted)}
 .bk-files-more a{color:var(--choc);font-weight:700}
 
-/* ---------- hero life: drifting morning light, flour in the air, dough-rise logo */
+/* ---------- hero life: dough-rise logo (background gradient further below) */
 .bk-hero{background:#a0beda;isolation:isolate}
 .bk-hero .sky{position:absolute;inset:-20%;z-index:-2;background:
   radial-gradient(38% 46% at 22% 30%,rgba(244,222,175,.75),transparent 70%),
@@ -215,7 +215,6 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
   radial-gradient(40% 46% at 30% 86%,rgba(143,176,207,.7),transparent 70%);
   filter:blur(18px);animation:sky 22s ease-in-out infinite alternate}
 @keyframes sky{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(4%,-3%,0) scale(1.06)}100%{transform:translate3d(-3%,3%,0) scale(1.02)}}
-.bk-hero canvas.flour{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
 .bk-hero .logo{animation:rise 1.4s .15s cubic-bezier(.2,.8,.2,1) both}
 @keyframes rise{from{opacity:0;transform:translateY(34px) scale(.94,.9)}60%{opacity:1;transform:translateY(-4px) scale(1.01,1.02)}to{opacity:1;transform:none}}
 .bk-hero .t{animation:fadeup .9s .9s ease-out both}
@@ -232,7 +231,7 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
 /* the hero clips only its background */
 .bk-hero{overflow:visible;z-index:3}
 .bk-hero .bg{position:absolute;inset:0;overflow:hidden;z-index:-1}
-.bk-hero .bg .sky,.bk-hero .bg canvas.flour{z-index:auto}
+.bk-hero .bg .sky{z-index:auto}
 
 
 /* ---------- pattern: the network's word pattern, in bakery colours and Playfair italic */
@@ -264,3 +263,14 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
 .bk-hero .t a{text-transform:none;letter-spacing:.01em;font-size:15px}
 .bk-foot .meta{text-transform:none;letter-spacing:.01em;font-size:15px}
 @media (max-width:960px){.bakery nav.top ul a{font-size:clamp(24px,6.5vw,34px);font-family:var(--f-disp);font-weight:600}}
+/* hero: one calm blue → cream gradient, drifting very slowly (replaces the blobs and flour) */
+.bk-hero .bg .sky{position:absolute;inset:0;filter:none;
+  background:linear-gradient(125deg,#a0beda 0%,#b3cbe2 26%,#d4d9d6 50%,#ecdfbf 74%,#f4deaf 100%);
+  background-size:180% 180%;animation:skyshift 24s ease-in-out infinite alternate}
+@keyframes skyshift{from{background-position:0% 0%}to{background-position:100% 100%}}
+@media (prefers-reduced-motion:reduce){.bk-hero .bg .sky{animation:none;background-position:50% 50%}}
+/* both colours always in frame: the gradient keeps full size and only its angle sways */
+@property --ga{syntax:'<angle>';inherits:false;initial-value:120deg}
+.bk-hero .bg .sky{background:linear-gradient(var(--ga),#a0beda 0%,#b5cce2 30%,#dcdcd0 58%,#efe0bd 80%,#f4deaf 100%);background-size:100% 100%;animation:skysway 18s ease-in-out infinite alternate}
+@keyframes skysway{from{--ga:105deg}to{--ga:150deg}}
+@media (prefers-reduced-motion:reduce){.bk-hero .bg .sky{animation:none}}
