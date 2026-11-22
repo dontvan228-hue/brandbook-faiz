@@ -206,15 +206,6 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
 .bk-files-more{margin-top:14px;font-size:14px;color:var(--muted)}
 .bk-files-more a{color:var(--choc);font-weight:700}
 
-/* ---------- awning (маркиза): blue/cream stripes, one scallop per stripe — the bakery's signature */
-.awning{--s:48px;--h:30px;--d:calc(var(--s) / 2);position:relative;height:calc(var(--h) + var(--d));pointer-events:none}
-.awning::before{content:"";position:absolute;inset:0 0 auto;height:var(--h);background:repeating-linear-gradient(90deg,var(--blue,#a0beda) 0 var(--s),var(--butter,#f4deaf) var(--s) calc(var(--s) * 2))}
-.awning::after{content:"";position:absolute;left:0;right:0;top:calc(var(--h) - 1px);height:calc(var(--d) + 1px);
-  background:repeating-linear-gradient(90deg,var(--blue,#a0beda) 0 var(--s),var(--butter,#f4deaf) var(--s) calc(var(--s) * 2));
-  -webkit-mask:radial-gradient(circle at 50% 0,#000 calc(var(--d) - .5px),transparent var(--d)) 0 0/var(--s) 100% repeat-x;
-          mask:radial-gradient(circle at 50% 0,#000 calc(var(--d) - .5px),transparent var(--d)) 0 0/var(--s) 100% repeat-x}
-.awning.sm{--s:32px;--h:18px}
-@media (max-width:640px){.awning{--s:36px;--h:22px}}
 /* ---------- hero life: drifting morning light, flour in the air, dough-rise logo */
 .bk-hero{background:#a0beda;isolation:isolate}
 .bk-hero .sky{position:absolute;inset:-20%;z-index:-2;background:
@@ -225,8 +216,6 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
   filter:blur(18px);animation:sky 22s ease-in-out infinite alternate}
 @keyframes sky{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(4%,-3%,0) scale(1.06)}100%{transform:translate3d(-3%,3%,0) scale(1.02)}}
 .bk-hero canvas.flour{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
-.bk-hero > .awning{position:absolute;left:0;right:0;bottom:calc(-1 * var(--d,24px));z-index:2;transform-origin:top;animation:unfurl 1.1s .5s cubic-bezier(.2,.8,.2,1) both}
-@keyframes unfurl{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 .bk-hero .logo{animation:rise 1.4s .15s cubic-bezier(.2,.8,.2,1) both}
 @keyframes rise{from{opacity:0;transform:translateY(34px) scale(.94,.9)}60%{opacity:1;transform:translateY(-4px) scale(1.01,1.02)}to{opacity:1;transform:none}}
 .bk-hero .t{animation:fadeup .9s .9s ease-out both}
@@ -239,15 +228,12 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
 .bk-marq span{display:inline-flex;align-items:center;gap:26px;padding-right:26px;font-family:var(--f-disp);font-style:italic;font-size:clamp(26px,3.4vw,44px);line-height:1.2;color:var(--choc);white-space:nowrap}
 .bk-marq span i{display:inline-block;width:.32em;height:.32em;border-radius:50%;background:var(--blue)}
 @keyframes bkmq{to{transform:translateX(-50%)}}
-@media (prefers-reduced-motion:reduce){.bk-hero .sky,.bk-hero > .awning,.bk-hero .logo,.bk-hero .t,.bk-marq .mi{animation:none}}
-/* the hero clips only its background, so the awning can hang over the running line */
+@media (prefers-reduced-motion:reduce){.bk-hero .sky,.bk-hero .logo,.bk-hero .t,.bk-marq .mi{animation:none}}
+/* the hero clips only its background */
 .bk-hero{overflow:visible;z-index:3}
 .bk-hero .bg{position:absolute;inset:0;overflow:hidden;z-index:-1}
 .bk-hero .bg .sky,.bk-hero .bg canvas.flour{z-index:auto}
 
-/* awning over the hero: half a tone off the page colours so it reads as fabric, with a rod and a soft shadow */
-.bk-hero > .awning{--blue:#8fb0cf;--butter:#fbf4e6;filter:drop-shadow(0 7px 8px rgba(92,58,40,.2))}
-.bk-hero > .awning::before{box-shadow:inset 0 4px 0 var(--choc)}
 
 /* ---------- pattern: the network's word pattern, in bakery colours and Playfair italic */
 .bk-tones{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
@@ -263,12 +249,6 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
 .bk-patt .over svg{width:min(56%,620px);height:auto;fill:var(--choc);filter:drop-shadow(0 14px 30px rgba(92,58,40,.25));transition:fill .6s}
 .bk-patt[data-tone="choc"] .over svg{fill:var(--butter);filter:drop-shadow(0 14px 30px rgba(0,0,0,.35))}
 .bk-marq span svg{height:.5em;width:auto;fill:var(--choc);margin-left:4px}
-/* awning demo in the identity section */
-.bk-awn-demo{margin-top:18px;border-radius:22px;overflow:hidden;background:var(--page);border:1px solid var(--line)}
-.bk-awn-demo .awning{--blue:#8fb0cf;--butter:#fbf4e6;filter:drop-shadow(0 7px 8px rgba(92,58,40,.2))}
-.bk-awn-demo .awning::before{box-shadow:inset 0 4px 0 var(--choc)}
-.bk-awn-sign{padding:clamp(28px,5vw,60px) 24px clamp(30px,5vw,56px);display:grid;place-items:center}
-.bk-awn-sign svg{width:min(64%,560px);height:auto;fill:var(--choc)}
 
 /* calmer type: sentence case instead of tracked capitals on labels and navigation */
 .bakery .eyebrow{text-transform:none;letter-spacing:.02em;font-size:15px;font-weight:600}
