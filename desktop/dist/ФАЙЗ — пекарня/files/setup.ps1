@@ -49,6 +49,8 @@ if ($Mode -in 'install','check') {
     New-Item -ItemType Directory -Force $dst | Out-Null
     Get-Process FaizWall -ErrorAction SilentlyContinue | Stop-Process -Force
     Copy-Item (Join-Path $src '*') $dst -Recurse -Force
+    # files that came through a messenger or browser carry a "from the internet" mark; drop it on our own files
+    Get-ChildItem $dst -Recurse -File | Unblock-File -ErrorAction SilentlyContinue
   }
   $ico = Join-Path $dst 'icons'
 
