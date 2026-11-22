@@ -24,6 +24,14 @@ const nav=$('#nav');const onS=()=>nav.classList.toggle('solid',scrollY>40);addEv
   matchMedia('(min-width:961px)').addEventListener('change',e=>{if(e.matches)setMenu(false);});}
 {const pr=$('#prog');if(pr){const upd=()=>{const m=document.documentElement.scrollHeight-innerHeight;pr.style.transform=`scaleX(${m>0?Math.min(1,scrollY/m):0})`;};addEventListener('scroll',upd,{passive:true});upd();}}
 
+/* seal rings on the cover: slow turn, faster while the pointer is over the mark (as on the vape cover) */
+{const seal=$('#bkSeal'),r1=$('#bkR1'),r2=$('#bkR2'),r4=$('#bkR4');
+  if(seal&&r1&&!reduce){let rot=0,boost=0,on=true;
+    seal.addEventListener('pointermove',()=>{boost=Math.min(2.4,boost+.35);});
+    new IntersectionObserver(es=>es.forEach(e=>on=e.isIntersecting)).observe(seal);
+    (function spin(){requestAnimationFrame(spin);if(!on)return;rot+=.12+boost;boost*=.94;
+      r1.setAttribute('transform',`rotate(${rot})`);r2.setAttribute('transform',`rotate(${-rot*.7})`);r4&&r4.setAttribute('transform',`rotate(${rot*.35})`);})();}}
+
 /* toast + copy colour */
 const toast=m=>{const t=$('#toast');if(!t)return;t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),1600);};
 $$('[data-copy]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.copy;const done=()=>toast('Скопировано '+v);try{navigator.clipboard.writeText(v).then(done,()=>toast(v));}catch(e){toast(v);}}));

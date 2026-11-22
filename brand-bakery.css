@@ -274,3 +274,45 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
 .bk-hero .bg .sky{background:linear-gradient(var(--ga),#a0beda 0%,#b5cce2 30%,#dcdcd0 58%,#efe0bd 80%,#f4deaf 100%);background-size:100% 100%;animation:skysway 18s ease-in-out infinite alternate}
 @keyframes skysway{from{--ga:105deg}to{--ga:150deg}}
 @media (prefers-reduced-motion:reduce){.bk-hero .bg .sky{animation:none}}
+/* ---------- bakery cover: the network's seal (Ф in rings of brand words) in bakery colours */
+.bk-pre{position:fixed;inset:0;z-index:100;background:#fbf4e6;display:grid;place-items:center;animation:bkPreOut .7s 1.9s forwards}
+.bk-pre svg{width:150px;height:auto;overflow:visible}
+.bk-pre path{fill:none;stroke:#5c3a28;stroke-width:2.4;stroke-dasharray:1;stroke-dashoffset:1;animation:bkDraw 1.6s .1s cubic-bezier(.6,0,.2,1) forwards}
+@keyframes bkDraw{to{stroke-dashoffset:0}}
+@keyframes bkPreOut{to{opacity:0;visibility:hidden}}
+.bk-hero.bk-cover{display:block;min-height:0;height:100svh;min-height:600px;padding:0;overflow:hidden}
+.bk-seal{position:absolute;left:50%;top:50%;width:min(84vmin,860px);aspect-ratio:1;translate:-50% -56%;cursor:pointer}
+.bk-seal svg{width:100%;height:100%;overflow:visible}
+.bk-seal .r1 text{font-family:var(--f-disp);font-style:italic;font-weight:500;font-size:48px;fill:var(--choc)}
+.bk-seal .r2 text{font-family:var(--f-head);font-weight:700;font-size:21px;fill:rgba(92,58,40,.78)}
+.bk-seal .r4 text{font-family:var(--f-head);font-weight:500;font-size:13px;fill:rgba(92,58,40,.45)}
+.bk-seal .ffill{fill:var(--choc);opacity:0;animation:bkFill 1s 3.3s ease-out forwards}
+.bk-seal .fline{fill:none;stroke:var(--choc);stroke-width:2;stroke-dasharray:1;stroke-dashoffset:1;animation:bkDraw 1.4s 2s cubic-bezier(.6,0,.2,1) forwards,bkFade .6s 3.9s forwards}
+@keyframes bkFill{to{opacity:1}}
+@keyframes bkFade{to{opacity:0}}
+.bk-seal .r1,.bk-seal .r2,.bk-seal .r4,.bk-seal .disc{opacity:0;animation:bkRingIn 1.2s cubic-bezier(.2,.8,.2,1) forwards}
+.bk-seal .disc{animation-delay:1.95s}.bk-seal .r2{animation-delay:2.2s}.bk-seal .r1{animation-delay:2.4s}.bk-seal .r4{animation-delay:2.6s}
+@keyframes bkRingIn{from{opacity:0}to{opacity:1}}
+.bk-hero.bk-cover .hud{position:absolute;left:0;right:0;bottom:0;display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:20px;
+  padding:0 max(24px,env(safe-area-inset-right,0px)) clamp(20px,4vh,36px) max(24px,env(safe-area-inset-left,0px));opacity:0;animation:fadeup .9s 3s ease-out forwards}
+.bk-hero.bk-cover .hud .t{font-size:15px;color:var(--choc)}
+.bk-hero.bk-cover .hud .t b{display:block;font-family:var(--f-disp);font-weight:600;font-size:clamp(24px,3vw,40px);margin-top:4px;color:var(--choc)}
+.bk-hero.bk-cover .hud .r{justify-self:end;text-align:right;font-size:13px;color:var(--muted);line-height:1.5}
+.bk-hero.bk-cover .hud .r a{display:inline-block;margin-top:10px;color:var(--choc);font-weight:700;text-decoration:none;border-bottom:1.5px solid currentColor}
+.bk-hero .choose{display:flex;gap:12px}
+.bk-hero .choose .opt{display:grid;grid-template-columns:1fr auto;column-gap:18px;align-items:center;min-width:250px;padding:16px 20px;border-radius:16px;text-decoration:none;
+  background:rgba(251,244,230,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(92,58,40,.18);color:var(--choc);transition:transform .3s,background .3s}
+.bk-hero .choose .opt b{font-family:var(--f-disp);font-weight:600;font-size:22px}
+.bk-hero .choose .opt span{grid-column:1;font-size:13px;color:var(--muted)}
+.bk-hero .choose .opt i{grid-row:1 / span 2;grid-column:2;font-style:normal;font-size:20px}
+.bk-hero .choose .opt:hover{transform:translateY(-3px);background:rgba(251,244,230,.92)}
+.bk-hero .choose .opt.dark{background:var(--choc);color:var(--butter);border-color:var(--choc)}
+.bk-hero .choose .opt.dark span{color:rgba(244,222,175,.8)}
+@media (max-width:980px){.bk-hero.bk-cover .hud{grid-template-columns:1fr}.bk-hero.bk-cover .hud .t,.bk-hero.bk-cover .hud .r{display:none}.bk-hero .choose{justify-content:center}}
+@media (max-width:600px){.bk-seal{width:min(98vw,560px);translate:-50% -64%}.bk-hero .choose{flex-direction:column;width:100%}.bk-hero .choose .opt{min-width:0}}
+@media (prefers-reduced-motion:reduce){.bk-pre{display:none}.bk-seal .ffill{opacity:1;animation:none}.bk-seal .fline{display:none}.bk-seal .r1,.bk-seal .r2,.bk-seal .r4,.bk-seal .disc,.bk-hero.bk-cover .hud{opacity:1;animation:none}}/* the vape .choose styles also match here: restore bakery type and colours on the cover buttons */
+.bk-hero .choose .opt b{color:var(--choc);text-transform:none;letter-spacing:0}
+.bk-hero .choose .opt.dark b,.bk-hero .choose .opt.dark i{color:var(--butter)}
+.bk-hero .choose .opt span{text-transform:none;letter-spacing:0}
+.bk-seal{width:min(76vmin,820px);translate:-50% -55%}
+@media (max-width:600px){.bk-seal{width:min(98vw,560px);translate:-50% -64%}}
