@@ -176,22 +176,27 @@ if(tp){
 
 /* ---------- payback calculator: one series, cumulative cash vs. months */
 {const C=$('#calc');if(C){
-  const el={inv:$('#cInv'),rev:$('#cRev'),mar:$('#cMar'),rent:$('#cRent'),sal:$('#cSal'),oth:$('#cOth')};
+  // two revenue models: a month figure (#cRev, #cMar) or, for food, checks/day × average check × days (#cChecks, #cAvg, #cDays) with food cost (#cFood)
+  const el={inv:$('#cInv'),rev:$('#cRev'),mar:$('#cMar'),rent:$('#cRent'),sal:$('#cSal'),oth:$('#cOth'),checks:$('#cChecks'),avg:$('#cAvg'),days:$('#cDays'),food:$('#cFood')};
+  const setT=(id,v)=>{const o=$(id);if(o)o.textContent=v;};
   const money=n=>{const a=Math.abs(n),s=n<0?'−':'';return a>=1e6?s+(a/1e6).toFixed(a>=1e7?0:1).replace('.',',')+' млн ₽':s+Math.round(a/1e3).toLocaleString('ru-RU')+' тыс ₽';};
   const sv=$('#chartSvg'),tip=$('#chartTip');let W=640;const H=300,P={l:64,r:16,t:20,b:34};let data=[],sx,sy;
   const nice=(span)=>{const raw=span/4,p=Math.pow(10,Math.floor(Math.log10(raw)));const m=raw/p;return (m<=1?1:m<=2?2:m<=5?5:10)*p;};
-  const draw=()=>{W=sv.clientWidth&&sv.clientWidth<520?400:640;sv.setAttribute('viewBox',`0 0 ${W} ${H}`);const inv=+el.inv.value,rev=+el.rev.value,mar=+el.mar.value/100,rent=+el.rent.value,sal=+el.sal.value,oth=+el.oth.value;
+  const draw=()=>{W=sv.clientWidth&&sv.clientWidth<520?400:640;sv.setAttribute('viewBox',`0 0 ${W} ${H}`);const inv=+el.inv.value,rent=+el.rent.value,sal=+el.sal.value,oth=+el.oth.value;
+    const byChecks=!!(el.checks&&el.avg&&el.days),nCk=byChecks?+el.checks.value:0,avg=byChecks?+el.avg.value:0,nD=byChecks?+el.days.value:0;
+    const rev=byChecks?nCk*avg*nD:+el.rev.value, costPct=el.food?+el.food.value:100-(+el.mar.value), mar=(100-costPct)/100;
     const gross=rev*mar,opx=rent+sal+oth,pr=gross-opx;           // monthly: revenue → gross profit → net profit
     const pay=pr>0?inv/pr:Infinity, be=mar>0?opx/mar:Infinity, roi=pr*12/inv;
-    $('#oInv').textContent=money(inv);$('#oRev').textContent=money(rev);$('#oMar').textContent=el.mar.value+' %';
-    $('#oRent').textContent=money(rent);$('#oSal').textContent=money(sal);$('#oOth').textContent=money(oth);
+    setT('#oInv',money(inv));setT('#oRev',money(rev));if(el.mar)setT('#oMar',el.mar.value+' %');
+    setT('#oChecks',nCk+' в день');setT('#oAvg',avg.toLocaleString('ru-RU')+' ₽');setT('#oDays',nD+' дн');if(el.food)setT('#oFood',costPct+' %');
+    setT('#oRent',money(rent));setT('#oSal',money(sal));setT('#oOth',money(oth));
     const rp=$('#rProfit');rp.textContent=money(pr);rp.classList.toggle('neg',pr<=0);
     $('#rPay').textContent=pr>0?(Math.ceil(pay)+' мес'):'не окупается';
     $('#rBe').textContent=isFinite(be)?money(be):'—';
     const rr=$('#rRoi');rr.textContent=(roi*100).toFixed(0).replace('-','−')+' %';rr.classList.toggle('neg',roi<=0);
     const row=(cls,a,b)=>`<li class="${cls}"><span>${a}</span><b>${b}</b></li>`;
-    $('#calcSteps').innerHTML=row('','Выручка в месяц',money(rev))
-      +row('minus',`− Закупка товара (${100-el.mar.value} % выручки)`,money(-(rev-gross)))
+    $('#calcSteps').innerHTML=row('',byChecks?`Выручка: ${nCk} чеков × ${avg.toLocaleString('ru-RU')} ₽ × ${nD} дн`:'Выручка в месяц',money(rev))
+      +row('minus',el.food?`− Продукты и упаковка (фудкост ${costPct} %)`:`− Закупка товара (${costPct} % выручки)`,money(-(rev-gross)))
       +row('tot','= Валовая прибыль',money(gross))
       +row('minus','− Аренда',money(-rent))+row('minus','− Зарплаты и налоги с них',money(-sal))+row('minus','− Прочие расходы',money(-oth))
       +row('tot'+(pr<=0?' neg':''),'= Чистая прибыль в месяц',money(pr))
@@ -212,5 +217,5 @@ if(tp){
     tip.textContent=`Месяц ${m} · ${money(data[m])}`;tip.style.left=X/W*r.width+'px';tip.style.top=Y/H*r.height+'px';tip.classList.add('on');};
   const leave=()=>{tip.classList.remove('on');const d=$('#cD');if(d)d.setAttribute('opacity',0);const x=$('#cX');if(x)x.setAttribute('d','');};
   sv.addEventListener('pointermove',hover);sv.addEventListener('pointerleave',leave);
-  Object.values(el).forEach(i=>i.addEventListener('input',draw));addEventListener('resize',draw);draw();}}
+  Object.values(el).filter(Boolean).forEach(i=>i.addEventListener('input',draw));addEventListener('resize',draw);draw();}}
 })();
