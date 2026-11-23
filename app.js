@@ -25,7 +25,7 @@ if(matchMedia('(hover:hover) and (pointer:fine)').matches){let cx=0,cy=0,tx=0,ty
 /* ---------- hero seal */
 const SEAL={r1:{txt:'Faiz · Quality · Trust · Comfort · Faiz · Quality · Trust · Comfort · ',r:372,el:'#hR1'},
             r2:{txt:'ФАЙЗ · КАЧЕСТВО · ДОВЕРИЕ · КОМФОРТ · АТМОСФЕРА · ВЫБОР · ',r:268,el:'#hR2'},
-            r4:{txt:'БРЕНДБУК · ФИРМЕННЫЙ СТИЛЬ · 2026 · БРЕНДБУК · ФИРМЕННЫЙ СТИЛЬ · 2026 · БРЕНДБУК · ФИРМЕННЫЙ СТИЛЬ · 2026 · ',r:450,el:'#hR4'}};
+            r4:{txt:'БРЕНДБУК · ФИРМЕННЫЙ СТИЛЬ · ФАЙЗ · БРЕНДБУК · ФИРМЕННЫЙ СТИЛЬ · ФАЙЗ · БРЕНДБУК · ФИРМЕННЫЙ СТИЛЬ · ФАЙЗ · ',r:450,el:'#hR4'}};
 const CH=[];
 function buildRing(key){const R=SEAL[key];const g=$(R.el);g.innerHTML='';const chars=[...R.txt];
   const els=chars.map(c=>{const t=document.createElementNS(NS,'text');t.textContent=c===' '?' ':c;t.setAttribute('text-anchor','middle');g.appendChild(t);return t;});
