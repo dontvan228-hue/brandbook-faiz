@@ -1,4 +1,4 @@
-/* ФАЙЗ · пекарня: прокрутка, меню, копирование цветов, нарисованные макеты носителей и шаблонов */
+/* ФАЙЗ · пекарня: прокрутка, меню, копирование цветов, нарисованные макеты носителей */
 (function(){
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -95,6 +95,6 @@ if(hasG&&!reduce){gsap.registerPlugin(ScrollTrigger);
   $$('#bkPatt .row').forEach((r,i)=>{const dir=+r.dataset.dir;gsap.fromTo(r,{x:dir>0?-600-i*120:-200-i*80},{x:dir>0?-100-i*120:-700-i*80,ease:'none',scrollTrigger:{trigger:'#bkPatt',start:'top bottom',end:'bottom top',scrub:true}});});
   gsap.from('#bkPatt .over svg',{scale:.7,opacity:0,duration:1.1,ease:'expo.out',scrollTrigger:{trigger:'#bkPatt',start:'top 70%'}});}
 
-const SEC=(document.body.dataset.subnav||'quick logo identity carriers templates').split(/\s+/);
+const SEC=(document.body.dataset.subnav||'quick logo identity carriers').split(/\s+/);
 window.initSubnav&&initSubnav({sections:SEC,lenis,reduce});
 })();
