@@ -90,8 +90,38 @@ $$('[data-ptone]').forEach(b=>b.addEventListener('click',()=>{const p=$('#bkPatt
 
 /* reveal */
 if(hasG&&!reduce){gsap.registerPlugin(ScrollTrigger);
-  $$('.rv').forEach(el=>gsap.from(el,{y:20,opacity:0,duration:.6,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 95%'}}));
-  $$('h3.st').forEach(el=>gsap.from(el,{y:16,opacity:0,duration:.5,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 95%'}}));
+  const ST=(el,start)=>({trigger:el,start:start||'top 88%',once:true});
+  // big section titles: words rise out of a mask one by one
+  $$('main h2.h').forEach(h=>{if(h.children.length)return;const words=h.textContent.trim().split(/\s+/);
+    h.innerHTML=words.map(w=>`<span class="bk-w"><span>${w.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}</span></span>`).join(' ');
+    gsap.from(h.querySelectorAll('.bk-w>span'),{yPercent:110,rotate:4,duration:1.1,ease:'expo.out',stagger:.08,scrollTrigger:ST(h,'top 90%')});});
+  // eyebrows and subsection titles: the little bar draws itself, the text slides in
+  $$('main .eyebrow').forEach(e=>gsap.from(e,{x:-24,opacity:0,duration:.8,ease:'power3.out',scrollTrigger:ST(e,'top 92%')}));
+  $$('h3.st').forEach(el=>{gsap.from(el,{y:24,opacity:0,duration:.8,ease:'power3.out',scrollTrigger:ST(el,'top 92%')});
+    gsap.fromTo(el,{'--bar':0},{'--bar':1,duration:1,ease:'expo.out',scrollTrigger:ST(el,'top 92%')});});
+  // card grids: cards come up one after another with a soft scale
+  const GRID='.bk-bento,.bk-mocks,.bk-signs,.bk-stickers,.bk-files,.bk-pal,.bk-vars,.bk-dd,.bk-bag,.bk-tiles,.bk-cols3,.bk-road,.bk-types';
+  const inGrid=new Set();
+  $$(GRID).forEach(g=>{const kids=[...g.children];kids.forEach(k=>inGrid.add(k));
+    gsap.from(kids,{y:48,scale:.96,opacity:0,duration:.9,ease:'power3.out',stagger:.09,clearProps:'transform,opacity',scrollTrigger:ST(g,'top 86%')});});
+  $$('.rv').forEach(el=>{if(inGrid.has(el)||el.closest('.bk-bento,.bk-mocks,.bk-signs,.bk-stickers,.bk-bag'))return;
+    gsap.from(el,{y:28,opacity:0,duration:.8,ease:'power3.out',scrollTrigger:ST(el,'top 92%')});});
+  // photos: open like a curtain, then drift slowly while scrolling
+  $$('.bk-mocks .fr img,.bk-signs img,.bk-bag figure>img').forEach(im=>{
+    gsap.fromTo(im,{clipPath:'inset(100% 0 0 0 round 18px)'},{clipPath:'inset(0% 0 0 0 round 18px)',duration:1.2,ease:'expo.out',scrollTrigger:ST(im,'top 90%')});
+    if(im.closest('.fr')&&!im.closest('.bk-fr-sticker'))gsap.fromTo(im,{scale:1.14,yPercent:-4},{scale:1.02,yPercent:4,ease:'none',scrollTrigger:{trigger:im,start:'top bottom',end:'bottom top',scrub:true}});});
+  // stickers roll in
+  $$('.bk-stickers img,.bk-fr-sticker img[src*="sticker"]').forEach((im,i)=>gsap.from(im,{rotate:i%2?40:-40,scale:.7,duration:1.3,ease:'back.out(1.6)',scrollTrigger:ST(im,'top 90%')}));
+  // brand colour cards fill from the bottom
+  $$('.bk-pal>*').forEach(c=>gsap.fromTo(c,{clipPath:'inset(100% 0 0 0 round 18px)'},{clipPath:'inset(0% 0 0 0 round 18px)',duration:1.1,ease:'expo.out',scrollTrigger:ST(c.parentElement,'top 85%')}));
+  // dimension lines on the bag scheme draw themselves
+  $$('.bk-scheme svg g[stroke] path').forEach(p=>{let L=0;try{L=p.getTotalLength()}catch(_){}if(!L)return;
+    gsap.fromTo(p,{strokeDasharray:L,strokeDashoffset:L},{strokeDashoffset:0,duration:1.4,ease:'power2.inOut',scrollTrigger:ST(p.closest('svg'),'top 80%'),onComplete:()=>p.style.removeProperty('stroke-dasharray')});});
+  // tables: rows slide in
+  $$('.bk-table').forEach(t=>gsap.from(t.querySelectorAll('tr'),{x:-20,opacity:0,duration:.6,ease:'power2.out',stagger:.04,scrollTrigger:ST(t,'top 90%')}));
+  // reading progress line under the top bar
+  {const bar=document.createElement('div');bar.className='bk-progress';bar.setAttribute('aria-hidden','true');document.body.appendChild(bar);
+    gsap.to(bar,{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.3}});}
   $$('#bkPatt .row').forEach((r,i)=>{const dir=+r.dataset.dir;gsap.fromTo(r,{x:dir>0?-600-i*120:-200-i*80},{x:dir>0?-100-i*120:-700-i*80,ease:'none',scrollTrigger:{trigger:'#bkPatt',start:'top bottom',end:'bottom top',scrub:true}});});
   gsap.from('#bkPatt .over svg',{scale:.7,opacity:0,duration:1.1,ease:'expo.out',scrollTrigger:{trigger:'#bkPatt',start:'top 70%'}});}
 

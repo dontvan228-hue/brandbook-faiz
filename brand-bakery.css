@@ -387,3 +387,15 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
   .bk-menu-grid figure>img{height:auto;object-fit:initial}
 }
 .bakery #carriers{padding-bottom:clamp(120px,13vw,200px)}
+
+/* ---------- motion: titles, bars, hover lift, reading progress ---------- */
+.bk-w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.14em;margin-bottom:-.14em}
+.bk-w>span{display:inline-block;transform-origin:0 100%}
+.bakery h3.st::before{transform:scaleX(var(--bar,1));transform-origin:left center}
+.bk-progress{position:fixed;top:0;left:0;right:0;height:3px;background:var(--choc);transform:scaleX(0);transform-origin:0 50%;z-index:300;pointer-events:none}
+.bk-mocks .fr,.bk-signs img,.bk-files .f,.bk-bento>div,.bk-stickers figure,.bk-pal>*,.bk-dd>*,.bk-tiles>*,.bk-cols3>*,.bk-types>*{transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s}
+@media (hover:hover){
+  .bk-mocks figure:hover .fr,.bk-signs figure:hover img,.bk-files .f:hover,.bk-bento>div:hover,.bk-stickers figure:hover,.bk-pal>*:hover,.bk-dd>*:hover,.bk-tiles>*:hover,.bk-cols3>*:hover,.bk-types>*:hover{transform:translateY(-6px);box-shadow:0 22px 44px -24px rgba(92,58,40,.5)}
+}
+.bk-bento .logo-tile svg{animation:bkBreath 4.6s ease-in-out infinite;transform-origin:50% 60%}
+@media (prefers-reduced-motion:reduce){.bk-bento .logo-tile svg{animation:none}}
