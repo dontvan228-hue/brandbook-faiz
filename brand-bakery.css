@@ -386,4 +386,4 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
   .bk-menu-grid figure{grid-template-rows:auto auto}
   .bk-menu-grid figure>img{height:auto;object-fit:initial}
 }
-.bakery #carriers{padding-bottom:clamp(64px,min(9vw,13vh),130px)}
+.bakery #carriers{padding-bottom:clamp(120px,13vw,200px)}
