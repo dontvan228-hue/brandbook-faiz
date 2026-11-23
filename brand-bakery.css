@@ -362,3 +362,5 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
 .bk-sign-scheme+.bk-wrap-x{margin-top:14px}
 @media (max-width:860px){.bk-signs{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.bk-signs{grid-template-columns:1fr}}
+.bk-photo img{padding:0}
+.bk-photo+.bk-sign-scheme{margin-top:16px}
