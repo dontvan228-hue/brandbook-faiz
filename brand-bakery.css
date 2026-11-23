@@ -332,7 +332,7 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
 .bk-spec td:first-child{white-space:nowrap;font-weight:700;width:1%}
 .bk-spec a{color:var(--choc);font-weight:700}
 .bk-tz{margin-top:4px;white-space:pre-wrap;font:15px/1.6 var(--f-head);color:var(--choc);background:var(--page);border:1px solid var(--line);border-radius:16px;padding:22px 24px;max-width:860px}
-.bk-tz-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.bk-wraps img{background:var(--page);padding:14px;border-radius:18px}
+.bk-tz-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.bk-wraps img{background:var(--page);padding:14px;border-radius:18px;box-sizing:border-box}
 .bk-spec+.bk-wrap-x,.bk-wrap-x+.bk-wrap-x{margin-top:14px}
 .bk-mocks .fr.bk-fr-sticker img{object-fit:contain;padding:14%;box-sizing:border-box}
 .bk-stickers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px;max-width:760px}
@@ -364,3 +364,25 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
 @media (max-width:520px){.bk-signs{grid-template-columns:1fr}}
 .bk-photo img{padding:0}
 .bk-photo+.bk-sign-scheme{margin-top:16px}
+
+/* ---------- polish: even rows, full-width blocks ---------- */
+.bakery #carriers .eyebrow::before,.bakery .tone-blue .eyebrow::before{background:var(--choc)}
+.bk-bento .chips{height:auto;flex:1;min-height:64px}
+.bk-files{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.bk-files .f{padding:16px}
+.bk-files .f .sw{height:clamp(96px,10vw,140px)}
+.bk-files .f .sw svg{width:min(62%,360px)}
+.bk-stickers{max-width:none}
+.bk-stickers figure{justify-items:center;text-align:center}
+.bk-stickers img{max-width:340px}
+.bk-tz-box{max-width:none}
+.bk-tz-box .bk-tz{max-width:none}
+@media (min-width:861px){
+  .bk-bag figure{grid-template-rows:1fr auto;align-content:stretch}
+  .bk-bag figure>img{height:100%;object-fit:cover}
+  .bk-scheme svg{height:100%}
+  .bk-bag .bk-wraps>img{height:100%;object-fit:contain;box-sizing:border-box}
+  .bk-menu-grid{grid-template-columns:minmax(0,.62fr) minmax(0,1.38fr);align-items:start}
+  .bk-menu-grid figure{grid-template-rows:auto auto}
+  .bk-menu-grid figure>img{height:auto;object-fit:initial}
+}
