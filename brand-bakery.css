@@ -332,4 +332,5 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
 .bk-spec td:first-child{white-space:nowrap;font-weight:700;width:1%}
 .bk-spec a{color:var(--choc);font-weight:700}
 .bk-tz{margin-top:4px;white-space:pre-wrap;font:15px/1.6 var(--f-head);color:var(--choc);background:var(--page);border:1px solid var(--line);border-radius:16px;padding:22px 24px;max-width:860px}
-.bk-tz-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.bk-tz-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.bk-wraps img{background:var(--page);padding:14px;border-radius:18px}
+.bk-spec+.bk-wrap-x,.bk-wrap-x+.bk-wrap-x{margin-top:14px}
