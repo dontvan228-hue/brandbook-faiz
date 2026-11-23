@@ -171,10 +171,9 @@ const ST=[
  `<svg width="120" height="120" viewBox="0 0 120 120"><rect width="120" height="120" rx="26" fill="#02110c" stroke="#c8b48c" stroke-width="2"/><svg x="34" y="26" width="52" height="68" viewBox="44 44 344.5 391.25" style="fill:#f3ebd6"><use href="#pF"/></svg></svg>`,
  `<svg width="170" height="170" viewBox="0 0 170 170"><defs><path id="sc1" d="M85,85 m-58,0 a58,58 0 1,1 116,0 a58,58 0 1,1 -116,0"/></defs><circle cx="85" cy="85" r="82" fill="#c8b48c"/><text font-family="UnifrakturMaguntia" font-size="19" fill="#02110c"><textPath href="#sc1" textLength="360">Faiz · Trust · Comfort · Choice ·</textPath></text><svg x="64" y="60" width="42" height="50" viewBox="44 44 344.5 391.25" style="fill:#02110c"><use href="#pF"/></svg></svg>`,
  `<svg width="200" height="80" viewBox="0 0 200 80"><rect width="200" height="80" rx="40" fill="#1a422f"/><text x="100" y="52" text-anchor="middle" font-family="UnifrakturMaguntia" font-size="36" fill="#f3ebd6">Quality</text></svg>`,
- `<svg width="140" height="140" viewBox="0 0 140 140"><circle cx="70" cy="70" r="68" fill="#f3ebd6"/><text x="70" y="82" text-anchor="middle" font-family="Cormorant Garamond" font-style="italic" font-size="34" fill="#1a422f">с 2026</text></svg>`
 ];
 let stkZ=20;
-const pos=[[6,10,-8],[30,48,5],[58,12,-4],[70,48,9],[18,62,6],[44,20,-12]];
+const pos=[[6,10,-8],[30,48,5],[58,12,-4],[70,48,9],[18,62,6]];
 ST.forEach((s,i)=>{const d=document.createElement('div');d.className='stk';d.innerHTML=s;d.style.left=pos[i][0]+'%';d.style.top=pos[i][1]+'%';d.style.transform=`rotate(${pos[i][2]}deg)`;board.appendChild(d);
   let sx,sy,ox,oy;d.addEventListener('pointerdown',e=>{if(e.button>0)return;try{d.setPointerCapture(e.pointerId)}catch(_){}sx=e.clientX;sy=e.clientY;ox=d.offsetLeft;oy=d.offsetTop;d.style.zIndex=++stkZ;
     const mv=ev=>{const bw=board.clientWidth-d.offsetWidth,bh=board.clientHeight-d.offsetHeight;d.style.left=Math.max(0,Math.min(bw,ox+ev.clientX-sx))+'px';d.style.top=Math.max(0,Math.min(bh,oy+ev.clientY-sy))+'px';};
