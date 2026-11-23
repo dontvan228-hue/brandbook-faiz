@@ -51,6 +51,10 @@ const nav=$('#nav');const onS=()=>nav.classList.toggle('solid',scrollY>40);addEv
 /* toast + copy colour */
 const toast=m=>{const t=$('#toast');if(!t)return;t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),1600);};
 $$('[data-copy]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.copy;const done=()=>toast('Скопировано '+v);try{navigator.clipboard.writeText(v).then(done,()=>toast(v));}catch(e){toast(v);}}));
+// copy a whole text block (e.g. the print-shop request)
+$$('[data-copy-from]').forEach(b=>b.addEventListener('click',()=>{const el=$(b.dataset.copyFrom);if(!el)return;const v=el.innerText.trim();
+  const fail=()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);toast('Выделено — нажмите Ctrl+C');};
+  try{navigator.clipboard.writeText(v).then(()=>toast('Текст запроса скопирован'),fail);}catch(e){fail();}}));
 
 /* ---------- drawn mockups */
 const logo=(cx,cy,w,fill)=>{const h=w/LR;return `<use href="#fl" x="${(cx-w/2).toFixed(1)}" y="${(cy-h/2).toFixed(1)}" width="${w}" height="${h.toFixed(1)}" fill="${fill}"/>`;};

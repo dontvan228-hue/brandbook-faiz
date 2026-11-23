@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" referrerpolicy="no-referrer" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,500&display=swap">
 <link rel="stylesheet" href="brand.css?v=10">
-<link rel="stylesheet" href="brand-bakery.css?v=18">
+<link rel="stylesheet" href="brand-bakery.css?v=19">
 </head>
 <body class="bakery" data-logo-ratio="3.83">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -216,11 +216,87 @@
     <p style="margin-top:16px">Пока это нарисованные макеты — реалистичные фото сделаем позже по промтам.</p>
     <h3 class="st">Упаковка</h3>
     <div class="bk-mocks">
-      <figure class="rv"><div class="fr" data-mock="bag"></div><figcaption><b>Пакет</b>Сливочная бумага, голубая полоса</figcaption></figure>
+      <figure class="rv"><div class="fr"><img src="img/bakery/bag.jpg" alt="Крафт-пакет ФАЙЗ" loading="lazy"></div><figcaption><b>Пакет</b>Кремовый крафт, голубая полоса, кручёные ручки</figcaption></figure>
       <figure class="rv"><div class="fr" data-mock="box"></div><figcaption><b>Коробка для торта</b>Голубой картон, логотип на гранях</figcaption></figure>
       <figure class="rv"><div class="fr" data-mock="cup"></div><figcaption><b>Стакан для кофе</b>Голубой бандаж с логотипом</figcaption></figure>
       <figure class="rv"><div class="fr" data-mock="sticker"></div><figcaption><b>Наклейка</b>Круглая, на коробки и пакеты</figcaption></figure>
     </div>
+    <h3 class="st">Пакет для типографии</h3>
+    <p>Крафт-пакет с кручёными ручками для выпечки на вынос. Схема и таблица — для типографии; ниже готовый текст запроса на расчёт.</p>
+    <div class="bk-bag">
+      <figure class="rv"><img src="img/bakery/bag.jpg" alt="Крафт-пакет ФАЙЗ: голубая полоса сверху, шоколадный логотип и надпись «Свежая выпечка»" loading="lazy"><figcaption>Как выглядит пакет</figcaption></figure>
+      <figure class="rv bk-scheme">
+        <svg viewBox="0 0 560 430" role="img" aria-label="Схема пакета: лицевая сторона 260 на 280 мм, бок 150 мм, полоса 45 мм, логотип 190 мм, надпись 140 мм">
+          <defs><marker id="ar" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 L7 4 L0 7" fill="none" stroke="#765545" stroke-width="1.2"/></marker></defs>
+          <!-- handles -->
+          <path d="M128 66 C128 8 238 8 238 66" fill="none" stroke="#5c3a28" stroke-width="5"/>
+          <path d="M140 66 C140 22 226 22 226 66" fill="none" stroke="#5c3a28" stroke-width="5"/>
+          <!-- front 260x280 (1 mm = 1.1) and side 150x280 -->
+          <rect x="40" y="60" width="286" height="308" fill="#f4deaf" stroke="#5c3a28" stroke-width="1.5"/>
+          <rect x="326" y="60" width="165" height="308" fill="#efd6a2" stroke="#5c3a28" stroke-width="1.5"/>
+          <path d="M408.5 60 V368 M326 368 L408.5 330 L491 368" fill="none" stroke="#5c3a28" stroke-width="1" stroke-dasharray="4 4" opacity=".55"/>
+          <rect x="40.75" y="60.75" width="449.5" height="49.5" fill="#a0beda"/>
+          <!-- logo 190 mm wide, top 150 mm from the top edge -->
+          <svg x="78.5" y="225" width="209" height="54.5" viewBox="0 0 861.25 224.75"><use href="#fl" fill="#5c3a28"/></svg>
+          <text x="183" y="335" text-anchor="middle" font-family="Playfair Display,Georgia,serif" font-size="12.5" letter-spacing="3.2" fill="#5c3a28">СВЕЖАЯ ВЫПЕЧКА</text>
+          <!-- dimensions -->
+          <g stroke="#765545" stroke-width="1" fill="none">
+            <path d="M40 392 H326" marker-start="url(#ar)" marker-end="url(#ar)"/>
+            <path d="M326 392 H491" marker-start="url(#ar)" marker-end="url(#ar)"/>
+            <path d="M18 60 V368" marker-start="url(#ar)" marker-end="url(#ar)"/>
+            <path d="M510 60 V110" marker-start="url(#ar)" marker-end="url(#ar)"/>
+            <path d="M78.5 212 H287.5" marker-start="url(#ar)" marker-end="url(#ar)" stroke-dasharray="3 3"/>
+            <path d="M300 110 V225" marker-start="url(#ar)" marker-end="url(#ar)" stroke-dasharray="3 3"/>
+            <path d="M300 335 V368" marker-start="url(#ar)" marker-end="url(#ar)" stroke-dasharray="3 3"/>
+          </g>
+          <g font-family="Manrope,system-ui,sans-serif" font-size="12" font-weight="700" fill="#5c3a28" text-anchor="middle">
+            <text x="183" y="412">260 мм</text><text x="408.5" y="412">бок 150 мм</text>
+            <text x="12" y="218" transform="rotate(-90 12 218)">280 мм</text>
+            <text x="532" y="89">45</text>
+            <text x="183" y="206">логотип 190 мм</text>
+            <text x="304" y="171" text-anchor="start" font-weight="500">105</text>
+            <text x="304" y="356" text-anchor="start" font-weight="500">30</text>
+          </g>
+        </svg>
+        <figcaption>Схема: лицевая сторона и бок, размеры в миллиметрах. 105 мм — от нижнего края полосы до логотипа (150 мм от верха пакета).</figcaption>
+      </figure>
+    </div>
+    <div class="bk-wrap-x"><table class="bk-table bk-spec">
+      <tr><th>Параметр</th><th>Значение</th></tr>
+      <tr><td>Тип</td><td>Крафт-пакет с прямоугольным дном, вклеенные кручёные бумажные ручки</td></tr>
+      <tr><td>Размер (Ш×В×Г)</td><td>260 × 280 × 150 мм — или ближайший готовый штамп типографии</td></tr>
+      <tr><td>Бумага</td><td>Крафт светло-бежевый (кремовый), 100–120 г/м². Образец бумаги — до запуска тиража</td></tr>
+      <tr><td>Печать</td><td>2+0, без ламинации: голубой <b>#A0BEDA</b> (ориентир Pantone 543 C) и шоколад <b>#5C3A28</b> (ориентир Pantone 4625 C). Выкрас на этой бумаге — обязательно</td></tr>
+      <tr><td>Полоса</td><td>Голубая плашка 45 мм от верхнего края, по всему периметру</td></tr>
+      <tr><td>Логотип</td><td>Шоколад, ширина 190 мм, по центру лицевой стороны, верх логотипа — 150 мм от верха пакета. Файл: <a href="logo/food/faiz-food_chocolate.pdf" download>PDF</a> · <a href="logo/food/faiz-food_chocolate.svg" download>SVG</a></td></tr>
+      <tr><td>Надпись</td><td>«СВЕЖАЯ ВЫПЕЧКА» — Playfair Display, прописные, разрядка +20 %, высота букв 8 мм, ширина ~140 мм, по центру, 30 мм от низа. В макете — в кривых</td></tr>
+      <tr><td>Ручки</td><td>Кручёные бумажные, тёмно-коричневые (в тон шоколаду)</td></tr>
+      <tr><td>Обратная сторона</td><td>Та же раскладка, что на лицевой (уточнить в расчёте)</td></tr>
+      <tr><td>Тираж</td><td>Расчёт на 1 000, 3 000 и 5 000 шт.</td></tr>
+    </table></div>
+    <div class="sub">Запрос на расчёт — готовый текст</div>
+    <div class="bk-tz" id="bagTz">Тема: Запрос на расчёт печати крафт-пакетов с кручёными ручками («ФАЙЗ»)
+
+Добрый день!
+
+Просим рассчитать стоимость и сроки изготовления бумажных крафт-пакетов с кручёными ручками по следующему ТЗ:
+
+1. Тип пакета: крафт-пакет с прямоугольным дном и вклеенными кручёными ручками (цвет ручек — тёмно-коричневый).
+2. Материал: светло-бежевый (кремовый) крафт плотностью 100–120 г/м². Просим прислать образец бумаги до запуска тиража.
+3. Размер (Ш×В×Г): ориентир 260×280×150 мм (просим предложить ближайшие размеры из ваших готовых вырубных штампов).
+4. Печать: 2+0, без ламинации — голубая плашка сверху по всему периметру (45 мм от верхнего края) + логотип и текст тёмно-коричневым.
+   Цвета: голубой #A0BEDA (ориентир Pantone 543 C), тёмно-коричневый #5C3A28 (ориентир Pantone 4625 C). Просим выкрас на выбранной бумаге.
+5. Тираж: просим дать расчёт на 1 000 шт., 3 000 шт. и 5 000 шт.
+
+Визуализация внешнего вида и схема раскладки — во вложении. Логотип предоставим в векторе (PDF/SVG).
+Также просим прислать ваш шаблон-выкройку (развёртку в .pdf/.ai) под подходящий штамп и технические требования к макету.
+
+С уважением,
+[Ваше имя]
+[Название пекарни / компании]
+[Телефон / мессенджер]</div>
+    <div class="bk-tz-acts"><button type="button" class="bk-btn" data-copy-from="#bagTz">Скопировать текст запроса</button><a class="bk-btn ghost" href="img/bakery/bag.jpg" download>Скачать визуализацию</a><a class="bk-btn ghost" href="logo/food/faiz-food_chocolate.pdf" download>Логотип PDF</a></div>
+
     <h3 class="st">Форма персонала</h3>
     <div class="bk-mocks">
       <figure class="rv"><div class="fr" data-mock="apron"></div><figcaption><b>Фартук</b>Голубой, логотип шоколадом</figcaption></figure>
@@ -272,6 +348,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" integrity="sha384-B2WBjDzEjJpYvhmi2UyEn7rektqkf5suS6sNoyyrf0EBAwBHdkiXxIlU0V5Ru2ed" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="subnav.js?v=1"></script>
-<script src="food.js?v=10"></script>
+<script src="food.js?v=11"></script>
 </body>
 </html>

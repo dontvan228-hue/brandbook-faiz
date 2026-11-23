@@ -321,3 +321,15 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
 @keyframes bkBreath{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-1.4%) scale(1.04,1.05)}}
 .bk-seal canvas.puff{position:absolute;inset:-12%;width:124%;height:124%;pointer-events:none}
 @media (prefers-reduced-motion:reduce){.bk-seal .ffill{animation:none;opacity:1}.bk-seal canvas.puff{display:none}}
+/* bag: photo + scheme, spec table, print-shop request */
+.bk-mocks .fr img{width:100%;height:100%;object-fit:cover;display:block}
+.bk-bag{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:16px;margin-top:22px;align-items:stretch}
+.bk-bag figure{margin:0;display:grid;gap:10px;align-content:start}
+.bk-bag img{width:100%;height:auto;border-radius:18px;display:block;border:1px solid var(--line)}
+.bk-scheme svg{width:100%;height:auto;background:var(--page);border-radius:18px;border:1px solid var(--line);padding:12px}
+.bk-bag figcaption{font-size:14px;color:var(--muted)}
+@media (max-width:860px){.bk-bag{grid-template-columns:1fr}}
+.bk-spec td:first-child{white-space:nowrap;font-weight:700;width:1%}
+.bk-spec a{color:var(--choc);font-weight:700}
+.bk-tz{margin-top:4px;white-space:pre-wrap;font:15px/1.6 var(--f-head);color:var(--choc);background:var(--page);border:1px solid var(--line);border-radius:16px;padding:22px 24px;max-width:860px}
+.bk-tz-acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
