@@ -341,3 +341,13 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
 .bk-stickers figcaption{font-size:14px;color:var(--muted)}.bk-stickers figcaption b{display:block;color:var(--choc)}
 .bk-stickers a{color:var(--choc);font-weight:700}
 @media (max-width:520px){.bk-stickers{grid-template-columns:1fr}}
+/* request text: collapsed by default */
+.bk-tz-box{margin:clamp(36px,4vw,56px) 0 0;max-width:860px;border:1px solid var(--line);border-radius:16px;background:var(--page)}
+.bk-tz-box summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:18px 24px;font-weight:700;font-size:16px;color:var(--choc)}
+.bk-tz-box summary::-webkit-details-marker{display:none}
+.bk-tz-box summary span{margin-left:auto;font-size:13px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:8px}
+.bk-tz-box summary span::after{content:"";width:8px;height:8px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-3px);transition:transform .25s}
+.bk-tz-box[open] summary span{font-size:0;gap:0}.bk-tz-box[open] summary span::before{content:"свернуть";font-size:13px;margin-right:8px}
+.bk-tz-box[open] summary span::after{transform:rotate(-135deg) translateY(-3px)}
+.bk-tz-box summary:focus-visible{outline:2px solid var(--choc);outline-offset:3px;border-radius:16px}
+.bk-tz-box .bk-tz{margin:0;border:0;border-top:1px solid var(--line);border-radius:0 0 16px 16px;max-width:none}
