@@ -351,3 +351,14 @@ body.bakery ::selection{background:var(--blue);color:var(--choc)}
 .bk-tz-box[open] summary span::after{transform:rotate(-135deg) translateY(-3px)}
 .bk-tz-box summary:focus-visible{outline:2px solid var(--choc);outline-offset:3px;border-radius:16px}
 .bk-tz-box .bk-tz{margin:0;border:0;border-top:1px solid var(--line);border-radius:0 0 16px 16px;max-width:none}
+/* signage */
+.bk-signs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:22px}
+.bk-signs figure{margin:0;display:grid;gap:10px;align-content:start}
+.bk-signs img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 0;border-radius:18px;display:block;border:1px solid var(--line)}
+.bk-signs figcaption{font-size:14px;color:var(--muted)}.bk-signs figcaption b{display:block;color:var(--choc)}
+.bk-sign-scheme{margin:16px 0 0;display:grid;gap:10px}
+.bk-sign-scheme img{width:100%;height:auto;background:var(--page);border-radius:18px;border:1px solid var(--line);padding:clamp(10px,2vw,24px);box-sizing:border-box}
+.bk-sign-scheme figcaption{font-size:14px;color:var(--muted)}
+.bk-sign-scheme+.bk-wrap-x{margin-top:14px}
+@media (max-width:860px){.bk-signs{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.bk-signs{grid-template-columns:1fr}}
