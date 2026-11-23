@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" referrerpolicy="no-referrer" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,500&display=swap">
 <link rel="stylesheet" href="brand.css?v=10">
-<link rel="stylesheet" href="brand-bakery.css?v=20">
+<link rel="stylesheet" href="brand-bakery.css?v=21">
 </head>
 <body class="bakery" data-logo-ratio="3.83">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -218,7 +218,7 @@
     <div class="bk-mocks">
       <figure class="rv"><div class="fr"><img src="img/bakery/bag.jpg" alt="Крафт-пакет ФАЙЗ" loading="lazy"></div><figcaption><b>Пакет</b>Кремовый крафт, голубая полоса, кручёные ручки</figcaption></figure>
       <figure class="rv"><div class="fr"><img src="img/bakery/cup.jpg" alt="Стакан ФАЙЗ" loading="lazy"></div><figcaption><b>Стакан для кофе</b>Сливочный, голубая полоса, 250–400 мл</figcaption></figure>
-      <figure class="rv"><div class="fr" data-mock="sticker"></div><figcaption><b>Наклейка</b>Круглая, на пакеты и упаковку</figcaption></figure>
+      <figure class="rv"><div class="fr bk-fr-sticker"><img src="print/bakery/sticker/faiz-sticker_d80_chocolate.svg" alt="Наклейка ФАЙЗ «С любовью»" loading="lazy"></div><figcaption><b>Наклейка</b>Круглая, 80 мм, «С любовью»</figcaption></figure>
     </div>
     <h3 class="st">Пакет для типографии</h3>
     <p>Крафт-пакет с кручёными ручками для выпечки на вынос. Схема и таблица — для типографии; ниже готовый текст запроса на расчёт.</p>
@@ -344,6 +344,45 @@
 [Название пекарни / компании]
 [Телефон / мессенджер]</div>
     <div class="bk-tz-acts"><button type="button" class="bk-btn" data-copy-from="#cupTz">Скопировать текст запроса</button><a class="bk-btn ghost" href="print/bakery/faiz-bakery-cups-print.zip" download>Скачать все файлы (ZIP)</a><a class="bk-btn ghost" href="img/bakery/cup.jpg" download>Скачать визуализацию</a></div>
+
+    <h3 class="st">Наклейка для типографии</h3>
+    <p>Круглая наклейка «С любовью», 80 мм — на пакеты и упаковку, а ещё как отдельный стикер в подарок. Два цвета; логотип и надпись — в кривых, файлы готовы к печати.</p>
+    <div class="bk-stickers">
+      <figure class="rv"><img src="print/bakery/sticker/faiz-sticker_d80_chocolate.svg" alt="Наклейка ФАЙЗ на шоколадном фоне" loading="lazy"><figcaption><b>Шоколадная</b><a href="print/bakery/sticker/faiz-sticker_d80_chocolate.pdf" download>PDF</a> · <a href="print/bakery/sticker/faiz-sticker_d80_chocolate.svg" download>SVG</a></figcaption></figure>
+      <figure class="rv"><img src="print/bakery/sticker/faiz-sticker_d80_cream.svg" alt="Наклейка ФАЙЗ на сливочном фоне" loading="lazy"><figcaption><b>Сливочная</b><a href="print/bakery/sticker/faiz-sticker_d80_cream.pdf" download>PDF</a> · <a href="print/bakery/sticker/faiz-sticker_d80_cream.svg" download>SVG</a></figcaption></figure>
+    </div>
+    <div class="bk-wrap-x"><table class="bk-table bk-spec">
+      <tr><th>Параметр</th><th>Значение</th></tr>
+      <tr><td>Размер</td><td>Круг Ø 80 мм, макет 84 × 84 мм (вылеты 2 мм)</td></tr>
+      <tr><td>Материал</td><td>Белая виниловая плёнка (ПВХ или полипропилен), матовая ламинация — не боится влаги и трения</td></tr>
+      <tr><td>Цвета</td><td>Шоколад <b>#5C3A28</b> — CMYK 0 37 57 64; сливочный <b>#F4DEAF</b> — CMYK 0 9 28 4</td></tr>
+      <tr><td>Безопасная зона</td><td>Пунктир и надписи — не ближе 4,5 мм к линии реза</td></tr>
+      <tr><td>Контур реза</td><td>Слой CutContour: круг Ø 80 мм, пурпурная линия 0,1 мм — не печатается</td></tr>
+      <tr><td>Выдача</td><td>Для кассы — листы А3/SRA3 с надсечкой (kiss-cut); поштучно — вырубка в край (die-cut)</td></tr>
+    </table></div>
+    <div class="sub">Запрос на расчёт — готовый текст</div>
+    <div class="bk-tz" id="stickerTz">Тема: Запрос на расчёт печати круглых наклеек «ФАЙЗ — С любовью», Ø 80 мм
+
+Добрый день!
+
+Просим рассчитать стоимость и сроки печати наклеек:
+
+1. Изделие: круглая наклейка Ø 80 мм, два варианта цвета (шоколадный и сливочный фон).
+2. Материал: белая виниловая плёнка (ПВХ или полипропилен), матовая ламинация.
+3. Печать: полноцветная. Цвета: шоколад #5C3A28 (CMYK 0/37/57/64), сливочный #F4DEAF (CMYK 0/9/28/4). Просим цветопробу на выбранной плёнке.
+4. Макеты: PDF и SVG 84 × 84 мм с вылетами 2 мм, всё в кривых. Контур реза — отдельный слой CutContour (круг Ø 80 мм).
+5. Выдача — просим посчитать оба варианта:
+   а) листы А3/SRA3 с плоттерной надсечкой (kiss-cut) — для кассы;
+   б) поштучная вырубка в край (die-cut).
+6. Тираж: 500, 1 000 и 3 000 шт. каждого цвета.
+
+Файлы — во вложении.
+
+С уважением,
+[Ваше имя]
+[Название пекарни / компании]
+[Телефон / мессенджер]</div>
+    <div class="bk-tz-acts"><button type="button" class="bk-btn" data-copy-from="#stickerTz">Скопировать текст запроса</button><a class="bk-btn ghost" href="print/bakery/faiz-bakery-sticker-print.zip" download>Скачать все файлы (ZIP)</a></div>
 
     <h3 class="st">Точка продаж</h3>
     <div class="bk-mocks">
